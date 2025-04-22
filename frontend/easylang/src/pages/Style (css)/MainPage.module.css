@@ -1,0 +1,630 @@
+.home {
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.header {
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+.menu_icon {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background: rgba(127, 67, 153, 1);
+    margin: 3px 0;
+}
+
+.nav_links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav_links li a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 1rem;
+    display: inline-block;
+    /* Фиксируем размер */
+    padding: 5px 10px;
+    /* Отступы */
+    border-radius: 5px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav_links li a:hover {
+    color: rgb(0, 0, 0);
+    background: rgb(230, 230, 230);
+    /* Серый фон при наведении */
+}
+
+/* Кнопки авторизации */
+.auth_buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.login_btn {
+    padding: 8px 16px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    background: none;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.login_btn:hover {
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+.signup_btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    background: rgba(127, 67, 153, 1);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.signup_btn:hover {
+    background: rgb(119, 90, 131);
+}
+
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .menu_icon {
+        display: flex;
+    }
+
+    .nav_links {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: rgba(251, 244, 255, 1);
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+        transform: translateY(-200px);
+        transition: transform 0.3s;
+    }
+
+    .nav_active {
+        transform: translateY(0);
+    }
+
+    .auth_buttons {
+        display: none;
+    }
+}
+
+/* --------------------------------------- */
+.hero_section {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero_overlay {
+    background-image: url('/src/pages/pictures/fon.png');
+    min-height: 65vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Наложение с темным фоном */
+    padding: 40px;
+    color: #000000;
+    text-align: center;
+    width: 100%;
+}
+
+.home_title {
+    margin-top: 100px;
+    font-size: 2.3rem;
+    margin-bottom: 50px;
+    color: rgb(0, 0, 0);
+}
+
+.home_text {
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+}
+
+.try_free_btn {
+    background-color: rgba(127, 67, 153, 1);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.try_free_btn:hover {
+    background-color: rgb(113, 75, 129);
+}
+
+.login_link {
+    color: rgb(0, 0, 0);
+    /* Зеленый цвет для ссылки */
+    text-decoration: underline;
+    font-size: 1rem;
+
+}
+
+/* Начните изучать английский язык прямо сейчас!-------------------*/
+
+.start_learning_section {
+    text-align: center;
+    padding: 50px 0;
+    background: #f5f5f5;
+    background: linear-gradient(0deg, rgba(245, 245, 245, 1) 0%, rgba(223, 186, 227, 1) 27%, rgba(225, 186, 230, 1) 67%, rgba(255, 255, 255, 1) 100%);
+}
+
+.start_learning_title {
+    font-size: 2.3rem;
+    margin-bottom: 50px;
+}
+
+.buttons_row {
+    display: flex;
+    /* Используем flexbox для центровки */
+    justify-content: center;
+    /* Центрируем элементы по горизонтали */
+    flex-wrap: wrap;
+    /* Чтобы кнопки располагались в несколько строк */
+    max-width: 1000px;
+    /* Максимальная ширина контейнера */
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.buttons_row button {
+    padding: 14px 16px;
+    /* Внутренние отступы */
+    font-size: 18px;
+    /* Размер шрифта */
+    height: 100px;
+    /* Высота кнопки */
+    width: 250px;
+    /* Фиксированная ширина кнопки */
+    background-color: rgb(245, 238, 238);
+    /* Цвет фона */
+    color: #2b2a2a;
+    /* Цвет текста */
+    border: none;
+    /* Убираем границу */
+    margin: 20px;
+}
+
+.buttons_row button:hover {
+    background-color: rgb(193, 173, 202);
+}
+
+.start_btn {
+    background-color: rgba(127, 67, 153, 1);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.start_btn:hover {
+    background-color: rgb(113, 75, 129);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.modal_content button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(127, 67, 153, 1);
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Что вас приведет к результату?-----------------------------*/
+.results_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: rgba(243, 237, 247, 1);
+}
+
+.results_content {
+    flex: 1;
+    max-width: 50%;
+}
+
+.results_title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    text-align: justify;
+    /* Выровняли текст по ширине */
+}
+
+.results_columns {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 100px;
+}
+
+.results_column {
+    list-style: none;
+    padding: 0;
+    width: 48%;
+    text-align: justify;
+    /* Выровняли текст в колонках по ширине */
+}
+
+.results_column li {
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.auth_form {
+    flex-shrink: 0;
+    /* Фиксируем размер формы */
+    width: 350px;
+    /* Установили фиксированную ширину */
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+.auth_title {
+    font-size: 20px;
+    margin-bottom: 30 px;
+}
+
+
+.auth_form input,
+.auth_form button {
+    width: 100%;
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px solid rgba(200, 200, 200, 1);
+    border-radius: 5px;
+    display: block;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    text-align: left;
+}
+
+.submit_btn {
+    background-color: rgba(127, 67, 153, 1);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.submit_btn:hover {
+    background-color: rgb(112, 63, 133);
+}
+
+/* флаги */
+
+.languageSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+/* Заголовок */
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Фиксированный контейнер для языков */
+.languageWrapper {
+    width: 50%;
+    height: 200px;
+    background: rgba(251, 244, 255, 1);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Обычный контейнер с языками */
+.languageContainer {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    width: 100%;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Кнопки-флаги */
+.languageButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.languageButton img {
+    width: 110px;
+    height: 70px;
+}
+
+.languageButton span {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.languageButton:hover {
+    transform: scale(1.1);
+}
+
+/* Описание языка */
+.languageDescription {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(251, 244, 255, 1);
+    padding: 20px 30px;
+    font-size: 18px;
+    font-weight: 500;
+    gap: 20px;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Левая часть: флаг + название */
+.languageInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Флаг */
+.languageImage {
+    width: 110px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+/* Название языка */
+.languageTitle {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Описание справа */
+.languageText {
+    flex: 1;
+    font-size: 15px;
+    color: #2c2b2b;
+    text-align: left;
+    max-width: 70%;
+    margin-left: 20px;
+}
+
+/* Стрелка для переключения */
+.nextButton {
+    background: #fefefe;
+    border: none;
+    font-size: 24px;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.nextButton:hover {
+    background: rgb(231, 211, 243);
+}
+
+
+
+
+/* Блок теста */
+.testContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: rgba(231, 188, 251, 0.46);
+    padding: 40px;
+    border-radius: 60% 32% 60% 35% / 35% 74% 20% 46%;
+    max-width: 600px;
+    position: relative;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.testText {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}
+
+.testSelect {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgba(251, 244, 255, 1);
+}
+
+.testButton {
+    background: black;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.testButton:hover {
+    opacity: 0.8;
+}
+
+
+/* Тарифы */
+.pricing {
+    background-color: rgba(243, 237, 247, 1);
+}
+
+.pricing_section {
+    text-align: center;
+    padding: 50px 20px;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+.pricing_title {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.pricing_container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: rgb(211, 199, 219);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.pricing_card {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    padding: 20px;
+    text-align: center;
+    background: white;
+    background-color: rgb(211, 199, 219);
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pricing_card:last-child {
+    border-right: none;
+}
+
+.card_title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.card_description {
+    font-size: 16px;
+    color: #555;
+    text-align: justify;
+    flex-grow: 1;
+
+}
+
+.card_price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 100px;
+}
+
+.card_button {
+    background-color: rgba(127, 67, 153, 1);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.card_button:hover {
+    background-color: rgb(112, 63, 133);
+}
