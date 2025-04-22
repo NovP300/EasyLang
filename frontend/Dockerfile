@@ -5,7 +5,7 @@ FROM node:18-slim
 WORKDIR /app
 
 # Копируем package.json и package-lock.json, если есть
-COPY easylang/package.json easylang/package-lock.json* /app/
+COPY ./easylang/package.json ./easylang/package-lock.json* /app/
 
 # Устанавливаем зависимости
 RUN npm install
@@ -17,4 +17,4 @@ COPY easylang /app/
 EXPOSE 3000
 
 # Запускаем приложение
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npm install && npm start"]
