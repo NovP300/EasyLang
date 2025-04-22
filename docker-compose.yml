@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./backend  # Путь к бэкенду
+    volumes:
+      - ./backend:/app
+      - ./backend/media:/app/media
+      - ./backend/static:/app/static
+    expose:
+      - "8000"   
+
+    environment:
+      - DEBUG=True
+      - DATABASE_NAME=lang_db
+      - DATABASE_USER=lang_user
+      - DATABASE_PASSWORD=lang_pass
+      - DATABASE_HOST=92.248.160.36
+      - DATABASE_PORT=5432
+
+  frontend:
+    build:
+      context: ./frontend  # Путь к фронтенду
+    volumes:
+      - ./frontend/easylang:/app
+    ports:
+      - "3000:3000"  # Порт для React
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+    environment:
+    - CHOKIDAR_USEPOLLING=true
+  nginx:
+    build:
+        context: ./nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./backend/media:/app/media
+      - ./backend/static:/app/static
+    ports:
+      - "80:80" 
+    depends_on:
+      - backend
