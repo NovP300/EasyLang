@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { login } from "../api/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./styles/LoginModal.module.css";
 
 const LoginModal = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state?.background || location;
 
   const handleLogin = async () => {
     try {
@@ -18,7 +20,7 @@ const LoginModal = () => {
   };
 
   const handleClose = () => {
-    navigate(-1); // Закрыть модалку
+    navigate(background.pathname);
   };
 
   return (

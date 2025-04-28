@@ -14,24 +14,28 @@ const languages = [
         img: img2,
         description:
             "Самый востребованный язык в мире, ключ к международному общению, карьере и путешествиям. На нем говорят более 1,5 миллиарда человек, а 80% информации в интернете представлено на английском. Изучение английского поможет вам смотреть фильмы в оригинале и уверенно чувствовать себя за границей.",
+        link: "english"
     },
     {
         name: "Немецкий",
         img: img3,
         description:
             "Язык технологий, науки и бизнеса. Германия – один из лидеров мировой экономики, а знание немецкого открывает доступ к образованию и работе в Европе. Логичная грамматика и четкие правила помогут вам быстро освоить язык и использовать его для учебы, карьеры и общения с носителями.",
+        link: "german"
     },
     {
         name: "Французский",
         img: img1,
         description:
             "Язык моды, искусства, дипломатии и романтики. На нем говорят более 300 миллионов человек в разных уголках мира. Французский полезен для путешествий, работы в международных организациях и знакомства с богатой культурой Франции. Освоив его, вы сможете читать классику в оригинале и свободно общаться в Париже!",
+        link: "french"
     },
     {
         name: "Испанский",
         img: img4,
         description:
             "Второй по популярности язык в мире, на котором говорят более 500 миллионов человек. Это язык страсти, музыки, танцев и ярких путешествий по Испании и Латинской Америке. Благодаря простой грамматике и приятному звучанию испанский легко освоить, а знание его откроет двери в новую культуру и возможности!",
+        link: "spanish"
     },
 ];
 
@@ -136,6 +140,9 @@ export default function MainPage() {
             alert('Заявка отправлена!');
         }
     };
+
+    const isAuthenticated = Boolean(localStorage.getItem("access_token"));
+
     return (
         <div className={styles.home}>
             <header className={styles.header}>
@@ -170,14 +177,28 @@ export default function MainPage() {
                         </li>
                     </ul>
 
+                    
+
                     {/* Кнопки входа и регистрации */}
-                    <div className={styles.auth_buttons}>
-                        <Link to="/login" state={{ background: location }}>
+                    <div>
+  
+                        {!isAuthenticated ? (
+                        <div className={styles.auth_buttons}>
+                            <Link to="/login" state={{ background: location }}>
                             <button className={styles.login_btn}>Войти</button>
-                        </Link>
-                        <Link to="/register" state={{ background: location }}>
+                            </Link>
+                            <Link to="/register" state={{ background: location }}>
                             <button className={styles.signup_btn}>Зарегистрироваться</button>
-                        </Link>
+                            </Link>
+                        </div>
+                        ) : (
+
+                        <div className={styles.auth_buttons}>
+                            <Link to="/profile">
+                            <button className={styles.profile_btn}>Профиль</button>
+                            </Link>
+                        </div>
+                        )}
                     </div>
                 </nav>
             </header>
@@ -318,6 +339,9 @@ export default function MainPage() {
                                 <img className={styles.languageImage} src={selectedLanguage.img} alt={selectedLanguage.name} />
                                 <h3 className={styles.languageTitle}>{selectedLanguage.name}</h3>
                             </div>
+
+                            {/* Кнопка "Записаться на курс" */}
+                            <a href={`/languages/${selectedLanguage.link}`} >Записаться на курс</a>
 
                             {/* Правая часть: описание */}
                             <p className={styles.languageText}>{selectedLanguage.description}</p>

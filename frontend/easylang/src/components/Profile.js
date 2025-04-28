@@ -30,7 +30,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     logout(); // Удаляем токен при выходе
-    navigate("/login"); // Перенаправляем на страницу логина
+    navigate("/"); // Перенаправляем на страницу логина
   };
 
   return (

@@ -32,6 +32,7 @@ export const refreshToken = async () => {
   }
 };
 
+// Функция для регистрации
 export const register = async (email, username, password) => {
   const response = await axiosInstance.post(`${API_URL}/register/`, {
     email,

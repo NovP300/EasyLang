@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { register } from "../api/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./styles/LoginModal.module.css";
+import { Link } from "react-router-dom";
+
 
 const RegisterModal = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +11,8 @@ const RegisterModal = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state?.background || location;
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -18,7 +22,7 @@ const RegisterModal = () => {
   }, [navigate]);
 
   const handleClose = () => {
-    navigate(-1);
+    navigate(background.pathname);
   };
 
   const handleRegister = async () => {
@@ -90,6 +94,13 @@ const RegisterModal = () => {
           onChange={(e) => setRepeatPassword(e.target.value)}
         />
         <button className={styles.modal_button} onClick={handleRegister}>Зарегистрироваться</button>
+
+        <div className={styles.forgot_password}>
+          <Link to="/login" state={{ background }}>
+            У меня уже есть аккаунт
+          </Link>
+        </div>
+
       </div>
     </div>
   );
