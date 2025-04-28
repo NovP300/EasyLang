@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import styles from "./styles/LoginModal.module.css";
 
 const LoginModal = () => {
   const [email, setEmail] = useState("");
@@ -21,27 +22,9 @@ const LoginModal = () => {
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 1000,
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "2rem",
-          borderRadius: "8px",
-          minWidth: "300px",
-          maxWidth: "90%",
-        }}
-      >
-        <button onClick={handleClose} style={{ float: "right" }}>X</button>
+    <div className={styles.modal_overlay}>
+      <div className={styles.modal_content}>
+        <button className={styles.close_button} onClick={handleClose}>X</button>
         <h2>Вход</h2>
         <input
           type="email"
@@ -55,7 +38,10 @@ const LoginModal = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Пароль"
         />
-        <button onClick={handleLogin}>Войти</button>
+        <button className={styles.modal_button} onClick={handleLogin}>Войти</button>
+        <div className={styles.forgot_password}>
+          <a href="/forgot-password">Забыли пароль?</a>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import React, { useState, useRef } from "react";
 import styles from "./Style (css)/MainPage.module.css";
-import React, { useState } from "react";
 import img1 from "./pictures/france.png";
 import img2 from "./pictures/nemec.png";
 import img3 from "./pictures/spanish.png";
@@ -73,11 +73,22 @@ export default function MainPage() {
     const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
     const [openIndex, setOpenIndex] = useState(null);
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
+    const toggleMenu = () => { setMenuOpen(!menuOpen); };
+
+    const aboutRef = useRef(null);
+    const pricingRef = useRef(null);
+    const languagePR = useRef(null);
+    const faqRef = useRef(null);
+    const reviewsRef = useRef(null);
+    const contactsRef = useRef(null);
+
+    const scrollToSection = (ref) => {
+        setMenuOpen(false); // Закрываем бургер-меню при переходе
+        ref.current?.scrollIntoView({ behavior: "smooth" });
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
+
 
     const openModal = (content) => {
         setModalContent(content);
@@ -140,34 +151,22 @@ export default function MainPage() {
                     </div>
                     <ul className={`${styles.nav_links} ${menuOpen ? styles.nav_active : ""}`}>
                         <li>
-                            <Link to="/about" onClick={() => setMenuOpen(false)}>
-                                О нас
-                            </Link>
+                            <button onClick={() => scrollToSection(aboutRef)}>О нас</button>
                         </li>
                         <li>
-                            <Link to="/languages" onClick={() => setMenuOpen(false)}>
-                                Каталог языков
-                            </Link>
+                            <button onClick={() => scrollToSection(languagePR)}>Каталог языков</button>
                         </li>
                         <li>
-                            <Link to="/pricing" onClick={() => setMenuOpen(false)}>
-                                Тарифы
-                            </Link>
+                            <button onClick={() => scrollToSection(pricingRef)}>Тарифы</button>
                         </li>
                         <li>
-                            <Link to="/faq" onClick={() => setMenuOpen(false)}>
-                                Вопросы
-                            </Link>
+                            <button onClick={() => scrollToSection(faqRef)}>Вопросы</button>
                         </li>
                         <li>
-                            <Link to="/reviews" onClick={() => setMenuOpen(false)}>
-                                Отзывы
-                            </Link>
+                            <button onClick={() => scrollToSection(reviewsRef)}>Отзывы</button>
                         </li>
                         <li>
-                            <Link to="/contacts" onClick={() => setMenuOpen(false)}>
-                                Контакты
-                            </Link>
+                            <button onClick={() => scrollToSection(contactsRef)}>Контакты</button>
                         </li>
                     </ul>
 
@@ -240,7 +239,7 @@ export default function MainPage() {
             )}
 
             {/* Что вас приведет к результату? */}
-            <section className={styles.results_section}>
+            <section className={styles.results_section} ref={aboutRef}>
                 <div className={styles.results_content}>
                     <h2 className={styles.results_title}>Что вас приведет к <br />результату?</h2>
                     <div className={styles.results_columns}>
@@ -297,7 +296,7 @@ export default function MainPage() {
                 </div>
             </section>
 
-            <section className={styles.languageSection}>
+            <section className={styles.languageSection} ref={languagePR}>
                 <h2 className={styles.title}>Выбери язык, который хочешь изучать</h2>
 
                 {/* Контейнер для языков (фиксированные размеры) */}
@@ -338,7 +337,7 @@ export default function MainPage() {
                 </div>
             </section>
 
-            <section className={styles.pricing}>
+            <section className={styles.pricing} ref={pricingRef}>
                 <section className={styles.pricing_section}>
                     <h2 className={styles.pricing_title}>Тарифы</h2>
                     <div className={styles.pricing_container}>
@@ -379,7 +378,7 @@ export default function MainPage() {
             </section>
 
             {/* Часто задаваемые вопросы */}
-            <section className={styles.faqSection}>
+            <section className={styles.faqSection} ref={faqRef}>
                 <h2>Часто задаваемые вопросы</h2>
                 {faqData.map((item, idx) => (
                     <div key={idx}>
@@ -398,13 +397,13 @@ export default function MainPage() {
             </section>
 
             {/* Отзывы наших учеников */}
-            <section className={styles.reviewSection}>
+            <section className={styles.reviewSection} ref={reviewsRef}>
                 <h2>Отзывы наших учеников</h2>
                 <div className={styles.reviewGrid}>
                     {reviews.map((review) => (
                         <div key={review.id} className={styles.reviewCard}>
-                            <div className="stars">⭐️ {Array(review.stars).fill("⭐").join("")}</div>
-                            <div className="user">
+                            <div className={styles.stars}>⭐️ {Array(review.stars).fill("⭐").join("")}</div>
+                            <div className={styles.user}>
                                 <img
                                     src="https://via.placeholder.com/30"
                                     alt="user"
@@ -415,13 +414,16 @@ export default function MainPage() {
                                     <small>{review.date}</small>
                                 </div>
                             </div>
-                            <div className="comment">{review.comment}</div>
+                            <div className={styles.comment}>{review.comment}</div>
                         </div>
                     ))}
                 </div>
+                <Link to="/reviews">
+                    <button className={styles.btnCom}>Больше отзывов</button>
+                </Link>
             </section>
 
-            <footer className={styles.footer}>
+            <footer className={styles.footer} ref={contactsRef}>
                 <div className={styles.footer_container}>
                     {/* Логотип и соцсети */}
                     <div className={styles.footer_column}>

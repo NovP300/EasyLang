@@ -32,7 +32,7 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Пароль"
       />
-      <button onClick={handleLogin}>Войти</button>
+      <button onClick={handleLogin}>Войтиfff</button>
     </div>
   );
 };

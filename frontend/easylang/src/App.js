@@ -9,7 +9,7 @@ import LessonPage from "./pages/LessonPage";
 import GamePage from "./pages/ExercisePage";
 import MainPage from "./pages/MainPage";
 import ProgressPage from "./pages/ProgressPage";
-
+import ReviewsPage from "./pages/ReviewsPage";
 import LoginModal from "./modals/LoginModal";
 import RegisterModal from "./modals/RegisterModal";
 
@@ -21,6 +21,7 @@ function App() {
     <>
       <Routes location={background || location}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/languages/:Name" element={<ProtectedRoute><CoursePage /></ProtectedRoute>} />
         <Route path="/lessons/:slug" element={<ProtectedRoute><LessonPage /></ProtectedRoute>} />
         <Route path="/lessons/:slug/exercises" element={<ProtectedRoute><GamePage /></ProtectedRoute>} />

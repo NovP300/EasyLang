@@ -1,0 +1,96 @@
+
+.modal_overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal_content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    position: relative;
+    font-family: sans-serif;
+}
+
+.modal_content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.modal_content input {
+    display: block;
+    width: 100%;
+    padding: 0.95rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+
+
+.modal_button{
+    display: block;
+    width: 100%;
+    background-color: #1c1c1c;
+    color: white;
+    font-size: 1rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal_button:hover {
+    background-color: #000;
+}
+
+.close_button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.2rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.close_button:hover{
+    background-color: #999999;
+    border-radius: 50px;
+}
+
+.forgot_password {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.forgot_password a {
+    color: #1c1c1c;
+    text-decoration: none;
+}
+
+.forgot_password a:hover {
+    text-decoration: underline;
+}

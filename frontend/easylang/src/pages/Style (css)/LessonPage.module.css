@@ -1,0 +1,105 @@
+/* Основной контейнер */
+.pageContainer {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 32px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Навигационные кнопки */
+  .navButtons {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .navButtons a,
+  .navButtons button {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    background-color: #f1f1f1;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+  }
+  
+  .navButtons a:hover,
+  .navButtons button:hover {
+    background-color: #e2e2e2;
+  }
+  
+  /* Заголовок */
+  .pageTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* Уровень сложности */
+  .difficulty {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+  }
+  
+  /* Блоки теории */
+  .block {
+    margin-bottom: 40px;
+    padding: 24px;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    background-color: #fafafa;
+  }
+  
+  .block h2,
+  .block h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  
+  .block p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  /* Словарь */
+  .vocabularyList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .vocabularyList li {
+    padding: 6px 0;
+  }
+  
+  /* Картинка */
+  .picture {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+  
+  /* Кнопка к упражнениям */
+  .exerciseLink {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  
+  .exerciseLink:hover {
+    background-color: #333;
+  }
+  

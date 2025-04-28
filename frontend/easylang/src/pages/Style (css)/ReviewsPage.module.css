@@ -1,0 +1,70 @@
+.container {
+    position: relative;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.closeButton {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 10;
+}
+  
+
+.title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.reviewCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.rating {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-weight: 600;
+}
+
+.date {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.comment {
+    font-weight: 500;
+}

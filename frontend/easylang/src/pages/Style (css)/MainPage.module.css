@@ -41,22 +41,24 @@
     display: flex;
     list-style: none;
     gap: 20px;
+    
 }
 
-.nav_links li a {
+.nav_links li button {
     text-decoration: none;
     color: rgb(0, 0, 0);
     font-size: 1rem;
     display: inline-block;
-    /* Фиксируем размер */
     padding: 5px 10px;
-    /* Отступы */
+    border: none;
     border-radius: 5px;
     transition: background 0.2s, color 0.2s;
+    background-color: rgb(255, 255, 255);
 }
 
-.nav_links li a:hover {
+.nav_links li button:hover {
     color: rgb(0, 0, 0);
+    
     background: rgb(230, 230, 230);
     /* Серый фон при наведении */
 }
@@ -818,6 +820,7 @@
     font-size: 18px;
     max-width: 700px;
     margin: 0 auto;
+    cursor: pointer;
 }
 .faqAnswer {
     max-width: 600px;
@@ -875,8 +878,22 @@
     color: #444;
 }
 
+.btnCom {
+    background: rgb(43, 43, 43);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 20px;
+    font-size: 18px;
+}
 
-
+.btnCom:hover{
+    background: rgb(74, 74, 74);
+}
 .footer {
     background-color: #f9f9f9;
     padding: 40px 20px;

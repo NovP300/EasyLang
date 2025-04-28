@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { register } from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import styles from "./styles/LoginModal.module.css";
 
 const RegisterModal = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,13 +22,18 @@ const RegisterModal = () => {
   };
 
   const handleRegister = async () => {
-    if (!email || !username || !password) {
+    if (!email || !username || !password || !repeatPassword) {
       alert("Пожалуйста, заполните все поля.");
       return;
     }
 
     if (password.length < 6) {
       alert("Пароль должен быть не короче 8 символов.");
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      alert("Пароли не совпадают.");
       return;
     }
 
@@ -54,27 +61,9 @@ const RegisterModal = () => {
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 1000,
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "2rem",
-          borderRadius: "8px",
-          minWidth: "300px",
-          maxWidth: "90%",
-        }}
-      >
-        <button onClick={handleClose} style={{ float: "right" }}>X</button>
+    <div className={styles.modal_overlay}>
+      <div className={styles.modal_content}>
+        <button className={styles.close_button} onClick={handleClose}>X</button>
         <h2>Регистрация</h2>
         <input
           type="text"
@@ -94,7 +83,13 @@ const RegisterModal = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Пароль"
         />
-        <button onClick={handleRegister}>Зарегистрироваться</button>
+        <input
+          type="password"
+          placeholder="Повторите пароль"
+          value={repeatPassword}
+          onChange={(e) => setRepeatPassword(e.target.value)}
+        />
+        <button className={styles.modal_button} onClick={handleRegister}>Зарегистрироваться</button>
       </div>
     </div>
   );
