@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getLessonBySlug } from "../api/lessons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from './Style (css)/LessonPage.module.css';
 
 const MEDIA_URL = "http://localhost:80/media/";
@@ -54,6 +54,8 @@ export default function LessonPage() {
   const { slug } = useParams();
   const [lesson, setLesson] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchLesson = async () => {
@@ -79,10 +81,8 @@ export default function LessonPage() {
       {languageName && (
         <div className={styles.navButtons}>
           <Link to={`/languages/${languageName}`}>Курс</Link>
-          <button disabled>Прогресс</button>
-          <button onClick={() => alert("Оставить отзыв - модалка появится позже")}>
-            Оставить отзыв
-          </button>
+          <Link to={`/progress`} state={{ languageId }}>Прогресс</Link>
+          <Link to="/review" state={{ background: location, languageId }}>Оставить отзыв</Link>
         </div>
       )}
 

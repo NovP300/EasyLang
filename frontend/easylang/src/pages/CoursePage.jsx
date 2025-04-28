@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getModulesByLanguage } from "../api/modules";
 import { getLanguage } from "../api/languages"; 
 import ModuleItem from "../components/ModuleItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 
 // Словарь, связывающий имя языка с его ID
@@ -21,6 +21,8 @@ export default function CoursePage() {
 
   const { Name } = useParams();
   const languageId = languageMapping[Name.toLowerCase()];
+  const navigate = useNavigate();
+  const location = useLocation();
 
 
   const [modules, setModules] = useState([]);
@@ -64,11 +66,9 @@ export default function CoursePage() {
 
       {languageName && (
                 <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-                  <Link to={`/languages/${languageName}`}>Курс</Link>
+                  <Link to={`/languages/${Name}`}>Курс</Link>
                   <Link to={`/progress`} state={{ languageId }}>Прогресс</Link>
-                  <button onClick={() => alert("Оставить отзыв - модалка появится позже")}>
-                    Оставить отзыв
-                  </button>
+                  <Link to="/review" state={{ background: location, languageId }}>Оставить отзыв</Link>
                 </div>
       )}
 

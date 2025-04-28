@@ -12,6 +12,7 @@ import ProgressPage from "./pages/ProgressPage";
 import ReviewsPage from "./pages/ReviewsPage";
 import LoginModal from "./modals/LoginModal";
 import RegisterModal from "./modals/RegisterModal";
+import ReviewModal from "./modals/ReviewModal";
 
 function App() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginModal />} />
           <Route path="/register" element={<RegisterModal />} />
+          <Route path="/review" element={<ReviewModal />} />
         </Routes>
       )}
 
