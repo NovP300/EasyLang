@@ -15,6 +15,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.viewsets import ModelViewSet
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 # Регистрация пользователя
 class RegisterView(generics.CreateAPIView):
@@ -44,6 +46,12 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         user = request.user  # request.user уже доступен после проверки токена
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
 
 
 class TokenRefreshView(APIView):
@@ -172,5 +180,20 @@ class ReviewViewSet(ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticated]
 
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['language', 'user']
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+class MyReviewByLanguageView(generics.GenericAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, language_id):
+        try:
+            review = Review.objects.get(user=request.user, language_id=language_id)
+            serializer = self.get_serializer(review)
+            return Response(serializer.data)
+        except Review.DoesNotExist:
+            return Response({"detail": "Review not found."}, status=404)

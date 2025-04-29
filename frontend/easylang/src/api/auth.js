@@ -18,17 +18,22 @@ export const logout = () => {
 // Функция для обновления access-токена
 export const refreshToken = async () => {
   const refresh_token = localStorage.getItem("refresh_token");
-  if (!refresh_token) return null;
+  if (!refresh_token) {
+    console.log("Нет refresh токена");
+    return null;
+  }
 
   try {
     const response = await axiosInstance.post(`${API_URL}/token/refresh/`, {
       refresh: refresh_token,
     });
+    console.log("Новый access_token:", response.data.access);
     localStorage.setItem("access_token", response.data.access);
     return response.data.access;
   } catch (error) {
     console.error("Ошибка обновления токена", error);
     logout();
+    return null;
   }
 };
 

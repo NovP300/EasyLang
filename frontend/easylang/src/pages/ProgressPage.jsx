@@ -58,13 +58,9 @@ export default function ProgressPage() {
     <div className="p-4">
 
       <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-      <Link to={`/languages/${Object.keys(languageMapping).find(key => languageMapping[key] === languageId) || ''}`}>
-        Курс
-      </Link>
-        <Link to={`/progress`}>Прогресс</Link>
-        <button onClick={() => alert("Оставить отзыв - модалка появится позже")}>
-          Оставить отзыв
-        </button>
+        <Link to={`/languages/${Object.keys(languageMapping).find(key => languageMapping[key] === languageId) || ''}`}>Курс</Link>
+          <Link to={`#`}>Прогресс</Link>
+          <Link to="/review" state={{ background: location, languageId }}>Оставить отзыв</Link>
       </div>
 
 

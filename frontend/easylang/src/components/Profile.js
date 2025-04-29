@@ -19,7 +19,7 @@ const Profile = () => {
     const fetchUser = async () => {
       const data = await getProfile();
       if (!data) {
-        navigate("/login"); // Если данные не получены, перенаправляем на логин
+        navigate("/"); // Если данные не получены, перенаправляем на логин
       } else {
         setUser(data);
       }

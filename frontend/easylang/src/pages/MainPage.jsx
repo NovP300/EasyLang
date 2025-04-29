@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Style (css)/MainPage.module.css";
 import img1 from "./pictures/france.png";
 import img2 from "./pictures/nemec.png";
@@ -7,9 +7,13 @@ import img3 from "./pictures/spanish.png";
 import img4 from "./pictures/USA.png";
 import { FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
 import { FaMedal } from "react-icons/fa";
+import { getAllReviews } from "../api/review";
+import { getUserById } from "../api/profile";
+import { FaStar } from "react-icons/fa";
 
 const languages = [
     {
+        id: 1,
         name: "Английский",
         img: img2,
         description:
@@ -17,6 +21,7 @@ const languages = [
         link: "english"
     },
     {
+        id: 2,
         name: "Немецкий",
         img: img3,
         description:
@@ -24,6 +29,7 @@ const languages = [
         link: "german"
     },
     {
+        id: 3,
         name: "Французский",
         img: img1,
         description:
@@ -31,6 +37,7 @@ const languages = [
         link: "french"
     },
     {
+        id: 4,
         name: "Испанский",
         img: img4,
         description:
@@ -67,12 +74,7 @@ const faqData = [
     },
 ];
 
-const reviews = [
-    { id: 1, user: "Имя пользователя", date: "Дата отзыва", stars: 3, comment: "Комментарий" },
-    { id: 2, user: "Имя пользователя", date: "Дата отзыва", stars: 4, comment: "Комментарий" },
-    { id: 3, user: "Имя пользователя", date: "Дата отзыва", stars: 3, comment: "Комментарий" },
-    { id: 4, user: "Имя пользователя", date: "Дата отзыва", stars: 2, comment: "Комментарий" },
-];
+
 export default function MainPage() {
     const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
@@ -143,6 +145,43 @@ export default function MainPage() {
 
     const isAuthenticated = Boolean(localStorage.getItem("access_token"));
 
+    const [reviews, setReviews] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState({});
+
+    useEffect(() => {
+        const fetchReviewsAndUsers = async () => {
+          try {
+            // Загружаем отзывы
+            const reviewsData = await getAllReviews();
+            console.log("Загруженные отзывы:", reviewsData);  // Отладка
+            setReviews(reviewsData.slice(0, 3)); // Например, 3 последних отзыва
+      
+            // Загружаем данные о пользователях
+            const usersData = {};
+            for (let review of reviewsData) {
+              console.log(`Загружаем профиль для пользователя с ID: ${review.user}`);  // Отладка, какой user загружается
+              // Теперь мы должны загрузить профиль по ID, используя API
+              const user = await getUserById(review.user);  // Функция для получения пользователя по его ID
+              console.log("Полученный профиль пользователя:", user);  // Отладка
+      
+              if (user) {
+                usersData[review.user] = user;  // Сохраняем информацию о пользователе
+              }
+            }
+            setUsers(usersData); // Обновляем состояние с пользователями
+          } catch (error) {
+            console.error("Ошибка при загрузке отзывов или пользователей", error);
+          } finally {
+            setLoading(false);
+          }
+        };
+      
+        fetchReviewsAndUsers();
+      }, []);
+    
+
+
     return (
         <div className={styles.home}>
             <header className={styles.header}>
@@ -180,6 +219,9 @@ export default function MainPage() {
                     
 
                     {/* Кнопки входа и регистрации */}
+                 
+  
+              
                     <div>
   
                         {!isAuthenticated ? (
@@ -200,6 +242,7 @@ export default function MainPage() {
                         </div>
                         )}
                     </div>
+                        
                 </nav>
             </header>
 
@@ -423,25 +466,47 @@ export default function MainPage() {
             {/* Отзывы наших учеников */}
             <section className={styles.reviewSection} ref={reviewsRef}>
                 <h2>Отзывы наших учеников</h2>
-                <div className={styles.reviewGrid}>
-                    {reviews.map((review) => (
-                        <div key={review.id} className={styles.reviewCard}>
-                            <div className={styles.stars}>⭐️ {Array(review.stars).fill("⭐").join("")}</div>
-                            <div className={styles.user}>
-                                <img
-                                    src="https://via.placeholder.com/30"
-                                    alt="user"
-                                    style={{ borderRadius: "50%" }}
-                                />
-                                <div>
-                                    {review.user} <br />
-                                    <small>{review.date}</small>
+
+                {loading ? (
+                    <div>Загрузка...</div> // Заменяем на блок с текстом "Загрузка"
+                ) : (
+                    <div className={styles.reviewGrid}>
+                        {reviews.map((review) => {
+                            // Ищем язык по id
+                            const language = languages.find(lang => lang.id === review.language);
+                            return (
+                                <div key={review.id} className={styles.reviewCard}>
+                                    <div className={styles.rating}>
+                                    {[...Array(5)].map((_, index) => (
+                                        <FaStar
+                                            key={index}
+                                            color={index < parseFloat(review.estimation) ? "#facc15" : "#d1d5db"}
+                                        />
+                                    ))}
+                                     </div>
+
+                                    <div className={styles.user}>
+                                        {/* Проверяем, если пользователь есть в state */}
+                                        {users[review.user] && (
+                                            <>
+                                                <div>
+                                                    {users[review.user].username} <br />
+                                                    <small>{new Date(review.date).toLocaleDateString()}</small> {/* Форматируем дату */}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    <div className={styles.comment}>{review.response}</div>
+
+                                    {/* Отображаем название языка */}
+                                    {language && <div className={styles.language}>Курс: {language.name}</div>}
                                 </div>
-                            </div>
-                            <div className={styles.comment}>{review.comment}</div>
-                        </div>
-                    ))}
-                </div>
+                            );
+                        })}
+                    </div>
+                )}
+
                 <Link to="/reviews">
                     <button className={styles.btnCom}>Больше отзывов</button>
                 </Link>

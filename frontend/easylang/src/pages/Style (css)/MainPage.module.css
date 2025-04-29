@@ -831,8 +831,7 @@
     line-height: 1.5;
   }
   
-
-.reviewSection {
+  .reviewSection {
     padding: 40px 20px;
     background-color: #f2edf7;
     text-align: center;
@@ -849,6 +848,7 @@
     gap: 20px;
     max-width: 1000px;
     margin: 0 auto;
+    padding: 0 10px;
 }
 
 .reviewCard {
@@ -857,10 +857,21 @@
     padding: 20px;
     text-align: left;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.reviewCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .reviewCard .stars {
     margin-bottom: 8px;
+    font-size: 20px;
 }
 
 .reviewCard .user {
@@ -876,6 +887,7 @@
 .reviewCard .comment {
     font-size: 14px;
     color: #444;
+    margin-top: 12px;
 }
 
 .btnCom {
@@ -891,7 +903,7 @@
     font-size: 18px;
 }
 
-.btnCom:hover{
+.btnCom:hover {
     background: rgb(74, 74, 74);
 }
 .footer {
