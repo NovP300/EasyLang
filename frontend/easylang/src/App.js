@@ -13,6 +13,7 @@ import ReviewsPage from "./pages/ReviewsPage";
 import LoginModal from "./modals/LoginModal";
 import RegisterModal from "./modals/RegisterModal";
 import ReviewModal from "./modals/ReviewModal";
+import Layout from "./components/Layout";
 
 function App() {
   const location = useLocation();
@@ -21,23 +22,17 @@ function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/reviews" element={<ReviewsPage />} />
-        <Route path="/languages/:Name" element={<ProtectedRoute><CoursePage /></ProtectedRoute>} />
-        <Route path="/lessons/:slug" element={<ProtectedRoute><LessonPage /></ProtectedRoute>} />
-        <Route path="/lessons/:slug/exercises" element={<ProtectedRoute><GamePage /></ProtectedRoute>} />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route path="/progress" element={<ProtectedRoute><ProgressPage/></ProtectedRoute>} />
-
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path="reviews" element={<ReviewsPage />} />
+          <Route path="languages/:Name" element={<ProtectedRoute><CoursePage /></ProtectedRoute>} />
+          <Route path="lessons/:slug" element={<ProtectedRoute><LessonPage /></ProtectedRoute>} />
+          <Route path="lessons/:slug/exercises" element={<ProtectedRoute><GamePage /></ProtectedRoute>} />
+          <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="progress" element={<ProtectedRoute><ProgressPage /></ProtectedRoute>} />
+        </Route>
       </Routes>
+
 
       {/* Модалки поверх background */}
       {background && (

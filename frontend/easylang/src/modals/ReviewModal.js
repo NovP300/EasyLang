@@ -17,7 +17,7 @@ export default function ReviewModal() {
 
   // Функция для закрытия модалки
   const handleClose = () => {
-    navigate(background.pathname);
+    navigate(background.pathname, { state: { languageId } });
   };
 
   // Функция для отправки отзыва

@@ -1,15 +1,14 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Style (css)/MainPage.module.css";
 import img1 from "./pictures/france.png";
 import img2 from "./pictures/nemec.png";
 import img3 from "./pictures/spanish.png";
 import img4 from "./pictures/USA.png";
-import { FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
-import { FaMedal } from "react-icons/fa";
 import { getAllReviews } from "../api/review";
 import { getUserById, logout } from "../api/profile";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaMedal } from "react-icons/fa";
+
 
 const languages = [
     {
@@ -77,10 +76,8 @@ const faqData = [
 
 export default function MainPage() {
     const location = useLocation();
-    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [openIndex, setOpenIndex] = useState(null);
-    const toggleMenu = () => { setMenuOpen(!menuOpen); };
 
     const aboutRef = useRef(null);
     const pricingRef = useRef(null);
@@ -94,6 +91,26 @@ export default function MainPage() {
         setMenuOpen(false); // Закрываем бургер-меню при переходе
         ref.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    const { setHeaderProps } = useOutletContext();
+
+    useEffect(() => {
+        setHeaderProps({
+            scrollToSection,
+            aboutRef,
+            pricingRef,
+            languagePR,
+            faqRef,
+            reviewsRef,
+            contactsRef,
+        });
+
+        // Опционально: очищаем после ухода со страницы
+        return () => {
+            setHeaderProps({});
+        };
+    }, []);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
 
@@ -144,11 +161,6 @@ export default function MainPage() {
             alert('Заявка отправлена!');
         }
     };
-  const handleLogout = () => {
-    logout(); // Удаляем токен при выходе
-    navigate("/"); // Перенаправляем на страницу логина
-  };
-    const isAuthenticated = Boolean(localStorage.getItem("access_token"));
 
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -185,108 +197,8 @@ export default function MainPage() {
         fetchReviewsAndUsers();
     }, []);
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
-                setMenuOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
     return (
         <div className={styles.home}>
-            <header className={styles.header}>
-                <nav className={styles.nav}>
-                    {/* Логотип */}
-                    <div className={styles.logo}>EasyLang</div>
-
-                    {/* Иконка бургера */}
-                    <div className={styles.menu_icon} onClick={toggleMenu}>
-                        <div className={styles.bar}></div>
-                        <div className={styles.bar}></div>
-                        <div className={styles.bar}></div>
-                    </div>
-                    <ul className={`${styles.nav_links} ${menuOpen ? styles.nav_active : ""}`}>
-                        <li>
-                            <button onClick={() => scrollToSection(aboutRef)}>О нас</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(languagePR)}>Каталог языков</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(pricingRef)}>Тарифы</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(faqRef)}>Вопросы</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(reviewsRef)}>Отзывы</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(contactsRef)}>Контакты</button>
-                        </li>
-                    </ul>
-
-                    {/* Кнопки входа и регистрации */}
-
-                    <div>
-
-                        {!isAuthenticated ? (
-                            <div className={styles.auth_buttons}>
-                                <Link to="/login" state={{ background: location }}>
-                                    <button className={styles.login_btn}>Войти</button>
-                                </Link>
-                                <Link to="/register" state={{ background: location }}>
-                                    <button className={styles.signup_btn}>Зарегистрироваться</button>
-                                </Link>
-                            </div>
-                        ) : (
-                            <div className={styles.auth_buttons}>
-                                <div className={styles.profile_wrapper} ref={profileMenuRef}>
-                                    <button
-                                        className={`${styles.profile_btn} ${menuOpen ? styles.profile_btn_active : ''}`}
-                                        onClick={() => setMenuOpen((prev) => !prev)}
-                                    >
-                                        Профиль
-                                    </button>
-
-                                    <div className={`${styles.dropdown_menu} ${menuOpen ? styles.dropdown_open : ''}`}>
-                                        <hr className={styles.divider} />
-                                        <button
-                                            className={styles.dropdown_item}
-                                            onClick={() => {
-                                                setMenuOpen(false);
-                                                navigate("/profile");
-                                            }}
-                                        >
-                                            Мой профиль
-                                        </button>
-                                        <button
-                                            className={styles.dropdown_item}
-                                            onClick={() => {
-                                                setMenuOpen(false);
-                                                navigate("/courses");
-                                            }}
-                                        >
-                                            Мои курсы
-                                        </button>
-                                        <button className={styles.dropdown_item}
-                                            onClick={handleLogout}>
-                                            Выйти
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        )}
-                    </div>
-
-                </nav>
-            </header>
 
             {/* EasyLang — учите языки в своем ритме! */}
             <section className={styles.hero_section}>
@@ -553,59 +465,6 @@ export default function MainPage() {
                     <button className={styles.btnCom}>Больше отзывов</button>
                 </Link>
             </section>
-
-            <footer className={styles.footer} ref={contactsRef}>
-                <div className={styles.footer_container}>
-                    {/* Логотип и соцсети */}
-                    <div className={styles.footer_column}>
-                        <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                            <FaTwitter />
-                            <FaInstagram />
-                            <FaYoutube />
-                            <FaLinkedin />
-                        </div>
-                    </div>
-
-                    <div className={styles.footer_column}>
-                        <h4>Сценарии использования</h4>
-                        <ul>
-                            <li>UI-дизайн</li>
-                            <li>UX-дизайн</li>
-                            <li>Вайрфрейминг</li>
-                            <li>Диаграммы</li>
-                            <li>Мозговой штурм</li>
-                            <li>Онлайн-доска</li>
-                            <li>Командная работа</li>
-                        </ul>
-                    </div>
-
-                    <div className={styles.footer_column}>
-                        <h4>Исследовать</h4>
-                        <ul>
-                            <li>Дизайн</li>
-                            <li>Прототипирование</li>
-                            <li>Функции для разработки</li>
-                            <li>Дизайн-системы</li>
-                            <li>Совместная работа</li>
-                            <li>Процесс дизайна</li>
-                            <li>FigJam</li>
-                        </ul>
-                    </div>
-
-                    <div className={styles.footer_column}>
-                        <h4>Ресурсы</h4>
-                        <ul>
-                            <li>Блог</li>
-                            <li>Лучшие практики</li>
-                            <li>Цвета</li>
-                            <li>Цветовой круг</li>
-                            <li>Поддержка</li>
-                            <li>Разработчики</li>
-                            <li>Библиотека ресурсов</li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
 
         </div>
     );

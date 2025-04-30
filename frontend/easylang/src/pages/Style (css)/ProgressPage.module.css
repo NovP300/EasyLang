@@ -4,6 +4,37 @@
     max-width: 1000px;
     margin: 0 auto;
 }
+.tabNavigation {
+    display: flex;
+    justify-content: left;
+    gap: 16px;
+    background-color: #f4e9fd; /* светло-фиолетовый фон */
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .tabLink {
+    background-color: white;
+    color: #5e4b8b;
+    padding: 10px 18px;
+    border-radius: 5px; /* pills */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+  
+  .tabLink:hover {
+    background-color: rgba(231, 188, 251, 0.46);
+    color: black;
+  }
+  
+  .activeTab {
+    background-color: rgba(231, 188, 251, 0.46);
+    color: black;
+  }
 
 /* Навигация сверху */
 .progress_navigation {

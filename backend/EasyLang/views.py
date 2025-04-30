@@ -175,6 +175,41 @@ class ProgressOverviewView(APIView):
             "total_modules": total_modules,
         })
 
+class DetailedProgressView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+
+        # Все завершенные уроки пользователя
+        completed_lessons = LessonProgress.objects.filter(user=user).values_list("lesson_id", flat=True)
+        completed_lessons_set = set(completed_lessons)
+
+        modules_data = []
+
+        for module in Module.objects.prefetch_related("lessons"):
+            lesson_ids = list(module.lessons.values_list("id", flat=True))
+            total = len(lesson_ids)
+            completed = sum(1 for lid in lesson_ids if lid in completed_lessons_set)
+
+            modules_data.append({
+                "id": module.id,
+                "title": module.title,
+                "completed_lessons": completed,
+                "total_lessons": total,
+                "is_completed": completed == total and total > 0,
+            })
+
+        return Response({
+            "completed_lesson_ids": list(completed_lessons_set),
+            "modules": modules_data
+        })
+
+
+
+
+
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer

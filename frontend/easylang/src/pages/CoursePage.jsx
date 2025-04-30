@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getModulesByLanguage } from "../api/modules";
-import { getLanguage } from "../api/languages"; 
+import { getLanguage } from "../api/languages";
+import { useNavigate, useLocation } from "react-router-dom";
 import ModuleItem from "../components/ModuleItem";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-
+import useProgress from "../api/useProgress";
+import { Link } from "react-router-dom";
+import styles from "./Style (css)/CoursePage.module.css";
 
 // Словарь, связывающий имя языка с его ID
 const languageMapping = {
@@ -14,25 +16,20 @@ const languageMapping = {
   spanish: 4,
 };
 
-
-
-
 export default function CoursePage() {
-
   const { Name } = useParams();
   const languageId = languageMapping[Name.toLowerCase()];
   const navigate = useNavigate();
   const location = useLocation();
 
-
+  // Состояния для модулей, описания языка, прогресса и загрузки
   const [modules, setModules] = useState([]);
   const [languageDescription, setLanguageDescription] = useState("");
-  const [languageName, setLanguageName] = useState(""); // Добавляем состояние для имени курса
+  const [languageName, setLanguageName] = useState(""); // Для имени курса
+  const { UseProgress, loading } = useProgress(); // Получаем прогресс
 
+  // Загружаем модули и описание языка
   useEffect(() => {
-
-
-
     const fetchModules = async () => {
       try {
         const data = await getModulesByLanguage(languageId);
@@ -44,13 +41,9 @@ export default function CoursePage() {
 
     const fetchLanguageDetails = async () => {
       try {
-
-        const languageData = await getLanguage(languageId); // Получаем данные о языке
-        
-        setLanguageDescription(languageData.description);  // Получаем описание курса
-        
-
-        setLanguageName(languageData.name); // Получаем название курса
+        const languageData = await getLanguage(languageId);
+        setLanguageDescription(languageData.description); // Описание курса
+        setLanguageName(languageData.name); // Название курса
       } catch (error) {
         console.error("Error fetching language details:", error);
       }
@@ -58,25 +51,53 @@ export default function CoursePage() {
 
     fetchModules();
     fetchLanguageDetails();
-  }, [Name]);
+  }, [Name, languageId]);
+
+  if (loading) return <div>Загрузка курса...</div>;
 
   return (
-    
-    <div className="p-4">
-
+    <div className={styles.courseContainer}>
       {languageName && (
-                <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-                  <Link to={`/languages/${Name}`}>Курс</Link>
-                  <Link to={`/progress`} state={{ languageId }}>Прогресс</Link>
-                  <Link to="/review" state={{ background: location, languageId }}>Оставить отзыв</Link>
-                </div>
+        <div className={styles.tabNavigation}>
+          <Link to={`/languages/${Name}`} className={`${styles.tabLink} ${location.pathname.includes("/languages") ? styles.activeTab : ""}`}>Курс</Link>
+          <Link to={`/progress?languageId=${languageId}`} className={styles.tabLink}>Прогресс</Link>
+          <Link to="/review" state={{ background: location, languageId }} className={styles.tabLink}>
+            Оставить отзыв
+          </Link>
+        </div>
       )}
 
-      <h1 className="text-2xl font-bold mb-4">Курc: {languageName}</h1>
-      <div>{languageDescription}</div>
-      {modules.map((mod) => (
-        <ModuleItem key={mod.id} module={mod} />
-      ))}
+      <div className={styles.courseBox}>
+        <h1 className={styles.courseTitle}>{languageName}</h1>
+        <p className={styles.courseText}>Вы начали курс "{languageName}"!</p>
+        <p className={styles.courseDescription}>{languageDescription}</p>
+        <p className={styles.courseNote}>
+          Учитесь в удобном для вас темпе, закрепляйте знания с помощью практических упражнений и достигайте своих целей!
+        </p>
+
+        <div className={styles.testContainer}>
+          <p className={styles.testText}>
+            Сомневаешься в своём уровне и не знаешь с чего начать?
+          </p>
+          <button className={styles.testButton}>Пройти тест</button>
+        </div>
+      </div>
+
+      <h2 className={styles.modulesTitle}>Список модулей</h2>
+      {/* Выводим модули с прогрессом */}
+      {modules.map((mod, index) => {
+        const isLocked = index > 0 && !UseProgress.modules[index - 1]?.is_completed;
+
+        return (
+          <ModuleItem
+            key={mod.id}
+            module={mod}
+            isLocked={isLocked} // Применяем статус заблокирован/разблокирован
+            completedLessonIds={UseProgress.completed_lesson_ids} // Передаем завершенные уроки
+            moduleClass={isLocked ? styles.lockedModule : styles.unlockedModule} // Применяем классы для модуля
+          />
+        );
+      })}
     </div>
   );
 }
