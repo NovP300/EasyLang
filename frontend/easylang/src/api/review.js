@@ -39,12 +39,9 @@ export const createReview = async (languageId, responseText, estimation) => {
 };
 
 // Обновить отзыв
-export const updateReview = async (id, responseText, estimation) => {
+export const updateReview = async (id, data) => {
   try {
-    const response = await axiosInstance.patch(`${API_URL}/reviews/${id}/`, {
-      response: responseText,
-      estimation: estimation,
-    });
+    const response = await axiosInstance.patch(`${API_URL}/reviews/${id}/`, data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -52,4 +49,17 @@ export const updateReview = async (id, responseText, estimation) => {
   }
 };
 
+
+export const getReviewByUserAndLanguage = async (languageId) => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/reviews/my/${languageId}/`, {
+      params: { language: languageId },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response?.status === 404) return null;
+    console.error(error);
+    throw new Error("Ошибка при загрузке отзыва пользователя");
+  }
+};
 

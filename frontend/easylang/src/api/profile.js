@@ -25,6 +25,17 @@ export const getProfile = async () => {
   }
 };
 
+
+export const getUserById = async (userId) => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/users/${userId}/`); // Используем новый эндпоинт
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при получении пользователя:", error);
+    return null;
+  }
+};
+
 // Функция для выхода пользователя
 export function logout() {
   localStorage.removeItem("access_token");  // Используем access_token

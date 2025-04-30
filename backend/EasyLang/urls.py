@@ -4,7 +4,8 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     RegisterView, ProfileView,
     LanguageViewSet, ModuleViewSet,
-    LessonViewSet, ExerciseViewSet, LessonViewSet, LessonProgressView, ProgressOverviewView, ReviewViewSet
+    LessonViewSet, ExerciseViewSet, LessonViewSet, LessonProgressView, ProgressOverviewView, ReviewViewSet, MyReviewByLanguageView,
+    UserDetailView,
 )
 
 
@@ -41,5 +42,9 @@ urlpatterns = [
 
     path("progress/", LessonProgressView.as_view(), name="lesson-progress"),
     path("progress/overview/", ProgressOverviewView.as_view(), name="progress-overview"),
+
+
+    path('reviews/my/<int:language_id>/', MyReviewByLanguageView.as_view()),
+    path('users/<int:id>/', UserDetailView.as_view(), name='user_detail'),
 ]
 

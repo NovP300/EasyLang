@@ -51,15 +51,14 @@ export default function ProgressPage() {
   if (!progress) return <p>Загрузка...</p>;
 
   return (
+
     <div className={styles.progress_page}>
       <div className={styles.progress_navigation}>
         <Link to={`/languages/${Object.keys(languageMapping).find(key => languageMapping[key] === languageId) || ''}`}>
           Курс
         </Link>
         <Link to={`/progress`}>Прогресс</Link>
-        <button onClick={() => alert("Оставить отзыв - модалка появится позже")}>
-          Оставить отзыв
-        </button>
+        <Link to="/review" state={{ background: location, languageId }}>Оставить отзыв</Link>
       </div>
 
       <div className={styles.progress_wrapper}>
