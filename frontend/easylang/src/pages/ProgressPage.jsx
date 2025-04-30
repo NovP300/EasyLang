@@ -9,6 +9,7 @@ import styles from "./Style (css)/ProgressPage.module.css";
 import img from "./pictures/girl.png";
 import { FaCheck, FaClone, FaBookOpen } from "react-icons/fa";
 import { SlFlag } from "react-icons/sl";
+import useProgress from "../api/useProgress"; 
 
 const languageMapping = {
   english: 1,
@@ -21,7 +22,12 @@ export default function ProgressPage() {
   const [progress, setProgress] = useState(null);
   const [modules, setModules] = useState([]);
   const location = useLocation();
-  const { languageId } = location.state || {};
+  const languageId = new URLSearchParams(location.search).get('languageId') || location.state?.languageId || 'defaultLanguageId';
+  const languageName = Object.keys(languageMapping).find(key => languageMapping[key] === Number(languageId));
+
+
+    // Состояния для модулей, описания языка, прогресса и загрузки
+  const { UseProgress, loading } = useProgress(); // Получаем прогресс
 
   useEffect(() => {
     const fetchProgress = async () => {
@@ -48,17 +54,22 @@ export default function ProgressPage() {
     fetchProgress();
   }, []);
 
+
   if (!progress) return <p>Загрузка...</p>;
+  if (loading) return <div>Загрузка прогресса...</div>;
+  console.log(`languageId in link: ${languageId}`);
+  console.log(location.search);
+  console.log(languageName);
 
   return (
-
+    
     <div className={styles.progress_page}>
       <div className={styles.progress_navigation}>
-        <Link to={`/languages/${Object.keys(languageMapping).find(key => languageMapping[key] === languageId) || ''}`}>
-          Курс
+      <Link to={`/languages/${languageName}`}>Курс</Link>
+        <Link to={`/progress?languageId=${languageId}`}>Прогресс</Link>
+        <Link to={`/review`} state={{ background: location, languageId }}>
+          Оставить отзыв
         </Link>
-        <Link to={`/progress`}>Прогресс</Link>
-        <Link to="/review" state={{ background: location, languageId }}>Оставить отзыв</Link>
       </div>
 
       <div className={styles.progress_wrapper}>
@@ -107,9 +118,19 @@ export default function ProgressPage() {
       </div>
       <h2 className={styles.modules_title}>Список модулей</h2>
 
-      {modules.map((mod) => (
-        <ModuleItem key={mod.id} module={mod} />
-      ))}
+      {modules.map((mod, index) => {
+        const isLocked = index > 0 && !UseProgress.modules[index - 1]?.is_completed;
+        
+        return (
+          <ModuleItem
+            key={mod.id}
+            module={mod}
+            isLocked={isLocked} // Применяем статус заблокирован/разблокирован
+            completedLessonIds={UseProgress.completed_lesson_ids} // Передаем завершенные уроки
+            moduleClass={isLocked ? styles.lockedModule : styles.unlockedModule} // Применяем классы для модуля
+          />
+        );
+      })}
     </div>
   );
 }

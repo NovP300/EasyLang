@@ -5,7 +5,7 @@ from .views import (
     RegisterView, ProfileView,
     LanguageViewSet, ModuleViewSet,
     LessonViewSet, ExerciseViewSet, LessonViewSet, LessonProgressView, ProgressOverviewView, ReviewViewSet, MyReviewByLanguageView,
-    UserDetailView,
+    UserDetailView, DetailedProgressView,
 )
 
 
@@ -42,6 +42,7 @@ urlpatterns = [
 
     path("progress/", LessonProgressView.as_view(), name="lesson-progress"),
     path("progress/overview/", ProgressOverviewView.as_view(), name="progress-overview"),
+    path('progress/detailed/', DetailedProgressView.as_view(), name='detailed-progress'),
 
 
     path('reviews/my/<int:language_id>/', MyReviewByLanguageView.as_view()),

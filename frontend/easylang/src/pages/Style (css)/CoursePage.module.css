@@ -1,0 +1,16 @@
+.lockedModule {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  .unlockedModule {
+    opacity: 1;
+  }
+  
+  .lockedTitle {
+    color: #aaa; /* Серый цвет для заблокированных */
+  }
+  
+  .unlockedTitle {
+    color: #333; /* Темный цвет для доступных */
+  }
