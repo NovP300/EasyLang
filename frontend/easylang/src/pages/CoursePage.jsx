@@ -28,6 +28,9 @@ export default function CoursePage() {
   const [languageName, setLanguageName] = useState(""); // Для имени курса
   const { UseProgress, loading } = useProgress(); // Получаем прогресс
 
+  const filteredModules = modules.filter(mod => mod.title !== 'Test');
+  const filteredProgressModules = UseProgress.modules.filter(mod => mod.title !== 'Test');
+
   // Загружаем модули и описание языка
   useEffect(() => {
     const fetchModules = async () => {
@@ -71,16 +74,18 @@ export default function CoursePage() {
       <div>{languageDescription}</div>
 
       {/* Выводим модули с прогрессом */}
-      {modules.map((mod, index) => {
-        const isLocked = index > 0 && !UseProgress.modules[index - 1]?.is_completed;
-        
+      {filteredModules.map((mod, index) => {
+        const prevModule = filteredModules[index - 1];
+        const prevProgress = filteredProgressModules.find((m) => m.id === prevModule?.id);
+        const isLocked = index > 0 && !prevProgress?.is_completed;
+
         return (
           <ModuleItem
             key={mod.id}
             module={mod}
-            isLocked={isLocked} // Применяем статус заблокирован/разблокирован
-            completedLessonIds={UseProgress.completed_lesson_ids} // Передаем завершенные уроки
-            moduleClass={isLocked ? styles.lockedModule : styles.unlockedModule} // Применяем классы для модуля
+            isLocked={isLocked}
+            completedLessonIds={UseProgress.completed_lesson_ids}
+            moduleClass={isLocked ? styles.lockedModule : styles.unlockedModule}
           />
         );
       })}

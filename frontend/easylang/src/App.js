@@ -13,6 +13,7 @@ import ReviewsPage from "./pages/ReviewsPage";
 import LoginModal from "./modals/LoginModal";
 import RegisterModal from "./modals/RegisterModal";
 import ReviewModal from "./modals/ReviewModal";
+import TestPage from "./pages/TestPage";
 
 function App() {
   const location = useLocation();
@@ -36,6 +37,7 @@ function App() {
         />
 
         <Route path="/progress" element={<ProtectedRoute><ProgressPage/></ProtectedRoute>} />
+        <Route path="/test" element={<TestPage />} />
 
       </Routes>
 

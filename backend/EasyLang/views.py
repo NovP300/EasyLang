@@ -153,17 +153,22 @@ class ProgressOverviewView(APIView):
 
         completed_lesson_ids = set(user_progress.values_list("lesson_id", flat=True))
 
-        # Всего
-        total_lessons = all_lessons.count()
-        completed_lessons = len(completed_lesson_ids)
+        # Исключаем тестовый модуль
+        all_modules = Module.objects.exclude(title__iexact="Test").prefetch_related("lessons")
+
+        # Считаем уроки только из обычных модулей
+        lesson_ids_in_modules = set()
+        for module in all_modules:
+            lesson_ids_in_modules.update(module.lessons.values_list("id", flat=True))
+
+        total_lessons = len(lesson_ids_in_modules)
+        completed_lessons = len([lid for lid in lesson_ids_in_modules if lid in completed_lesson_ids])
 
         # Считаем модули, где все уроки пройдены
         completed_modules = 0
-        all_modules = Module.objects.prefetch_related("lessons")
-
         for module in all_modules:
-            lesson_ids_in_module = set(module.lessons.values_list("id", flat=True))
-            if lesson_ids_in_module and lesson_ids_in_module.issubset(completed_lesson_ids):
+            lesson_ids = set(module.lessons.values_list("id", flat=True))
+            if lesson_ids and lesson_ids.issubset(completed_lesson_ids):
                 completed_modules += 1
 
         total_modules = all_modules.count()
@@ -174,6 +179,7 @@ class ProgressOverviewView(APIView):
             "completed_modules": completed_modules,
             "total_modules": total_modules,
         })
+
 
 class DetailedProgressView(APIView):
     authentication_classes = [JWTAuthentication]

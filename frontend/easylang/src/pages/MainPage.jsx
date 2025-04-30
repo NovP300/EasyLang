@@ -400,7 +400,9 @@ export default function MainPage() {
                     <p className={styles.testText}>
                         Сомневаешься в своём уровне и не знаешь с чего начать?
                     </p>
-                    <button className={styles.testButton}>Пройти тест</button>
+                    <button className={styles.testButton}>
+                        <Link className={styles.testLink} to={"/test"}>Пройти тест</Link>
+                        </button>
                 </div>
             </section>
 

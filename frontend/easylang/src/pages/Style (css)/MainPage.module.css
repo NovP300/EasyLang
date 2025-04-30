@@ -599,6 +599,11 @@
     opacity: 0.8;
 }
 
+.testLink{
+    color: white;
+    text-decoration: none;
+}
+
 /* ---------- Адаптив ---------- */
 
 /* Планшеты (768px и ниже) */
