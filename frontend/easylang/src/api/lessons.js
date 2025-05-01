@@ -29,3 +29,14 @@ export const getLessonBySlug = async (slug) => {
     throw new Error("Ошибка при загрузке урока по slug");
   }
 };
+
+
+export const getTestLessonsByLanguage = async (languageId) => {
+  try {
+    const res = await axiosInstance.get(`${API_URL}/lessons/test/${languageId}/`);
+    return res.data;
+  } catch (err) {
+    console.error("Ошибка загрузки тестовых уроков", err);
+    return [];
+  }
+};

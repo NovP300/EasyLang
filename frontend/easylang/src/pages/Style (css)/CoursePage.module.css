@@ -1,16 +1,123 @@
-.lockedModule {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-  
-  .unlockedModule {
-    opacity: 1;
-  }
-  
-  .lockedTitle {
-    color: #aaa; /* Серый цвет для заблокированных */
-  }
-  
-  .unlockedTitle {
-    color: #333; /* Темный цвет для доступных */
-  }
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgb(255, 255, 255);
+}
+.courseContainer {
+  max-width: 960px;
+  margin: 0 auto; /* Центрирует по горизонтали */
+  padding: 20px;
+}
+
+.tabNavigation {
+  display: flex;
+  justify-content: left;
+  gap: 16px;
+  background-color: #f4e9fd; /* светло-фиолетовый фон */
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.tabLink {
+  background-color: white;
+  color: #5e4b8b;
+  padding: 10px 18px;
+  border-radius: 5px; /* pills */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.tabLink:hover {
+  background-color: rgba(231, 188, 251, 0.46);
+  color: black;
+}
+
+.activeTab {
+  background-color: rgba(231, 188, 251, 0.46);
+  color: black;
+}
+
+.courseBox {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 24px;
+}
+
+.courseTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.courseText {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.courseDescription {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.courseNote {
+  margin-bottom: 24px;
+  color: #555;
+}
+
+/* Блок теста */
+.testContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: rgba(231, 188, 251, 0.46);
+  padding: 40px;
+  border-radius: 60% 32% 60% 35% / 35% 74% 20% 46%;
+  max-width: 600px;
+  margin: 50px auto; /* Центрирование блока */
+  position: relative;
+}
+
+
+.testText {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+.testSelect {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(251, 244, 255, 1);
+}
+
+.testButton {
+  background: black;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.testButton:hover {
+  opacity: 0.8;
+}
+
+.modulesTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}

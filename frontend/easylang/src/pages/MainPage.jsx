@@ -1,21 +1,20 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Style (css)/MainPage.module.css";
 import img1 from "./pictures/france.png";
 import img2 from "./pictures/nemec.png";
 import img3 from "./pictures/spanish.png";
 import img4 from "./pictures/USA.png";
-import { FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
-import { FaMedal } from "react-icons/fa";
 import { getAllReviews } from "../api/review";
-import { getUserById } from "../api/profile";
-import { FaStar } from "react-icons/fa";
+import { getUserById, logout } from "../api/profile";
+import { FaStar, FaMedal } from "react-icons/fa";
+
 
 const languages = [
     {
         id: 1,
         name: "Английский",
-        img: img2,
+        img: img4,
         description:
             "Самый востребованный язык в мире, ключ к международному общению, карьере и путешествиям. На нем говорят более 1,5 миллиарда человек, а 80% информации в интернете представлено на английском. Изучение английского поможет вам смотреть фильмы в оригинале и уверенно чувствовать себя за границей.",
         link: "english"
@@ -23,7 +22,7 @@ const languages = [
     {
         id: 2,
         name: "Немецкий",
-        img: img3,
+        img: img2,
         description:
             "Язык технологий, науки и бизнеса. Германия – один из лидеров мировой экономики, а знание немецкого открывает доступ к образованию и работе в Европе. Логичная грамматика и четкие правила помогут вам быстро освоить язык и использовать его для учебы, карьеры и общения с носителями.",
         link: "german"
@@ -39,7 +38,7 @@ const languages = [
     {
         id: 4,
         name: "Испанский",
-        img: img4,
+        img: img3,
         description:
             "Второй по популярности язык в мире, на котором говорят более 500 миллионов человек. Это язык страсти, музыки, танцев и ярких путешествий по Испании и Латинской Америке. Благодаря простой грамматике и приятному звучанию испанский легко освоить, а знание его откроет двери в новую культуру и возможности!",
         link: "spanish"
@@ -79,7 +78,6 @@ export default function MainPage() {
     const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
     const [openIndex, setOpenIndex] = useState(null);
-    const toggleMenu = () => { setMenuOpen(!menuOpen); };
 
     const aboutRef = useRef(null);
     const pricingRef = useRef(null);
@@ -87,11 +85,32 @@ export default function MainPage() {
     const faqRef = useRef(null);
     const reviewsRef = useRef(null);
     const contactsRef = useRef(null);
+    const profileMenuRef = useRef(null);
 
     const scrollToSection = (ref) => {
         setMenuOpen(false); // Закрываем бургер-меню при переходе
         ref.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    const { setHeaderProps } = useOutletContext();
+
+    useEffect(() => {
+        setHeaderProps({
+            scrollToSection,
+            aboutRef,
+            pricingRef,
+            languagePR,
+            faqRef,
+            reviewsRef,
+            contactsRef,
+        });
+
+        // Опционально: очищаем после ухода со страницы
+        return () => {
+            setHeaderProps({});
+        };
+    }, []);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
 
@@ -143,108 +162,43 @@ export default function MainPage() {
         }
     };
 
-    const isAuthenticated = Boolean(localStorage.getItem("access_token"));
-
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState({});
 
     useEffect(() => {
         const fetchReviewsAndUsers = async () => {
-          try {
-            // Загружаем отзывы
-            const reviewsData = await getAllReviews();
-            console.log("Загруженные отзывы:", reviewsData);  // Отладка
-            setReviews(reviewsData.slice(0, 3)); // Например, 3 последних отзыва
-      
-            // Загружаем данные о пользователях
-            const usersData = {};
-            for (let review of reviewsData) {
-              console.log(`Загружаем профиль для пользователя с ID: ${review.user}`);  // Отладка, какой user загружается
-              // Теперь мы должны загрузить профиль по ID, используя API
-              const user = await getUserById(review.user);  // Функция для получения пользователя по его ID
-              console.log("Полученный профиль пользователя:", user);  // Отладка
-      
-              if (user) {
-                usersData[review.user] = user;  // Сохраняем информацию о пользователе
-              }
-            }
-            setUsers(usersData); // Обновляем состояние с пользователями
-          } catch (error) {
-            console.error("Ошибка при загрузке отзывов или пользователей", error);
-          } finally {
-            setLoading(false);
-          }
-        };
-      
-        fetchReviewsAndUsers();
-      }, []);
-    
+            try {
+                // Загружаем отзывы
+                const reviewsData = await getAllReviews();
+                console.log("Загруженные отзывы:", reviewsData);  // Отладка
+                setReviews(reviewsData.slice(0, 3)); // Например, 3 последних отзыва
 
+                // Загружаем данные о пользователях
+                const usersData = {};
+                for (let review of reviewsData) {
+                    console.log(`Загружаем профиль для пользователя с ID: ${review.user}`);  // Отладка, какой user загружается
+                    // Теперь мы должны загрузить профиль по ID, используя API
+                    const user = await getUserById(review.user);  // Функция для получения пользователя по его ID
+                    console.log("Полученный профиль пользователя:", user);  // Отладка
+
+                    if (user) {
+                        usersData[review.user] = user;  // Сохраняем информацию о пользователе
+                    }
+                }
+                setUsers(usersData); // Обновляем состояние с пользователями
+            } catch (error) {
+                console.error("Ошибка при загрузке отзывов или пользователей", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchReviewsAndUsers();
+    }, []);
 
     return (
         <div className={styles.home}>
-            <header className={styles.header}>
-                <nav className={styles.nav}>
-                    {/* Логотип */}
-                    <div className={styles.logo}>EasyLang</div>
-
-                    {/* Иконка бургера */}
-                    <div className={styles.menu_icon} onClick={toggleMenu}>
-                        <div className={styles.bar}></div>
-                        <div className={styles.bar}></div>
-                        <div className={styles.bar}></div>
-                    </div>
-                    <ul className={`${styles.nav_links} ${menuOpen ? styles.nav_active : ""}`}>
-                        <li>
-                            <button onClick={() => scrollToSection(aboutRef)}>О нас</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(languagePR)}>Каталог языков</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(pricingRef)}>Тарифы</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(faqRef)}>Вопросы</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(reviewsRef)}>Отзывы</button>
-                        </li>
-                        <li>
-                            <button onClick={() => scrollToSection(contactsRef)}>Контакты</button>
-                        </li>
-                    </ul>
-
-                    
-
-                    {/* Кнопки входа и регистрации */}
-                 
-  
-              
-                    <div>
-  
-                        {!isAuthenticated ? (
-                        <div className={styles.auth_buttons}>
-                            <Link to="/login" state={{ background: location }}>
-                            <button className={styles.login_btn}>Войти</button>
-                            </Link>
-                            <Link to="/register" state={{ background: location }}>
-                            <button className={styles.signup_btn}>Зарегистрироваться</button>
-                            </Link>
-                        </div>
-                        ) : (
-
-                        <div className={styles.auth_buttons}>
-                            <Link to="/profile">
-                            <button className={styles.profile_btn}>Профиль</button>
-                            </Link>
-                        </div>
-                        )}
-                    </div>
-                        
-                </nav>
-            </header>
 
             {/* EasyLang — учите языки в своем ритме! */}
             <section className={styles.hero_section}>
@@ -479,13 +433,13 @@ export default function MainPage() {
                             return (
                                 <div key={review.id} className={styles.reviewCard}>
                                     <div className={styles.rating}>
-                                    {[...Array(5)].map((_, index) => (
-                                        <FaStar
-                                            key={index}
-                                            color={index < parseFloat(review.estimation) ? "#facc15" : "#d1d5db"}
-                                        />
-                                    ))}
-                                     </div>
+                                        {[...Array(5)].map((_, index) => (
+                                            <FaStar
+                                                key={index}
+                                                color={index < parseFloat(review.estimation) ? "#facc15" : "#d1d5db"}
+                                            />
+                                        ))}
+                                    </div>
 
                                     <div className={styles.user}>
                                         {/* Проверяем, если пользователь есть в state */}
@@ -513,59 +467,6 @@ export default function MainPage() {
                     <button className={styles.btnCom}>Больше отзывов</button>
                 </Link>
             </section>
-
-            <footer className={styles.footer} ref={contactsRef}>
-                <div className={styles.footer_container}>
-                    {/* Логотип и соцсети */}
-                    <div className={styles.footer_column}>
-                        <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                            <FaTwitter />
-                            <FaInstagram />
-                            <FaYoutube />
-                            <FaLinkedin />
-                        </div>
-                    </div>
-
-                    <div className={styles.footer_column}>
-                        <h4>Сценарии использования</h4>
-                        <ul>
-                            <li>UI-дизайн</li>
-                            <li>UX-дизайн</li>
-                            <li>Вайрфрейминг</li>
-                            <li>Диаграммы</li>
-                            <li>Мозговой штурм</li>
-                            <li>Онлайн-доска</li>
-                            <li>Командная работа</li>
-                        </ul>
-                    </div>
-
-                    <div className={styles.footer_column}>
-                        <h4>Исследовать</h4>
-                        <ul>
-                            <li>Дизайн</li>
-                            <li>Прототипирование</li>
-                            <li>Функции для разработки</li>
-                            <li>Дизайн-системы</li>
-                            <li>Совместная работа</li>
-                            <li>Процесс дизайна</li>
-                            <li>FigJam</li>
-                        </ul>
-                    </div>
-
-                    <div className={styles.footer_column}>
-                        <h4>Ресурсы</h4>
-                        <ul>
-                            <li>Блог</li>
-                            <li>Лучшие практики</li>
-                            <li>Цвета</li>
-                            <li>Цветовой круг</li>
-                            <li>Поддержка</li>
-                            <li>Разработчики</li>
-                            <li>Библиотека ресурсов</li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
 
         </div>
     );

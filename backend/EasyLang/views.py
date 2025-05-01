@@ -238,3 +238,18 @@ class MyReviewByLanguageView(generics.GenericAPIView):
             return Response(serializer.data)
         except Review.DoesNotExist:
             return Response({"detail": "Review not found."}, status=404)
+
+
+class TestLessonsView(APIView):
+    def get(self, request, language_id):
+        try:
+            test_module = Module.objects.get(language_id=language_id, title__icontains="test")
+        except Module.DoesNotExist:
+            return Response({"error": "Модуль тестирования не найден"}, status=404)
+
+        lessons = Lesson.objects.filter(module=test_module).order_by("difficulty_level")
+        data = [
+            {"level": lesson.difficulty_level, "slug": lesson.slug}
+            for lesson in lessons
+        ]
+        return Response(data)

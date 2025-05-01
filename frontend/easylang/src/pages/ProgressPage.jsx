@@ -66,13 +66,15 @@ export default function ProgressPage() {
   return (
     
     <div className={styles.progress_page}>
-      <div className={styles.progress_navigation}>
-      <Link to={`/languages/${languageName}`}>Курс</Link>
-        <Link to={`/progress?languageId=${languageId}`}>Прогресс</Link>
-        <Link to={`/review`} state={{ background: location, languageId }}>
-          Оставить отзыв
-        </Link>
-      </div>
+      {languageName && (
+        <div className={styles.tabNavigation}>
+          <Link to={`/languages/${languageName}`} className={styles.tabLink}>Курс</Link>
+          <Link to={`/progress?languageId=${languageId}`} className={`${styles.tabLink} ${location.pathname.includes("/progress") ? styles.activeTab : ""}`}>Прогресс</Link>
+          <Link to="/review" state={{ background: location, languageId }} className={styles.tabLink}>
+            Оставить отзыв
+          </Link>
+        </div>
+      )}
 
       <div className={styles.progress_wrapper}>
         {/* Левая часть */}

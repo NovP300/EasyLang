@@ -4,7 +4,7 @@ import { getModulesByLanguage } from "../api/modules";
 import { getLanguage } from "../api/languages";
 import { useNavigate, useLocation } from "react-router-dom";
 import ModuleItem from "../components/ModuleItem";
-import useProgress from "../api/useProgress"; 
+import useProgress from "../api/useProgress";
 import { Link } from "react-router-dom";
 import styles from "./Style (css)/CoursePage.module.css";
 
@@ -56,24 +56,39 @@ export default function CoursePage() {
     fetchLanguageDetails();
   }, [Name, languageId]);
 
-  if (loading) return <div>Загрузка прогресса...</div>;
+  if (loading) return <div>Загрузка курса...</div>;
 
   return (
-    <div className="p-4">
+    <div className={styles.courseContainer}>
       {languageName && (
-        <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-          <Link to={`/languages/${Name}`}>Курс</Link>
-          <Link to={`/progress?languageId=${languageId}`}>Прогресс</Link>
-          <Link to="/review" state={{ background: location, languageId }}>
+        <div className={styles.tabNavigation}>
+          <Link to={`/languages/${Name}`} className={`${styles.tabLink} ${location.pathname.includes("/languages") ? styles.activeTab : ""}`}>Курс</Link>
+          <Link to={`/progress?languageId=${languageId}`} className={styles.tabLink}>Прогресс</Link>
+          <Link to="/review" state={{ background: location, languageId }} className={styles.tabLink}>
             Оставить отзыв
           </Link>
         </div>
       )}
 
-      <h1 className="text-2xl font-bold mb-4">Курс: {languageName}</h1>
-      <div>{languageDescription}</div>
+      <div className={styles.courseBox}>
+        <h1 className={styles.courseTitle}>{languageName}</h1>
+        <p className={styles.courseText}>Вы начали курс "{languageName}"!</p>
+        <p className={styles.courseDescription}>{languageDescription}</p>
+        <p className={styles.courseNote}>
+          Учитесь в удобном для вас темпе, закрепляйте знания с помощью практических упражнений и достигайте своих целей!
+        </p>
 
+        <div className={styles.testContainer}>
+          <p className={styles.testText}>
+            Сомневаешься в своём уровне и не знаешь с чего начать?
+          </p>
+          <button className={styles.testButton}>Пройти тест</button>
+        </div>
+      </div>
+
+      <h2 className={styles.modulesTitle}>Список модулей</h2>
       {/* Выводим модули с прогрессом */}
+
       {filteredModules.map((mod, index) => {
         const prevModule = filteredModules[index - 1];
         const prevProgress = filteredProgressModules.find((m) => m.id === prevModule?.id);

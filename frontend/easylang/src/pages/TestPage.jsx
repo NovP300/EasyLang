@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getTestLessonsByLanguage } from "../api/lessons";
 
 export default function TestPage() {
   const navigate = useNavigate();
@@ -7,6 +8,8 @@ export default function TestPage() {
   const [step, setStep] = useState(1);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
+  const [testLessons, setTestLessons] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const languages = {
     english: { label: "Английский", id: 1, genitive: "английского" },
@@ -15,10 +18,50 @@ export default function TestPage() {
     spanish: { label: "Испанский", id: 4, genitive: "испанского" },
   };
 
-  const levels = ["Я новичок", "Начальный", "Средний", "Продвинутый"];
+  const levels = [
+    { label: "Начальный", difficulty: 1 },
+    { label: "Средний", difficulty: 2 },
+    { label: "Продвинутый", difficulty: 3 },
+  ];
 
   const goBack = () => setStep(prev => Math.max(1, prev - 1));
   const closeTest = () => navigate("/");
+
+  // Загрузка тестовых уроков при выборе языка
+  useEffect(() => {
+    const fetchLessons = async () => {
+      if (!selectedLanguage) return;
+      setIsLoading(true);
+      try {
+        const lessons = await getTestLessonsByLanguage(selectedLanguage.id);
+        setTestLessons(lessons);
+      } catch (err) {
+        console.error("Ошибка при загрузке тестовых уроков", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchLessons();
+  }, [selectedLanguage]);
+
+  const handleLevelClick = (level) => {
+    setSelectedLevel(level.label);
+  
+    console.log("Доступные уроки:", testLessons);
+    console.log("Ожидаемый уровень сложности:", level.difficulty);
+  
+    const matchingLesson = testLessons.find(
+        (lesson) => lesson.level === level.difficulty
+      );
+  
+    console.log("Найденный урок:", matchingLesson);
+  
+    if (matchingLesson) {
+      navigate(`/lessons/${matchingLesson.slug}/exercises`);
+    } else {
+      alert("Не удалось найти подходящий урок для выбранного уровня.");
+    }
+  };
 
   return (
     <div>
@@ -32,10 +75,10 @@ export default function TestPage() {
       {step === 1 && (
         <div>
           <h2>Выбери, какой язык хочешь изучать</h2>
-          {Object.entries(languages).map(([key, { label, id }]) => (
+          {Object.entries(languages).map(([key, { label, id, genitive }]) => (
             <div key={id}>
               <button onClick={() => {
-                setSelectedLanguage({ id, label, genitive: languages[key].genitive });
+                setSelectedLanguage({ id, label, genitive });
                 setStep(2);
               }}>
                 {label}
@@ -48,7 +91,7 @@ export default function TestPage() {
       {/* Шаг 2 */}
       {step === 2 && (
         <div>
-          <h2>Давай узнаем твой уровень {selectedLanguage?.genitive} языка </h2>
+          <h2>Давай узнаем твой уровень {selectedLanguage?.genitive} языка</h2>
           <button onClick={() => setStep(3)}>Поехали</button>
         </div>
       )}
@@ -57,17 +100,17 @@ export default function TestPage() {
       {step === 3 && (
         <div>
           <h2>Как бы вы оценили свой уровень языка?</h2>
-          {levels.map((level, i) => (
-            <div key={i}>
-              <button onClick={() => {
-                setSelectedLevel(level);
-                // Здесь можно подгрузить упражнения
-                console.log("Выбран уровень:", level);
-              }}>
-                {level}
-              </button>
-            </div>
-          ))}
+          {isLoading ? (
+            <p>Загрузка тестов...</p>
+          ) : (
+            levels.map((level, i) => (
+              <div key={i}>
+                <button onClick={() => handleLevelClick(level)}>
+                  {level.label}
+                </button>
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>
