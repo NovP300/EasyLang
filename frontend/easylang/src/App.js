@@ -13,7 +13,7 @@ import ReviewsPage from "./pages/ReviewsPage";
 import LoginModal from "./modals/LoginModal";
 import RegisterModal from "./modals/RegisterModal";
 import ReviewModal from "./modals/ReviewModal";
-
+import MyCourses from "./pages/MyCourses"
 import TestPage from "./pages/TestPage";
 import Layout from "./components/Layout";
 
@@ -41,6 +41,7 @@ function App() {
           <Route path="progress" element={<ProtectedRoute><ProgressPage /></ProtectedRoute>} />
           <Route path="/test" element={<TestPage />} />
           <Route path="test/:slug/exercises" element={<GamePage />} />
+          <Route path="/courses" element={<MyCourses />} />
         </Route>
 
       </Routes>

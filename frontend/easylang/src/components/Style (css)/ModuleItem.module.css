@@ -1,15 +1,135 @@
+
+
+.moduleItem {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background-color: white;
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.moduleItem:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.moduleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  gap: 12px;
+}
+
+.statusIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
+}
+
+.moduleTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .lockedTitle {
-    color: #aaa; /* Серый цвет для заблокированных модулей */
-  }
-  
-  .unlockedTitle {
-    color: #333; /* Темный цвет для доступных модулей */
-  }
-  
-  .completedLesson {
-    color: #38a169; /* Зеленый цвет для завершенных уроков */
-  }
-  
-  .incompleteLesson {
-    color: #3182ce; /* Синий цвет для незавершенных уроков */
-  }
+  color: #999;
+}
+
+.unlockedTitle {
+  color: #000;
+}
+
+.moduleDescription {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  position: relative;
+  display: inline-block;
+}
+
+.expandIcon {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: none;
+  background-color: white;
+  border: none;
+}
+
+.lessonList {
+  margin-top: 8px;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lessonItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 14px;
+  background-color: #fff;
+  border-bottom: 2px solid rgb(84, 84, 84);
+  margin-left: 60px;
+}
+
+.lessonIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.completed {
+  color: #1aaf51; 
+}
+
+.incomplete {
+  color: #958f8f;
+}
+
+.lessonLink {
+  font-size: 18px;
+  color: #111827;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.lessonLink:hover {
+  text-decoration: underline;
+}
+
+.lessonDisabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+
+
+.moduleInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.moduleLabel {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.moduleDescription {
+  margin-top: 12px;
+  margin-left: 60px;
+  font-size: 15px;
+  color: #555;
+}

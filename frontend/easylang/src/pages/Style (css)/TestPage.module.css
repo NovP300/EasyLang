@@ -1,0 +1,219 @@
+/* Центрирование основного контейнера */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Верхняя панель навигации */
+.navButtons {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 32px;
+}
+
+.backButton {
+    background-color: transparent;
+    color: #000;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+
+    cursor: pointer;
+}
+
+.closeButton {
+    position: relative;
+    margin: 0 0 16px auto;
+    width: 35px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.closeButtonInner {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+
+.closeButtonText {
+    font-size: 7px;
+    line-height: 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #000;
+    transition: all 0.3s ease-in;
+    opacity: 0;
+    font-family: Verdana, sans-serif;
+}
+
+.closeButtonInner::before,
+.closeButtonInner::after {
+    position: absolute;
+    content: '';
+    height: 3px;
+    width: 100%;
+    background: #000;
+    left: 0;
+    transition: all 0.3s ease-in;
+}
+
+.closeButtonInner::before {
+    top: calc(50% - 3px);
+    transform: rotate(45deg);
+}
+
+.closeButtonInner::after {
+    bottom: 50%;
+    transform: rotate(-45deg);
+}
+
+.closeButton:hover .closeButtonText {
+    opacity: 1;
+}
+
+.closeButton:hover .closeButtonInner::before,
+.closeButton:hover .closeButtonInner::after {
+    transform: rotate(0);
+}
+
+.closeButton:hover .closeButtonInner::before {
+    top: 0;
+}
+
+.closeButton:hover .closeButtonInner::after {
+    bottom: 0;
+}
+
+
+
+/* ШАГ 1 ---------------------------------- */
+.stepTitle {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+/* Контейнер для кнопок языков */
+.languageOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+/* Кнопки выбора языка */
+.languageButton {
+    background-color: #1c1c1c;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    width: 280px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.languageButton:hover {
+    background-color: #333;
+}
+
+/* ШАГ 2 ------------------------------ */
+.stepContainer {
+    text-align: center;
+    margin-top: 70px;
+}
+
+.stepTitle {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+.descriptionBlob {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: rgba(231, 188, 251, 0.46);
+    padding: 40px;
+    border-radius: 60% 32% 60% 35% / 35% 74% 20% 46%;
+    max-width: 600px;
+    position: relative;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.descriptionText {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    font-style: italic;
+}
+
+.primaryButton {
+    background-color: #3a3939;
+    color: white;
+    padding: 15px 26px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.primaryButton:hover {
+    background-color: #232323;
+}
+
+/* ШАГ 3 ------------------------------ */
+.levelStep {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.levelTitle {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 28px;
+}
+
+.levelOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
+
+.levelButton {
+    background-color: #222;
+    color: white;
+    padding: 16px 24px;
+    width: 20rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 22px;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.levelButton:hover {
+    background-color: #444;
+}
+
+.levelDesc {
+    font-weight: 400;
+    font-size: 13px;
+    color: #ccc;
+    margin-top: 4px;
+}

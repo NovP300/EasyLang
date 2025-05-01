@@ -1,0 +1,124 @@
+/* ВЕРХНЯЯ СЕКЦИЯ: профиль */
+.profileSection {
+    background-color: #c3abcd;
+    padding: 32px;
+}
+
+.profileName {
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 35px;
+    color: #0f0f0f;
+    margin-left: 60px;
+}
+
+.profileStats {
+    font-size: 18px;
+    color: #1f1f1f;
+    margin: 8px 0;
+    margin-left: 20px;
+}
+
+/* НИЖНЯЯ СЕКЦИЯ: курсы */
+.courseSection {
+    background-color: #f4ebf9;
+    padding: 32px;
+}
+
+.courseHeader {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.courseList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.courseCard {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.courseTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.progressText {
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.linkBtn {
+    background-color: #000;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.courseCard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Левая колонка */
+.iconBox {
+    margin-left: 10px;
+    margin-right: 12px;
+    flex-grow: 0;
+}
+
+/* Центральная колонка */
+.courseInfo {
+    flex-grow: 1;
+    margin-top: 0px;
+}
+
+.courseTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.progressText {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.leaveBtn {
+    background: transparent;
+    border: none;
+    color: #999;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Правая колонка */
+.linkBox {
+    flex-shrink: 0;
+    padding: 30px;
+}
+
+.linkBtn {
+    background-color: #202020;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+}
