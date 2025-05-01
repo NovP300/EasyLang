@@ -57,7 +57,16 @@ export default function TestPage() {
     console.log("Найденный урок:", matchingLesson);
   
     if (matchingLesson) {
-      navigate(`/lessons/${matchingLesson.slug}/exercises`);
+
+      console.log("selectedLanguage.id:", selectedLanguage?.id);
+      console.log("Навигация с параметрами:", {
+      isTest: true,
+      difficulty: matchingLesson.level,
+      languageId: selectedLanguage?.id,
+    });
+
+      navigate(`/lessons/${matchingLesson.slug}/exercises`, { state: { isTest: true, difficulty: matchingLesson.level, languageId: selectedLanguage.id } });
+
     } else {
       alert("Не удалось найти подходящий урок для выбранного уровня.");
     }

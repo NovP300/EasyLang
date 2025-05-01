@@ -17,8 +17,9 @@ class LanguageAdmin(admin.ModelAdmin):
 
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "language")
-    list_filter = ("language",)
+    list_display = ("title", "language", "order", "is_test", "paid")
+    list_filter = ("language", "is_test", "paid")
+
     search_fields = ("title", "description")
     inlines = [LessonInline]  # Вставка уроков в модуль
 

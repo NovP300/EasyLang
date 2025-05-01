@@ -55,6 +55,10 @@ class Module(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
+    order = models.PositiveIntegerField(null=True, blank=True)  # null → для тестового модуля
+    is_test = models.BooleanField(default=False)
+    paid = models.BooleanField(default=False)  # для будущей реализации платных модулей
+
     def __str__(self):
         return f"{self.language.name} - {self.title}"
 

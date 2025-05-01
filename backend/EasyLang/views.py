@@ -253,3 +253,27 @@ class TestLessonsView(APIView):
             for lesson in lessons
         ]
         return Response(data)
+
+
+
+class MarkLessonsCompletedBeforeModuleView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, language_id, module_order):
+        user = request.user
+
+        # Получаем модули по языку, ниже нужного уровня и не тестовые
+        modules = Module.objects.filter(language_id=language_id, order__lte=module_order, is_test=False)
+
+        lessons = Lesson.objects.filter(module__in=modules)
+
+        created = 0
+        for lesson in lessons:
+            obj, was_created = LessonProgress.objects.get_or_create(user=user, lesson=lesson)
+            if was_created:
+                created += 1
+
+        return Response({
+            "status": "ok",
+            "message": f"Уроки разблокированы. Добавлено {created} новых записей."
+        }, status=status.HTTP_200_OK)

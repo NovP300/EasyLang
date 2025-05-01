@@ -20,3 +20,15 @@ export const getModuleDetails = async (moduleId) => {
       throw new Error("Ошибка при загрузке модуля");
     }
 };
+
+
+export const unlockLessonsUpToModule = async (languageId, moduleOrder) => {
+  try {
+    await axiosInstance.post(
+      `${API_URL}/progress/unlock-up-to/${languageId}/${moduleOrder}/`
+    );
+  } catch (error) {
+    console.error("Ошибка при разблокировке модулей", error);
+    throw error;
+  }
+};
