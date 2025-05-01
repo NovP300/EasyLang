@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Link } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getExercisesByLesson } from "../api/exercises";
 import ExerciseRenderer from "../components/Exercise/ExerciseRender";
@@ -25,6 +25,12 @@ const GamePage = () => {
   const maxErrorsAllowed = 2;
 
   const [languageId, setLanguageId] = useState(null); // для обычного урока
+
+  useEffect(() => {
+    console.log("✅ ExercisePage открыт");
+    console.log(location);  // для отладки
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -133,7 +139,7 @@ const GamePage = () => {
             <p>🎉 Молодец! Вы успешно прошли тест.</p>
             <p>Зарегистрируйтесь, чтобы сохранить результат и приступить к обучению!</p>
             <button
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/register", { state: { background: location } })}
               className="bg-blue-600 text-white px-4 py-2 rounded"
             >
               Зарегистрироваться
@@ -149,7 +155,7 @@ const GamePage = () => {
       } else {
         return (
           <div className="p-4 text-center">
-            ✅ Вы успешно прошли тест! Модули до вашего уровня разблокированы.
+            ✅ Вы успешно прошли тест! Модули  разблокированы в соответсвии с пройденным тестом.
           </div>
         );
       }

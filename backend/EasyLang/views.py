@@ -16,6 +16,8 @@ from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import AllowAny
+
 
 
 # Регистрация пользователя
@@ -219,7 +221,8 @@ class DetailedProgressView(APIView):
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
+
+    permission_classes = [AllowAny]
 
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['language', 'user']
@@ -229,7 +232,6 @@ class ReviewViewSet(ModelViewSet):
 
 class MyReviewByLanguageView(generics.GenericAPIView):
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
 
     def get(self, request, language_id):
         try:
@@ -241,6 +243,9 @@ class MyReviewByLanguageView(generics.GenericAPIView):
 
 
 class TestLessonsView(APIView):
+
+    permission_classes = [AllowAny]
+
     def get(self, request, language_id):
         try:
             test_module = Module.objects.get(language_id=language_id, title__icontains="test")
@@ -257,7 +262,6 @@ class TestLessonsView(APIView):
 
 
 class MarkLessonsCompletedBeforeModuleView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def post(self, request, language_id, module_order):
         user = request.user

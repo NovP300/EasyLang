@@ -65,7 +65,7 @@ export default function TestPage() {
       languageId: selectedLanguage?.id,
     });
 
-      navigate(`/lessons/${matchingLesson.slug}/exercises`, { state: { isTest: true, difficulty: matchingLesson.level, languageId: selectedLanguage.id } });
+      navigate(`/test/${matchingLesson.slug}/exercises`, { state: { isTest: true, difficulty: matchingLesson.level, languageId: selectedLanguage.id } });
 
     } else {
       alert("Не удалось найти подходящий урок для выбранного уровня.");

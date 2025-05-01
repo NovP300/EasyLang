@@ -40,6 +40,7 @@ function App() {
           <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="progress" element={<ProtectedRoute><ProgressPage /></ProtectedRoute>} />
           <Route path="/test" element={<TestPage />} />
+          <Route path="test/:slug/exercises" element={<GamePage />} />
         </Route>
 
       </Routes>
