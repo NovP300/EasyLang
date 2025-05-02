@@ -90,17 +90,15 @@ export default function CoursePage() {
       {/* Выводим модули с прогрессом */}
 
       {filteredModules.map((mod, index) => {
-        const prevModule = filteredModules[index - 1];
-        const prevProgress = filteredProgressModules.find((m) => m.id === prevModule?.id);
-        const isLocked = index > 0 && !prevProgress?.is_completed;
-
+        const isLocked = index > 0 && 
+                        !filteredProgressModules[index - 1]?.is_completed;
+        
         return (
           <ModuleItem
             key={mod.id}
             module={mod}
             isLocked={isLocked}
-            completedLessonIds={UseProgress.completed_lesson_ids}
-            moduleClass={isLocked ? styles.lockedModule : styles.unlockedModule}
+            completedLessonIds={UseProgress.completed_lesson_ids || []}
           />
         );
       })}

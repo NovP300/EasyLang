@@ -166,6 +166,8 @@ export default function MainPage() {
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState({});
 
+    const isAuthenticated = Boolean(localStorage.getItem("access_token"));
+
     useEffect(() => {
         const fetchReviewsAndUsers = async () => {
             try {
@@ -241,9 +243,16 @@ export default function MainPage() {
                         Прогресс и мотивация
                     </button>
                 </div>
-                <Link to="/login" state={{ background: location }}>
-                    <button className={styles.start_btn}>Начать заниматься</button>
-                </Link>
+
+                {isAuthenticated? ( <button className={styles.start_btn} onClick={() => scrollToSection(languagePR)}>Начать заниматься</button>) 
+                : (
+                    <Link to="/login" state={{ background: location }}>
+                        <button className={styles.start_btn}>Начать заниматься</button>
+                    </Link>
+                )}
+
+            
+
             </section>
 
             {/* Модальное окно */}

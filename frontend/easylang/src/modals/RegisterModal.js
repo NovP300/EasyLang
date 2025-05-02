@@ -3,6 +3,15 @@ import { register } from "../api/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./styles/LoginModal.module.css";
 import { Link } from "react-router-dom";
+import { applyTestResults } from "../api/progress";
+
+
+const languageMapping = {
+  english: 1,
+  german: 2,
+  french: 3,
+  spanish: 4,
+};
 
 
 const RegisterModal = () => {
@@ -48,9 +57,37 @@ const RegisterModal = () => {
     }
 
     try {
+      // 1. Регистрация
       await register(email, username, password);
-      navigate("/profile");
-    } catch (error) {
+  
+      // 2. Пытаемся применить тестовые результаты
+      const { applied, languageId, error } = await applyTestResults();
+      const savedTest = JSON.parse(localStorage.getItem('pendingTestResults'));
+  
+      // 3. Редирект с учётом контекста
+      if (applied && savedTest?.isAfterTest) {
+        const languageSlug = Object.keys(languageMapping).find(
+          key => languageMapping[key] === languageId
+        ) || 'english';
+        
+        navigate(`/languages/${languageSlug}`, {
+          state: { fromTest: true }
+        });
+      } else {
+        navigate("/profile", {
+          state: {
+            message: applied 
+              ? "Регистрация успешна!" 
+              : `Регистрация успешна, но: ${error || "не удалось применить прогресс теста"}`,
+          }
+        });
+      }
+  
+      // 4. Очистка независимо от результата
+      localStorage.removeItem('pendingTestResults');
+  
+    } 
+    catch (error) {
       const data = error.response?.data;
       const errors = [];
 
@@ -63,6 +100,8 @@ const RegisterModal = () => {
       alert(errors.length ? errors.join("\n") : "Ошибка регистрации. Проверьте данные.");
     }
   };
+
+
 
   return (
     <div className={styles.modal_overlay}>

@@ -134,6 +134,15 @@ const GamePage = () => {
           </div>
         );
       } else if (!isAuthenticated) {
+
+        // Сохраняем данные теста перед редиректом
+        localStorage.setItem('pendingTestResults', JSON.stringify({
+          languageId: passedLanguageId,
+          testLevel: testLevel, // или moduleOrder, в зависимости от вашей логики
+          isAfterTest: true,
+          expires: Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 дней
+        }));
+
         return (
           <div className="p-4 text-center space-y-4">
             <p>🎉 Молодец! Вы успешно прошли тест.</p>
