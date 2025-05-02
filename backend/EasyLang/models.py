@@ -39,6 +39,16 @@ class User(AbstractUser):
     USERNAME_FIELD = "email" 
     REQUIRED_FIELDS = ["username"]
 
+
+    GENDER_CHOICES = [
+        ("M", "Мужской"),
+        ("F", "Женский"),
+    ]
+    gender = models.CharField(
+        max_length=1, choices=GENDER_CHOICES, null=True, blank=True
+    )
+    birth_date = models.DateField(null=True, blank=True)
+
     def __str__(self):
         return self.email # Отображение email вместо id
 

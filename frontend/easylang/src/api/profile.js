@@ -41,3 +41,17 @@ export function logout() {
   localStorage.removeItem("access_token");  // Используем access_token
   localStorage.removeItem("refresh_token");
 }
+
+
+export const updateProfile = async (data) => {
+
+
+
+  try {
+    const response = await axiosInstance.patch(`${API_URL}/profile/`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при обновлении профиля:", error.response?.data || error);
+    throw error;
+  }
+};
