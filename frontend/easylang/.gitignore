@@ -4,15 +4,24 @@
 /node_modules
 /.pnp
 .pnp.js
+# Python
+__pycache__/
+*.py[cod]
 
 # testing
 /coverage
 
 # production
 /build
+# Node
+node_modules/
+
+# VS Code
+.vscode/
 
 # misc
 .DS_Store
+Thumbs.db
 .env.local
 .env.development.local
 .env.test.local
