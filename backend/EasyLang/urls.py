@@ -5,7 +5,7 @@ from .views import (
     RegisterView, ProfileView,
     LanguageViewSet, ModuleViewSet,
     LessonViewSet, ExerciseViewSet, LessonViewSet, LessonProgressView, ProgressOverviewView, ReviewViewSet, MyReviewByLanguageView,
-    UserDetailView, DetailedProgressView, TestLessonsView, MarkLessonsCompletedBeforeModuleView, ChangePasswordView
+    UserDetailView, DetailedProgressView, TestLessonsView, MarkLessonsCompletedBeforeModuleView, ChangePasswordView, CustomTokenObtainPairView
 )
 
 
@@ -17,7 +17,11 @@ router.register(r'reviews', ReviewViewSet)
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),
+
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+
+
     path('profile/', ProfileView.as_view(), name='profile'),
 
     # Языки

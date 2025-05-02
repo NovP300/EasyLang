@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User, Language, Module, Lesson, Exercise, LessonProgress, Review
 from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 
@@ -98,13 +99,51 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    old_password = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True)
-    repeat_password = serializers.CharField(required=True)
+    old_password = serializers.CharField(
+        required=True,
+        min_length=8,
+        style={'input_type': 'password'}
+    )
+    new_password = serializers.CharField(
+        required=True,
+        min_length=8,
+        style={'input_type': 'password'}
+    )
+    repeat_password = serializers.CharField(
+        required=True,
+        style={'input_type': 'password'}
+    )
 
     def validate(self, data):
         if data['new_password'] != data['repeat_password']:
-            raise serializers.ValidationError("Пароли не совпадают.")
+            raise serializers.ValidationError({"repeat_password": "Пароли не совпадают."})
         
         validate_password(data['new_password'])
         return data
+
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        
+        # Добавляем кастомные поля в токен
+        token['username'] = user.username
+        token['email'] = user.email
+        token['is_staff'] = user.is_staff
+        
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        
+        # Добавляем дополнительные данные в ответ
+        data['user'] = {
+            'id': self.user.id,
+            'username': self.user.username,
+            'email': self.user.email
+        }
+        return data
+
+

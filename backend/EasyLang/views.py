@@ -4,7 +4,11 @@ from rest_framework import generics, permissions
 from EasyLang.models import User, Language, Module, Lesson, Exercise, LessonProgress, Review
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import (UserSerializer, RegisterSerializer, LanguageSerializer, ModuleSerializer, LessonSerializer, ExerciseSerializer, LessonProgressSerializer, ReviewSerializer, ChangePasswordSerializer)
+
+from .serializers import (UserSerializer, RegisterSerializer, LanguageSerializer, ModuleSerializer, 
+LessonSerializer, ExerciseSerializer, LessonProgressSerializer,
+ ReviewSerializer, ChangePasswordSerializer, CustomTokenObtainPairSerializer)
+
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.decorators import action
@@ -17,6 +21,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 
@@ -65,14 +71,20 @@ class UserDetailView(generics.RetrieveAPIView):
 class TokenRefreshView(APIView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.data.get("refresh")
+        if not refresh_token:
+            return Response({"error": "Refresh token is required"}, status=400)
+        
         try:
             token = RefreshToken(refresh_token)
             return Response({
                 'access': str(token.access_token)
             })
-        except Exception as e:
-            return Response({"error": str(e)}, status=400)
+        except (InvalidToken, TokenError) as e:
+            return Response({"error": str(e)}, status=401)
 
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Language.objects.all()
@@ -294,6 +306,7 @@ class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        print("Данные на бэкенде:", request.data)
         serializer = ChangePasswordSerializer(data=request.data)
         user = request.user
 
