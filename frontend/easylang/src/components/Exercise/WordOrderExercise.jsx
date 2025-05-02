@@ -1,13 +1,24 @@
 import { useState } from "react";
+import styles from './Style/WordOrderExercise.module.css';
 
 const WordOrderExercise = ({ exercise, onAnswer }) => {
   const { header, data } = exercise;
   const { text, options, correct_answer } = data;
   const [selected, setSelected] = useState([]);
   const [feedback, setFeedback] = useState(null);
-
+  const positiveWords = [
+    "Супер!",
+    "Молодец!",
+    "Умница!",
+    "Так держать!",
+    "Потрясающе!",
+    "Удивительно!",
+    "Ты вообще красотка!"
+  ];
   const handleWordClick = (word) => {
-    if (!selected.includes(word)) {
+    if (selected.includes(word)) {
+      setSelected(selected.filter((w) => w !== word));
+    } else {
       setSelected([...selected, word]);
     }
   };
@@ -18,54 +29,93 @@ const WordOrderExercise = ({ exercise, onAnswer }) => {
 
   const handleSubmit = () => {
     const isCorrect = JSON.stringify(selected) === JSON.stringify(correct_answer);
-    setFeedback(isCorrect ? "✅ Правильно!" : `❌ Неправильно. Правильный порядок: ${correct_answer.join(" ")}`);
-    setTimeout(() => {
+    const randomPraise = positiveWords[Math.floor(Math.random() * positiveWords.length)];
+    setFeedback({
+      correct: isCorrect,
+      message: isCorrect ? randomPraise : correct_answer.join(" "),
+    });
+    /*setTimeout(() => {
       setSelected([]);
       setFeedback(null);
       onAnswer(isCorrect);
-    }, 2000);
+    }, 2000);*/
   };
 
   return (
-    <div>
-      <h2 className="text-lg font-semibold mb-2">{header}</h2>
-      <p className="mb-2">{text}</p>
+    <div className={styles.wrapper}>
+      <h2 className={styles.header}>{header}</h2>
+      <div className={styles.topSection}>
+        <p style={{ fontSize: "20px", fontWeight: "500" }}>{text}</p>
+      </div>
 
       {/* Выбранные слова */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        {selected.map((word, index) => (
-          <button
-            key={index}
-            onClick={() => handleRemoveWord(word)}
-            className="bg-blue-200 px-3 py-1 rounded hover:bg-blue-300 transition"
-          >
-            {word} ✖
-          </button>
-        ))}
+      <div className={styles.selectedContainer}>
+        <div className={styles.line}></div>
+        <div className={styles.selectedWords}>
+          {selected.map((word, index) => (
+            <button
+              key={index}
+              onClick={() => handleRemoveWord(word)}
+              className={styles.selectedWord}
+            >
+              {word}
+            </button>
+          ))}
+        </div>
+        <div className={styles.line}></div>
       </div>
 
-      {/* Кнопки со словами */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        {options.map((word, index) => (
-          <button
-            key={index}
-            onClick={() => handleWordClick(word)}
-            disabled={selected.includes(word)}
-            className="border px-3 py-1 rounded hover:bg-gray-100 transition disabled:opacity-50"
-          >
-            {word}
-          </button>
-        ))}
+      {/* Доступные слова */}
+      <div className={styles.optionsContainer}>
+        {options
+          .filter((word) => !selected.includes(word))
+          .map((word, index) => (
+            <button
+              key={index}
+              onClick={() => handleWordClick(word)}
+              className={styles.wordButton}
+            >
+              {word}
+            </button>
+          ))}
       </div>
+      
+      {!feedback && (
+        <div className={styles.buttonsRow}>
+          <button className={styles.skipButton}>Пропустить</button>
+          <button onClick={handleSubmit} className={styles.submitButton}>
+            Проверить
+          </button>
+        </div>
+      )}
 
-      <button
-        onClick={handleSubmit}
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-      >
-        Ответить
-      </button>
+      {feedback && (
+        <div
+          className={`${styles.feedbackBox} ${feedback.correct ? styles.correct : styles.incorrect
+            }`}
+        >
+          <div className={styles.feedbackHeader}>
+            {feedback.correct ? feedback.message : "Правильный ответ:"}
+          </div>
 
-      {feedback && <div className="mt-4 text-center font-semibold">{feedback}</div>}
+          {!feedback.correct && (
+            <div className={styles.feedbackText}>{feedback.message}</div>
+          )}
+
+          <div className={styles.feedbackButtonWrapper}>
+            <button
+              className={styles.nextButton}
+              onClick={() => {
+                setSelected([]);
+                setFeedback(null);
+                onAnswer(feedback.correct);
+              }}
+            >
+              Далее
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
