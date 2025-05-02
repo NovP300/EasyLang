@@ -6,16 +6,15 @@ import styles from './Style (css)/LessonPage.module.css';
 
 const MEDIA_URL = "http://localhost:80/media/";
 
-
 const IntroBlock = ({ text }) => (
-  <div className="intro-block">
+  <div className={styles.introBlock}>
     <h2 className="text-xl font-semibold">Введение</h2>
     <p>{text}</p>
   </div>
 );
 
 const InformationBlock = ({ title, text, audio }) => (
-  <div className="information-block">
+  <div className={styles.informationBlock}>
     <h3 className="font-bold">{title}</h3>
     <p>{text}</p>
     {audio && <audio controls src={`${MEDIA_URL}${audio}`}>Ваш браузер не поддерживает аудио</audio>}
@@ -23,9 +22,9 @@ const InformationBlock = ({ title, text, audio }) => (
 );
 
 const VocabularyBlock = ({ items }) => (
-  <div className="vocabulary-block">
+  <div className={styles.vocabularyBlock}>
     <h3 className="font-bold">Словарь урока</h3>
-    <ul>
+    <ul className={styles.vocabularyList}>
       {items.map((item, index) => (
         <li key={index}>
           <strong>{item.fl}</strong> - {item.ru} <em>({item.pronounce})</em>
@@ -36,7 +35,7 @@ const VocabularyBlock = ({ items }) => (
 );
 
 const PictureBlock = ({ text, media }) => (
-  <div className="picture-block">
+  <div className={styles.pictureBlock}>
     <h3 className="font-bold">Картинка</h3>
     <p>{text}</p>
     <img src={`${MEDIA_URL}${media}`} alt={`Путь к картинке: ${MEDIA_URL}${media}`} className="w-full" />
@@ -86,38 +85,48 @@ export default function LessonPage() {
         </div>
       )}
 
-      <h1 className={styles.pageTitle}>{lesson.title}</h1>
-      <p className={styles.difficulty}>Сложность: {lesson.difficulty_level}/3</p>
-
-      {/* Рендерим теорию */}
-      <div className="theory">
-        {lesson.theory.map((block, index) => {
-          switch (block.type) {
-            case "intro":
-              <div className={styles.block}>
-                <h2>Введение</h2>
-                <p>{block.text}</p>
-              </div>
-              return <IntroBlock key={index} text={block.text} />;
-            case "information":
-              return (
-                <InformationBlock
-                  key={index}
-                  title={block.title}
-                  text={block.text}
-                  audio={block.audio}
-                />
-              );
-            case "vocabulary":
-              return <VocabularyBlock key={index} items={block.items} />;
-            case "picture":
-              return <PictureBlock key={index} text={block.text} media={block.media} />;
-            default:
-              return null;
-          }
-        })}
+      {/* Контейнер: заголовок + введение */}
+      <div className={styles.firstBlock}>
+        <h1 className={styles.pageTitle}>{lesson.title}</h1>
+        <p className={styles.difficulty}>Сложность: {lesson.difficulty_level}/3</p>
+        {lesson.theory.map((block, index) =>
+          block.type === "intro" ? <IntroBlock key={index} text={block.text} /> : null
+        )}
       </div>
-      <Link to={`/lessons/${lesson.slug}/exercises`}>Приступить к упражнениям</Link>
+
+      {/* Контейнер: информация + картинка */}
+      <div className={styles.secondBlockWrapper}>
+        <div className={styles.secondBlock}>
+          {lesson.theory.map((block, index) =>
+            block.type === "information" ? (
+              <InformationBlock
+                key={index}
+                title={block.title}
+                text={block.text}
+                audio={block.audio}
+              />
+            ) : null
+          )}
+          {lesson.theory.map((block, index) =>
+            block.type === "picture" ? (
+              <PictureBlock key={index} text={block.text} media={block.media} />
+            ) : null
+          )}
+        </div>
+
+        <div className={styles.vocabularySide}>
+          {lesson.theory.map((block, index) =>
+            block.type === "vocabulary" ? (
+              <VocabularyBlock key={index} items={block.items} />
+            ) : null
+          )}
+        </div>
+      </div>
+
+      <Link to={`/lessons/${lesson.slug}/exercises`} className={styles.exerciseLink}>
+        Приступить к упражнениям
+      </Link>
     </div>
+
   );
 }

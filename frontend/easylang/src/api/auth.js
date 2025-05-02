@@ -51,3 +51,21 @@ export const register = async (email, username, password) => {
 
   return response.data.user;  // Если хочешь сразу получить данные пользователя
 };
+
+
+export const changePassword = async (passwordData) => {
+  const response = await axiosInstance.post(`${API_URL}/change-password/`, passwordData);
+  return response.data;
+};
+
+
+export const refreshTokenAfterPasswordChange = async (email, new_password) => {
+  const response = await axiosInstance.post(`${API_URL}/token/refresh/`, {
+    email,
+    password: new_password,
+  });
+
+  localStorage.setItem("access_token", response.data.access);
+  localStorage.setItem("refresh_token", response.data.refresh);
+  return response.data;
+};

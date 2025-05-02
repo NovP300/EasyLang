@@ -64,3 +64,14 @@
     border-radius: 6px;
     cursor: pointer;
 }
+
+.error {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+.inputError {
+    border: 1px solid red;
+    background-color: #ffe6e6;
+}

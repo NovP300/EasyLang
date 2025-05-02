@@ -4,7 +4,7 @@ from rest_framework import generics, permissions
 from EasyLang.models import User, Language, Module, Lesson, Exercise, LessonProgress, Review
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import UserSerializer, RegisterSerializer, LanguageSerializer, ModuleSerializer, LessonSerializer, ExerciseSerializer, LessonProgressSerializer, ReviewSerializer
+from .serializers import (UserSerializer, RegisterSerializer, LanguageSerializer, ModuleSerializer, LessonSerializer, ExerciseSerializer, LessonProgressSerializer, ReviewSerializer, ChangePasswordSerializer)
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.decorators import action
@@ -40,14 +40,20 @@ class RegisterView(generics.CreateAPIView):
         })
 
 # Профиль пользователя (доступен только авторизованным)
-class ProfileView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user = request.user  # request.user уже доступен после проверки токена
-        serializer = UserSerializer(user)
+        serializer = UserSerializer(request.user)
         return Response(serializer.data)
+
+    def patch(self, request):
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
 
 class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
@@ -281,3 +287,22 @@ class MarkLessonsCompletedBeforeModuleView(APIView):
             "status": "ok",
             "message": f"Уроки разблокированы. Добавлено {created} новых записей."
         }, status=status.HTTP_200_OK)
+
+
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        user = request.user
+
+        if serializer.is_valid():
+            if not user.check_password(serializer.validated_data['old_password']):
+                return Response({"old_password": ["Неверный текущий пароль."]}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user.set_password(serializer.validated_data['new_password'])
+            user.save()
+            return Response({"detail": "Пароль успешно обновлён."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

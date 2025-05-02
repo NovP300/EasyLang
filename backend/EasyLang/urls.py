@@ -5,7 +5,7 @@ from .views import (
     RegisterView, ProfileView,
     LanguageViewSet, ModuleViewSet,
     LessonViewSet, ExerciseViewSet, LessonViewSet, LessonProgressView, ProgressOverviewView, ReviewViewSet, MyReviewByLanguageView,
-    UserDetailView, DetailedProgressView, TestLessonsView, MarkLessonsCompletedBeforeModuleView,
+    UserDetailView, DetailedProgressView, TestLessonsView, MarkLessonsCompletedBeforeModuleView, ChangePasswordView
 )
 
 
@@ -52,6 +52,7 @@ urlpatterns = [
 
 
     path("progress/unlock-up-to/<int:language_id>/<int:module_order>/", MarkLessonsCompletedBeforeModuleView.as_view()),
+    path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     
 ]
 

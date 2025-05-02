@@ -4,11 +4,19 @@ from django.contrib.auth.password_validation import validate_password
 
 
 
+
 # Сериализатор для пользователя
 class UserSerializer(serializers.ModelSerializer):
+    GENDER_CHOICES = [
+        ("M", "Мужской"),
+        ("F", "Женский"),
+    ]
+    gender = serializers.ChoiceField(choices=GENDER_CHOICES, allow_null=True, required=False)
+    birth_date = serializers.DateField(allow_null=True, required=False)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'gender', 'birth_date']
 
 # Сериализатор для регистрации
 class RegisterSerializer(serializers.ModelSerializer):
@@ -86,3 +94,17 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = '__all__'
         read_only_fields = ['user', 'date']
+
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    repeat_password = serializers.CharField(required=True)
+
+    def validate(self, data):
+        if data['new_password'] != data['repeat_password']:
+            raise serializers.ValidationError("Пароли не совпадают.")
+        
+        validate_password(data['new_password'])
+        return data
