@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getLessonsByModule } from "../api/lessons";
 import { Link } from "react-router-dom";
 import styles from "./Style (css)/ModuleItem.module.css";
+import { FaCheckCircle } from "react-icons/fa";
 
 export default function LessonList({ moduleId, completedLessonIds }) {
   const [lessons, setLessons] = useState([]);
@@ -20,21 +21,26 @@ export default function LessonList({ moduleId, completedLessonIds }) {
   }, [moduleId]);
 
   return (
-    <ul className="mt-2 ml-4 list-disc">
+    <ul className={styles.lessonList}>
       {lessons.map((lesson) => {
         const isCompleted = completedLessonIds.includes(lesson.id);
 
         return (
-          <li key={lesson.id}>
-            <Link
-              to={`/lessons/${lesson.slug}`}
-              className={`hover:underline ${
-                isCompleted
-                  ? styles.completedLesson // Если урок завершен
-                  : styles.incompleteLesson // Если урок не завершен
+          <li key={lesson.id} className={styles.lessonItem}>
+            <div
+              className={`${styles.statusIcon} ${
+                isCompleted ? styles.completed : styles.incomplete
               }`}
             >
-              Урок: {lesson.title}
+              <FaCheckCircle size={23} />
+            </div>
+            <Link
+              to={`/lessons/${lesson.slug}`}
+              className={`${styles.lessonLink} ${
+                isCompleted ? styles.completed : styles.incomplete
+              }`}
+            >
+              {lesson.title}
             </Link>
           </li>
         );

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTestLessonsByLanguage } from "../api/lessons";
+import styles from './Style (css)/TestPage.module.css';
 
 export default function TestPage() {
   const navigate = useNavigate();
@@ -23,6 +24,21 @@ export default function TestPage() {
     { label: "Средний", difficulty: 2 },
     { label: "Продвинутый", difficulty: 3 },
   ];
+  
+  function getLevelDescription(label) {
+    switch (label) {
+      case "Я новичок":
+        return "";
+      case "Начальный":
+        return "Могу рассказать о себе";
+      case "Средний":
+        return "Могу поддержать простой разговор";
+      case "Продвинутый":
+        return "Могу обсудить большинство тем";
+      default:
+        return "";
+    }
+  }
 
   const goBack = () => setStep(prev => Math.max(1, prev - 1));
   const closeTest = () => navigate("/");
@@ -46,24 +62,24 @@ export default function TestPage() {
 
   const handleLevelClick = (level) => {
     setSelectedLevel(level.label);
-  
+
     console.log("Доступные уроки:", testLessons);
     console.log("Ожидаемый уровень сложности:", level.difficulty);
-  
+
     const matchingLesson = testLessons.find(
-        (lesson) => lesson.level === level.difficulty
-      );
-  
+      (lesson) => lesson.level === level.difficulty
+    );
+
     console.log("Найденный урок:", matchingLesson);
-  
+
     if (matchingLesson) {
 
       console.log("selectedLanguage.id:", selectedLanguage?.id);
       console.log("Навигация с параметрами:", {
-      isTest: true,
-      difficulty: matchingLesson.level,
-      languageId: selectedLanguage?.id,
-    });
+        isTest: true,
+        difficulty: matchingLesson.level,
+        languageId: selectedLanguage?.id,
+      });
 
       navigate(`/test/${matchingLesson.slug}/exercises`, { state: { isTest: true, difficulty: matchingLesson.level, languageId: selectedLanguage.id } });
 
@@ -73,52 +89,84 @@ export default function TestPage() {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       {/* Навигация */}
-      <div>
-        {step > 1 && <button onClick={goBack}>← Назад</button>}
-        <button onClick={closeTest} style={{ float: "right" }}>Закрыть ✕</button>
+      <div className={styles.navButtons}>
+        {step > 1 && (
+          <button className={styles.backButton} onClick={goBack}>
+            ← Назад
+          </button>
+        )}
+        <button onClick={closeTest} className={styles.closeButton}>
+          <div className={styles.closeButtonInner}>
+            <div className={styles.closeButtonText}>Закрыть</div>
+          </div>
+        </button>
       </div>
 
       {/* Шаг 1 */}
       {step === 1 && (
         <div>
-          <h2>Выбери, какой язык хочешь изучать</h2>
-          {Object.entries(languages).map(([key, { label, id, genitive }]) => (
-            <div key={id}>
-              <button onClick={() => {
-                setSelectedLanguage({ id, label, genitive });
-                setStep(2);
-              }}>
+          <h2 className={styles.stepTitle}>Выбери, какой язык хочешь изучать</h2>
+          <div className={styles.languageOptions}>
+            {Object.entries(languages).map(([key, { label, id, genitive }]) => (
+              <button
+                key={id}
+                className={styles.languageButton}
+                onClick={() => {
+                  setSelectedLanguage({ id, label, genitive });
+                  setStep(2);
+                }}>
                 {label}
               </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
 
       {/* Шаг 2 */}
       {step === 2 && (
-        <div>
-          <h2>Давай узнаем твой уровень {selectedLanguage?.genitive} языка</h2>
-          <button onClick={() => setStep(3)}>Поехали</button>
+        <div className={styles.stepContainer}>
+          <h2 className={styles.stepTitle}>
+            Давай узнаем твой уровень {selectedLanguage?.genitive} языка
+          </h2>
+
+          <div className={styles.descriptionBlob}>
+            <p className={styles.descriptionText}>
+              Это поможет нам определить, какие знания<br />
+              у тебя уже есть, и подобрать подходящую<br />
+              программу обучения
+            </p>
+          </div>
+
+          <button className={styles.primaryButton} onClick={() => setStep(3)}>
+            Поехали!
+          </button>
         </div>
       )}
 
       {/* Шаг 3 */}
       {step === 3 && (
-        <div>
-          <h2>Как бы вы оценили свой уровень языка?</h2>
+        <div className={styles.levelStep}>
+          <h2 className={styles.levelTitle}>
+            Как бы вы оценили свой уровень {selectedLanguage?.genitive}?
+          </h2>
+
           {isLoading ? (
             <p>Загрузка тестов...</p>
           ) : (
-            levels.map((level, i) => (
-              <div key={i}>
-                <button onClick={() => handleLevelClick(level)}>
-                  {level.label}
+            <div className={styles.levelOptions}>
+              {levels.map((level, i) => (
+                <button
+                  key={i}
+                  className={styles.levelButton}
+                  onClick={() => handleLevelClick(level)}
+                >
+                  <strong>{level.label}</strong>
+                  <span className={styles.levelDesc}>{getLevelDescription(level.label)}</span>
                 </button>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
       )}

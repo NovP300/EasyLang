@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import styles from "./styles/LoginModal.module.css";
+import styles from "./styles/ReviewModal.module.css";
 import { createReview, getReviewByUserAndLanguage, updateReview } from "../api/review";
 
 export default function ReviewModal() {
@@ -88,11 +88,12 @@ export default function ReviewModal() {
         ) : (
           // В любом другом случае показываем форму для создания или редактирования отзыва
           <>
-            <div>
+            <div className={styles.stars}>
               {[1, 2, 3, 4, 5].map((star) => (
                 <span
                   key={star}
-                  style={{ cursor: "pointer", color: star <= rating ? "gold" : "gray", fontSize: "24px" }}
+                  className={styles.star}
+                  style={{ color: star <= rating ? "gold" : "gray"}}
                   onClick={() => setRating(star)}
                 >
                   ★
