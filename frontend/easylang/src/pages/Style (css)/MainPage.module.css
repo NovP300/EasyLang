@@ -184,33 +184,6 @@
     background-color: #474747;
 }
 
-/* Мобильная адаптация*/
-@media (max-width: 768px) {
-    .menu_icon {
-        display: flex;
-    }
-
-    .nav_links {
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: rgba(251, 244, 255, 1);
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 0;
-        transform: translateY(-200px);
-        transition: transform 0.3s;
-    }
-
-    .nav_active {
-        transform: translateY(0);
-    }
-
-    .auth_buttons {
-        display: none;
-    }
-}
 
 /* --------------------------------------- */
 .hero_section {
@@ -459,56 +432,6 @@
     background-color: rgb(112, 63, 133);
 }
 
-/* ---------- Адаптив ---------- */
-
-/* Планшеты (768px и меньше) */
-@media (max-width: 768px) {
-    .results_section {
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .results_content {
-        max-width: 100%;
-    }
-
-    .results_columns {
-        flex-direction: column;
-    }
-
-    .results_column {
-        width: 100%;
-    }
-
-    .auth_form {
-        width: 100%;
-        max-width: 400px;
-        margin-top: 30px;
-    }
-}
-
-/* Мобильные (480px и меньше) */
-@media (max-width: 480px) {
-    .results_column li {
-        font-size: 16px;
-        flex-direction: row;
-    }
-
-    .icon {
-        font-size: 24px;
-        margin-right: 10px;
-    }
-
-    .auth_form {
-        padding: 20px;
-    }
-
-    .auth_title {
-        font-size: 18px;
-    }
-}
-
 /* флаги */
 
 .languageSection {
@@ -686,107 +609,10 @@
     opacity: 0.8;
 }
 
-.testLink{
+.testLink {
     color: white;
     text-decoration: none;
 }
-
-/* ---------- Адаптив ---------- */
-
-/* Планшеты (768px и ниже) */
-@media (max-width: 1024px) {
-    .languageWrapper {
-        width: 80%;
-        height: auto;
-        min-height: 200px;
-        flex-direction: column;
-    }
-
-    .languageContainer {
-        flex-wrap: wrap;
-        gap: 30px;
-    }
-
-    .languageDescription {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-    }
-
-    .languageText {
-        max-width: 100%;
-        margin-left: 0;
-        margin-top: 15px;
-        text-align: center;
-    }
-
-    .nextButton {
-        margin-top: 20px;
-    }
-
-    .testContainer {
-        padding: 30px;
-        border-radius: 30% 30% 50% 50% / 50% 50% 30% 30%;
-    }
-
-    .testText {
-        font-size: 18px;
-    }
-
-    .testButton {
-        font-size: 14px;
-        padding: 10px 16px;
-    }
-}
-
-/* Мобильные устройства (до 767px) */
-@media (max-width: 767px) {
-    .title {
-        font-size: 24px;
-    }
-
-    .languageWrapper {
-        width: 90%;
-    }
-
-    .languageButton img {
-        width: 80px;
-        height: 50px;
-    }
-
-    .languageButton span {
-        font-size: 14px;
-    }
-
-    .languageDescription {
-        font-size: 16px;
-        padding: 15px;
-    }
-
-    .languageTitle {
-        font-size: 14px;
-    }
-
-    .languageText {
-        font-size: 14px;
-    }
-
-    .nextButton {
-        font-size: 20px;
-    }
-
-    .testText {
-        font-size: 16px;
-    }
-
-    .testButton {
-        font-size: 14px;
-        padding: 10px 14px;
-    }
-}
-
-
 
 /* Тарифы */
 .pricing {
@@ -868,27 +694,6 @@
 .card_button:hover {
     background-color: rgb(112, 63, 133);
 }
-
-@media (max-width: 1024px) {
-    .pricing_card {
-        flex: 1 1 45%;
-    }
-}
-
-@media (max-width: 768px) {
-    .pricing_card {
-        flex: 1 1 100%;
-    }
-
-    .card_price {
-        margin-top: 20px;
-    }
-
-    .pricing_title {
-        font-size: 28px;
-    }
-}
-
 
 /*  вопросы */
 .faqSection {
@@ -992,7 +797,7 @@
     font-weight: bold;
     cursor: pointer;
     font-size: 18px;
-    margin-top: 20px;
+    margin-top: 100px;
     font-size: 18px;
 }
 
@@ -1034,4 +839,227 @@
     margin-bottom: 8px;
     color: #555;
     font-size: 14px;
+}
+
+/* <= 1200px */
+@media (max-width: 1200px) {
+    .pricing_card {
+        width: 30%;
+        padding: 15px;
+    }
+
+    .results_column {
+        gap: 15px;
+    }
+
+    .nav_links {
+        gap: 20px;
+    }
+}
+
+/* <= 1150px */
+@media (max-width: 1150px) {
+    .pricing_card {
+        width: 28%;
+    }
+
+    .results_columns {
+        padding: 0 10px;
+    }
+
+    .nav_links {
+        gap: 15px;
+        font-size: 14px;
+    }
+
+    .testContainer {
+        padding: 20px;
+    }
+}
+
+/* <= 1024px */
+@media (max-width: 1024px) {
+    .reviewGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .languageDescription {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .languageImage {
+        width: 100%;
+        max-width: 180px;
+        margin-bottom: 10px;
+    }
+
+    .auth_buttons {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+    }
+}
+
+/* <= 850px */
+@media (max-width: 850px) {
+    .pricing_card {
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .buttons_row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buttons_row button {
+        width: 70%;
+        margin: 8px 0;
+    }
+
+    .faqItem {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .nav_links {
+        display: none;
+    }
+
+    .menu_icon {
+        display: block;
+    }
+
+    .nav_links.active {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        padding: 15px;
+    }
+}
+
+/* <= 768px */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu_icon {
+        display: flex;
+    }
+
+    .nav_links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav_links.active {
+        display: flex;
+    }
+
+    .buttons_row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buttons_row button {
+        width: 90%;
+        height: auto;
+        font-size: 16px;
+    }
+
+    .languageContainer {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .testContainer {
+        padding: 30px;
+        border-radius: 20px;
+    }
+
+    .pricing_card {
+        padding: 20px 10px;
+    }
+
+    .faqItem {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .reviewGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* <= 600px */
+@media (max-width: 600px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .languageText {
+        font-size: 14px;
+    }
+
+    .languageImage {
+        max-width: 140px;
+    }
+
+    .auth_buttons button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .reviewGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .results_column {
+        width: 100%;
+        padding: 0;
+    }
+
+    .testContainer {
+        padding: 15px;
+        border-radius: 12px;
+    }
+}
+
+/* <= 480px */
+@media (max-width: 480px) {
+
+    .buttons_row button,
+    .auth_buttons button {
+        width: 100%;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .faqItem {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .languageText {
+        font-size: 13px;
+    }
+
+    .pricing_card {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .testContainer {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
