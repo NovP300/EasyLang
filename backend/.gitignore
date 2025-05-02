@@ -1,0 +1,25 @@
+# Django/Python .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+*.log
+*.pot
+
+# Environments
+.env/
+.venv/
+venv/
+env/
+
+# PyCharm/VS Code
+.idea/
+.vscode/
