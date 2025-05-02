@@ -76,10 +76,10 @@ export default function ReviewModal() {
         {existingReview && !editMode ? (
           // Если отзыв существует и не в режиме редактирования
           <>
-            <div>
+            <div className={styles.redac}>
               <p><strong>Ваш отзыв:</strong></p>
               <p>{existingReview.response}</p>
-              <p><strong>Оценка:</strong> {existingReview.estimation} ★</p>
+              <p><strong>Оценка:</strong> {existingReview.estimation} <kdb style={{ color: "gold" }}>★</kdb></p>
               <button onClick={() => setEditMode(true)} className={styles.modal_button}>
                 Редактировать отзыв
               </button>
@@ -88,6 +88,8 @@ export default function ReviewModal() {
         ) : (
           // В любом другом случае показываем форму для создания или редактирования отзыва
           <>
+            <h3 className={styles.text1} >Ваше мнение важно для нас!</h3>
+            <p>Оцените наш сайт</p>
             <div className={styles.stars}>
               {[1, 2, 3, 4, 5].map((star) => (
                 <span
@@ -100,11 +102,11 @@ export default function ReviewModal() {
                 </span>
               ))}
             </div>
-
+            <p>Расскажите, что вам понравилось в курсе и что можно улучшить</p>
             <textarea
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
-              placeholder="Напишите отзыв..."
+              placeholder="Оставьте комментарий..."
               className={styles.input}
               style={{ height: "100px" }}
             />
