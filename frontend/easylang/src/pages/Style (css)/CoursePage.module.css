@@ -49,14 +49,15 @@ body {
 }
 
 .courseTitle {
-  font-size: 24px;
+  font-size: 27px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .courseText {
   font-weight: 600;
   margin-bottom: 8px;
+  font-size: 17px;
 }
 
 .courseDescription {
@@ -117,7 +118,7 @@ body {
 }
 
 .modulesTitle {
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 600;
   margin-bottom: 16px;
 }
