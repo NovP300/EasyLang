@@ -10,58 +10,41 @@
 }
 
 /* Навигационные кнопки */
-.navButtons {
-<<<<<<< HEAD
+.navButtons{
   width: 100%;
   background-color: #f2e4f9;
   padding: 16px 0;  /* Отступы сверху и снизу */
   margin-bottom: 32px;  /* Отступ снизу */
   border-radius: 12px;  /* Скругленные углы */
-
-=======
   display: flex;
   gap: 16px;
   margin-bottom: 32px;
->>>>>>> b1392f07657c20b0bdcb211a4ba49e233ff61fe5
 }
+
 
 .navButtons a,
 .navButtons button {
-<<<<<<< HEAD
   padding: 15px 20px;
   border-radius: 10px;
   border: none;
-  
-=======
   padding: 10px 20px;
   border-radius: 12px;
   border: none;
   background-color: #f1f1f1;
->>>>>>> b1392f07657c20b0bdcb211a4ba49e233ff61fe5
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
   color: #333;
   transition: all 0.2s ease;
-<<<<<<< HEAD
-  
-=======
->>>>>>> b1392f07657c20b0bdcb211a4ba49e233ff61fe5
 }
 
 .navButtons a:hover,
 .navButtons button:hover {
-<<<<<<< HEAD
   background-color: #ebcff8;
 }
 
-/* Заголовок страницы */
-=======
-  background-color: #e2e2e2;
-}
 
 /* Заголовок */
->>>>>>> b1392f07657c20b0bdcb211a4ba49e233ff61fe5
 .pageTitle {
   font-size: 28px;
   font-weight: 700;
@@ -75,7 +58,6 @@
   margin-bottom: 32px;
 }
 
-<<<<<<< HEAD
 /* Контейнер для блока заголовка и введения */
 .firstBlock {
   margin-bottom: 32px;
@@ -167,7 +149,6 @@
 }
 
 /* Словарь — список */
-=======
 /* Блоки теории */
 .block {
   margin-bottom: 40px;
@@ -190,14 +171,12 @@
 }
 
 /* Словарь */
->>>>>>> b1392f07657c20b0bdcb211a4ba49e233ff61fe5
 .vocabularyList {
   list-style: none;
   padding: 0;
 }
 
 .vocabularyList li {
-<<<<<<< HEAD
   font-size: 16px;
   padding: 8px 0;
   border-bottom: 1px solid #f0f0f0;
@@ -222,7 +201,6 @@
   display: inline-block;
   margin-top: 32px;
   padding: 14px 28px;
-=======
   padding: 6px 0;
 }
 
@@ -238,7 +216,6 @@
   display: inline-block;
   margin-top: 20px;
   padding: 12px 24px;
->>>>>>> b1392f07657c20b0bdcb211a4ba49e233ff61fe5
   background-color: #000;
   color: #fff;
   border-radius: 12px;
