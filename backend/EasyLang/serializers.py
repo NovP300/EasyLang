@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Language, Module, Lesson, Exercise, LessonProgress, Review
+from .models import User, Language, Module, Lesson, Exercise, LessonProgress, Review, Feedback
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -147,3 +147,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return data
 
 
+from rest_framework import serializers
+from .models import Feedback
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = ['id', 'name', 'age', 'phone', 'email', 'created_at']

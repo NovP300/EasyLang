@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
 from rest_framework import generics, permissions
-from EasyLang.models import User, Language, Module, Lesson, Exercise, LessonProgress, Review
+from EasyLang.models import User, Language, Module, Lesson, Exercise, LessonProgress, Review, Feedback
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .serializers import (UserSerializer, RegisterSerializer, LanguageSerializer, ModuleSerializer, 
+from .serializers import (UserSerializer, RegisterSerializer, LanguageSerializer, ModuleSerializer, FeedbackSerializer,
 LessonSerializer, ExerciseSerializer, LessonProgressSerializer,
  ReviewSerializer, ChangePasswordSerializer, CustomTokenObtainPairSerializer)
 
@@ -317,3 +317,26 @@ class ChangePasswordView(APIView):
             return Response({"detail": "Пароль успешно обновлён."}, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FeedbackView(generics.ListCreateAPIView):
+    queryset = Feedback.objects.all().order_by('-created_at')
+    serializer_class = FeedbackSerializer
+
+    def get(self, request, *args, **kwargs):
+        # Можно добавить дополнительную логику для GET-запросов
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'status': 'success',
+                'message': 'Спасибо за вашу заявку! Мы свяжемся с вами в ближайшее время.',
+                'data': serializer.data
+            }, status=201)
+        return Response({
+            'status': 'error',
+            'errors': serializer.errors
+        }, status=400)

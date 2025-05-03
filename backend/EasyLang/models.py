@@ -145,3 +145,16 @@ class Review(models.Model):
         return f"{self.user.username} - {self.language.name} - {self.estimation}"
 
 
+class Feedback(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Имя")
+    age = models.PositiveIntegerField(verbose_name="Возраст")
+    phone = models.CharField(max_length=20, verbose_name="Телефон")
+    email = models.EmailField(verbose_name="Email")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+
+    class Meta:
+        verbose_name = "Обратная связь"
+        verbose_name_plural = "Обратные связи"
+
+    def __str__(self):
+        return f"{self.name} ({self.email})"

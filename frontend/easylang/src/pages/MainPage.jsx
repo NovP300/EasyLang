@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useLocation,  useOutletContext } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Style (css)/MainPage.module.css";
 import img1 from "./pictures/france.png";
@@ -6,8 +6,9 @@ import img2 from "./pictures/nemec.png";
 import img3 from "./pictures/spanish.png";
 import img4 from "./pictures/USA.png";
 import { getAllReviews } from "../api/review";
-import { getUserById, logout } from "../api/profile";
+import { getUserById } from "../api/profile";
 import { FaStar, FaMedal } from "react-icons/fa";
+import { submitFeedback } from '../api/feedback';
 
 
 const languages = [
@@ -85,7 +86,7 @@ export default function MainPage() {
     const faqRef = useRef(null);
     const reviewsRef = useRef(null);
     const contactsRef = useRef(null);
-    const profileMenuRef = useRef(null);
+
 
     const scrollToSection = (ref) => {
         setMenuOpen(false); // Закрываем бургер-меню при переходе
@@ -125,40 +126,61 @@ export default function MainPage() {
         setModalContent('');
     };
 
+    //ФОРМАААА
+
     const [formData, setFormData] = useState({
         name: '',
         age: '',
         phone: '',
         email: '',
-    });
+      });
+
 
     const [errors, setErrors] = useState({});
+    const [submitStatus, setSubmitStatus] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [selectedLanguage, setSelectedLanguage] = useState(null);
+
+    //ВАЛИДАЦИЯ ФОРМЫ ЗАЯВОК
     const validateForm = () => {
-        let newErrors = {};
-
-        if (!formData.name.trim()) {
-            newErrors.name = 'Введите имя';
+        const newErrors = {};
+        
+        if (!formData.name.trim()) newErrors.name = 'Введите имя';
+        if (!formData.age || isNaN(formData.age) || formData.age < 5 || formData.age > 120) {
+          newErrors.age = 'Введите возраст от 5 до 120 лет';
         }
-        if (!formData.age.trim() || isNaN(formData.age) || formData.age < 1) {
-            newErrors.age = 'Введите корректный возраст';
+        if (!formData.phone || !/^(\+7|8)[0-9]{10}$/.test(formData.phone)) {
+          newErrors.phone = 'Формат: +79991234567';
         }
-        if (!formData.phone.trim() || !/^\+?\d{10,15}$/.test(formData.phone)) {
-            newErrors.phone = 'Введите корректный номер телефона';
+        if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+          newErrors.email = 'Введите корректный email';
         }
-        if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            newErrors.email = 'Введите корректный email';
-        }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
-            alert('Заявка отправлена!');
+        
+        if (!validateForm()) return;
+        
+        setIsSubmitting(true);
+        
+        try {
+          const result = await submitFeedback(formData);
+          setSubmitStatus(result);
+          
+          if (result.success) {
+            setFormData({
+              name: '',
+              age: '',
+              phone: '',
+              email: ''
+            });
+          }
+        } finally {
+          setIsSubmitting(false);
         }
     };
 
@@ -198,6 +220,9 @@ export default function MainPage() {
 
         fetchReviewsAndUsers();
     }, []);
+
+
+    
 
     return (
         <div className={styles.home}>
@@ -285,40 +310,67 @@ export default function MainPage() {
                 </div>
                 <div className={styles.auth_form}>
                     <h3 className={styles.auth_title}>Получите программу и консультацию</h3>
+
+                    {submitStatus && (
+                        <div className={submitStatus.success ? styles.successMessage : styles.errorMessage}>
+                        {submitStatus.message}
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit}>
+                        <div className={styles.formGroup}>
                         <input
                             type="text"
                             placeholder="Имя"
                             value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            className={errors.name ? styles.errorInput : ''}
                         />
                         {errors.name && <span className={styles.error}>{errors.name}</span>}
+                        </div>
 
+                        <div className={styles.formGroup}>
                         <input
-                            type="text"
+                            type="number"
                             placeholder="Возраст"
                             value={formData.age}
-                            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                            onChange={(e) => setFormData({...formData, age: e.target.value})}
+                            className={errors.age ? styles.errorInput : ''}
+                            min="5"
+                            max="120"
                         />
                         {errors.age && <span className={styles.error}>{errors.age}</span>}
+                        </div>
 
+                        <div className={styles.formGroup}>
                         <input
-                            type="text"
-                            placeholder="Телефон"
+                            type="tel"
+                            placeholder="Телефон (+79991234567)"
                             value={formData.phone}
-                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                            className={errors.phone ? styles.errorInput : ''}
                         />
                         {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+                        </div>
 
+                        <div className={styles.formGroup}>
                         <input
                             type="email"
                             placeholder="Email"
                             value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            className={errors.email ? styles.errorInput : ''}
                         />
                         {errors.email && <span className={styles.error}>{errors.email}</span>}
+                        </div>
 
-                        <button type="submit" className={styles.submit_btn}>Оставить заявку</button>
+                        <button 
+                        type="submit" 
+                        className={styles.submit_btn}
+                        disabled={isSubmitting}
+                        >
+                        {isSubmitting ? 'Отправка...' : 'Оставить заявку'}
+                        </button>
                     </form>
                 </div>
             </section>
