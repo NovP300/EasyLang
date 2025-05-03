@@ -168,70 +168,68 @@ class ProgressOverviewView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        all_lessons = Lesson.objects.all()
-        user_progress = LessonProgress.objects.filter(user=request.user)
+        languages = Language.objects.all()
+        result = {}
 
-        completed_lesson_ids = set(user_progress.values_list("lesson_id", flat=True))
+        for lang in languages:
+            # Получаем модули для текущего языка (исключая тестовые)
+            modules = Module.objects.filter(language=lang).exclude(title__iexact="Test")
+            
+            # Получаем все ID уроков для этих модулей
+            lesson_ids = set()
+            for module in modules:
+                lesson_ids.update(module.lessons.values_list('id', flat=True))
+            
+            # Получаем пройденные уроки пользователя для этого языка
+            completed_lessons = LessonProgress.objects.filter(
+                user=request.user,
+                lesson__module__language=lang
+            ).values_list('lesson_id', flat=True)
+            
+            # Считаем завершенные модули
+            completed_modules_count = 0
+            for module in modules:
+                module_lessons = set(module.lessons.values_list('id', flat=True))
+                if module_lessons and module_lessons.issubset(completed_lessons):
+                    completed_modules_count += 1
+            
+            # Формируем результат для языка
+            result[str(lang.id)] = {  # Используем ID языка как ключ
+                "completed_lessons": len([lid for lid in lesson_ids if lid in completed_lessons]),
+                "total_lessons": len(lesson_ids),
+                "completed_modules": completed_modules_count,
+                "total_modules": modules.count(),
+                "language_name": lang.name  # Добавляем название языка
+            }
 
-        # Исключаем тестовый модуль
-        all_modules = Module.objects.exclude(title__iexact="Test").prefetch_related("lessons")
-
-        # Считаем уроки только из обычных модулей
-        lesson_ids_in_modules = set()
-        for module in all_modules:
-            lesson_ids_in_modules.update(module.lessons.values_list("id", flat=True))
-
-        total_lessons = len(lesson_ids_in_modules)
-        completed_lessons = len([lid for lid in lesson_ids_in_modules if lid in completed_lesson_ids])
-
-        # Считаем модули, где все уроки пройдены
-        completed_modules = 0
-        for module in all_modules:
-            lesson_ids = set(module.lessons.values_list("id", flat=True))
-            if lesson_ids and lesson_ids.issubset(completed_lesson_ids):
-                completed_modules += 1
-
-        total_modules = all_modules.count()
-
-        return Response({
-            "completed_lessons": completed_lessons,
-            "total_lessons": total_lessons,
-            "completed_modules": completed_modules,
-            "total_modules": total_modules,
-        })
+        return Response(result)
 
 
 class DetailedProgressView(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
     def get(self, request):
-        user = request.user
-
-        # Все завершенные уроки пользователя
-        completed_lessons = LessonProgress.objects.filter(user=user).values_list("lesson_id", flat=True)
-        completed_lessons_set = set(completed_lessons)
-
         modules_data = []
-
-        for module in Module.objects.prefetch_related("lessons"):
-            lesson_ids = list(module.lessons.values_list("id", flat=True))
-            total = len(lesson_ids)
-            completed = sum(1 for lid in lesson_ids if lid in completed_lessons_set)
+        for module in Module.objects.prefetch_related("lessons", "language"):
+            lessons = module.lessons.all()
+            completed = LessonProgress.objects.filter(
+                user=request.user,
+                lesson__in=lessons
+            ).count()
 
             modules_data.append({
                 "id": module.id,
                 "title": module.title,
+                "language_id": module.language.id,  # Добавили!
                 "completed_lessons": completed,
-                "total_lessons": total,
-                "is_completed": completed == total and total > 0,
+                "total_lessons": lessons.count(),
+                "is_completed": completed == lessons.count() and lessons.exists(),
             })
 
         return Response({
-            "completed_lesson_ids": list(completed_lessons_set),
+            "completed_lesson_ids": list(
+                LessonProgress.objects.filter(user=request.user).values_list("lesson_id", flat=True)
+            ),
             "modules": modules_data
         })
-
 
 
 

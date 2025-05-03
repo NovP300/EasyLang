@@ -39,3 +39,26 @@ export const applyTestResults = async () => {
     return { applied: false, error: error.message };
   }
 };
+
+
+// Получаем сводную статистику
+export const getProgressOverview = async () => {
+  try {
+    const response = await axiosInstance.get('/progress/overview/');
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка загрузки общей статистики:', error);
+    throw error;
+  }
+};
+
+// Получаем детализированный прогресс
+export const getDetailedProgress = async () => {
+  try {
+    const response = await axiosInstance.get('/progress/detailed/');
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка загрузки детального прогресса:', error);
+    throw error;
+  }
+};
