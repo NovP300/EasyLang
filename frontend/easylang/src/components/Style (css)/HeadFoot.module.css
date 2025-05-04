@@ -16,6 +16,7 @@
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    flex-wrap: wrap;
 }
 
 .logo {
@@ -58,15 +59,14 @@
 
 .nav_links li button:hover {
     color: rgb(0, 0, 0);
-
     background: rgb(230, 230, 230);
-    /* Серый фон при наведении */
 }
 
-/* Кнопки авторизации */
 .auth_buttons {
     display: flex;
     gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap;
 }
 
 .login_btn {
@@ -98,68 +98,53 @@
     background: rgb(119, 90, 131);
 }
 
-.profile_btn {
-    padding: 8px 16px;
-    border-radius: 5px;
-    background: rgb(0, 0, 0);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.profile_btn:hover {
-    background: rgb(51, 50, 51);
-}
-
 .profile_wrapper {
     position: relative;
     display: inline-block;
+    width: 100%;
+    min-width: 120px;
 }
 
 .profile_btn {
-    padding: 10px 16px;
-    border-radius: 8ps;
+    padding: 8px 12px;
+    border-radius: 3px 3px 0 0;
     background: black;
     color: white;
     border: none;
     cursor: pointer;
     font-weight: 500;
     transition: background 0.2s;
-    width: 180px;
-    text-align: center;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    width: 100%;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.profile_btn:hover {
-    background: rgb(51, 50, 51);
-}
-
+.profile_btn:hover,
 .profile_btn_active {
-    background: rgb(51, 50, 51);
-    /* Чуть светлее при открытии */
+    background: #333333;
 }
 
 .dropdown_menu {
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgb(51, 50, 51);
+    right: 0;
+    background: #333333;
     border: 1px solid #ccc;
     border-top: none;
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 3px 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 180px;
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.3s ease;
     z-index: 100;
+    width: 100%;
 }
 
 .dropdown_open {
     max-height: 500px;
-    /* Достаточно для всех кнопок */
 }
 
 .divider {
@@ -171,17 +156,17 @@
 .dropdown_item,
 .dropdown_item:link,
 .dropdown_item:visited {
-  display: block;
-  background: none;
-  border: none;
-  padding: 12px 16px;
-  text-align: center;
-  cursor: pointer;
-  font-size: 15px;
-  transition: background 0.2s;
-  color: #fffefe;
-  width: 100%;
-  text-decoration: none;
+    display: block;
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.2s;
+    color: #fffefe;
+    width: 100%;
+    text-decoration: none;
 }
 
 .dropdown_item:hover {
@@ -190,7 +175,7 @@
 
 
 
-
+/*футер*/
 .footer_container_custom {
     display: flex;
     justify-content: space-between;
@@ -200,208 +185,216 @@
     padding: 40px 20px;
     gap: 30px;
     text-align: left;
-    
-  }
-  
-  .footer_block {
+}
+
+.footer_block {
     flex: 1;
     min-width: 260px;
-    
-  }
-  
-  .footer_block h2 {
+}
+
+.footer_block h2 {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 10px;
     line-height: 1.2;
-    
-  }
-  
-  .footer_block h4 {
+}
+
+.footer_block h4 {
     font-size: 16px;
     font-weight: bold;
     margin: 10px 0;
-  }
-  
-  .footer_block p {
+}
+
+.footer_block p {
     font-size: 14px;
     color: #333;
     margin: 4px 0;
-  }
-  
-  .footer_title {
+}
+
+.footer_title {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 10px;
-  }
-  
-  .socials_title {
+}
+
+.socials_title {
     margin-top: 20px;
     font-size: 24px;
-  }
-  
-  .first_column {
+}
+
+.first_column {
     margin-top: 0;
-  }
-  
-  .lowered {
-    margin-top: 65px; /* Сдвиг вниз второй и третьей колонок */
-  }
-  
-  .socials {
+}
+
+.lowered {
+    margin-top: 65px;
+}
+
+.socials {
     display: flex;
     gap: 10px;
     margin: 10px 0;
     margin-bottom: 150px;
-  }
-  
-  .legal p {
+}
+
+.legal p {
     margin: 2px 0;
-  }
+}
 
 /* Адаптация для экранов <= 1200px */
 @media (max-width: 1200px) {
-  .nav {
-      padding: 0 20px;
-  }
+    .nav {
+        padding: 0 20px;
+    }
 
-  .nav_links {
-      gap: 16px;
-  }
+    .logo {
+        font-size: 1.3rem;
+    }
 
-  .auth_buttons {
-      gap: 8px;
-  }
+    .nav_links {
+        gap: 16px;
+    }
 
-  .footer_container {
-      padding: 0 20px;
-      gap: 20px;
-  }
+    .nav_links li button {
+        font-size: 0.95rem;
+        padding: 4px 8px;
+    }
+
+    .auth_buttons {
+        gap: 8px;
+    }
+
+    .auth_buttons button {
+        padding: 6px 12px;
+    }
+
+    .profile_btn {
+        width: 160px;
+    }
+
+    .footer_container {
+        padding: 0 20px;
+        gap: 20px;
+    }
 }
 
 /* <= 992px */
 @media (max-width: 992px) {
-  .header {
-      padding: 10px 10px;
-  }
+    .header {
+        padding: 10px 10px;
+    }
 
-  .nav {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 10px;
-  }
+    .logo {
+        font-size: 1.1rem;
+    }
 
-  .logo {
-      font-size: 1.2rem;
-  }
+    .nav {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+    }
 
-  .nav_links {
-      gap: 10px;
-  }
+    .logo {
+        font-size: 1.2rem;
+    }
 
-  .nav_links li button {
-      font-size: 0.9rem;
-      padding: 4px 8px;
-  }
+    .nav_links {
+        gap: 10px;
+    }
 
-  .auth_buttons {
-      gap: 6px;
-  }
+    .nav_links li button {
+        font-size: 0.85rem;
+        padding: 4px 6px;
+    }
 
-  .login_btn,
-  .signup_btn,
-  .profile_btn {
-      padding: 6px 10px;
-      font-size: 0.9rem;
-  }
+    .auth_buttons {
+        gap: 6px;
+    }
 
-  .profile_btn {
-      width: auto;
-  }
+    .login_btn,
+    .signup_btn,
+    .profile_btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+
+
 }
 
-@media (max-width: 825px) {
-  .nav_links {
-    display: none !important;
-  }
+@media (max-width: 858px) {
+    .auth_buttons {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .profile_wrapper {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .dropdown_menu {
+        width: 160px;
+        /* фиксируем ширину */
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 /* <= 768px */
 @media (max-width: 768px) {
-  .nav {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 10px 15px;
-  }
+    .nav {
+        position: relative;
+    }
 
-  .logo {
-      font-size: 1.2rem;
-  }
+    .auth_buttons {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-end;
+    }
 
-  .nav_links {
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      background: rgba(251, 244, 255, 1);
-      flex-direction: column;
-      align-items: center;
-      padding: 10px 0;
-      transform: translateY(-200px);
-      transition: transform 0.3s;
-      z-index: 99;
-  }
+    .profile_wrapper {
+        position: absolute;
+        top: -20px;
+        left: 440px;
+        right: 80px;
+        display: inline-block;
+        width: 50%;
+    }
+    
+    .profile_btn {
+        width: 50%;
+        font-size: 1rem;
+    }
+    .dropdown_menu{
+        width: 50%;
+    }
+    
+    .nav_links {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 20px;
+    }
 
-  .nav_active {
-      transform: translateY(0);
-  }
+    .nav_links li button {
+        width: 100%;
+        text-align: center;
+    }
 
-  .auth_buttons {
-      display: none;
-  }
+    .footer_container {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+    }
 
-  .menu_icon {
-      display: flex;
-  }
-
-  .footer_container {
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 10px;
-  }
-
-  .footer_column {
-      width: 100%;
-      max-width: 300px;
-      text-align: center;
-  }
-}
-
-/* <= 576px */
-@media (max-width: 576px) {
-  .logo {
-      font-size: 1rem;
-  }
-
-  .footer_column h4 {
-      font-size: 15px;
-  }
-
-  .footer_column li {
-      font-size: 13px;
-  }
-
-  .dropdown_item {
-      font-size: 14px;
-  }
-
-  .profile_btn {
-      width: 100%;
-      font-size: 14px;
-      padding: 10px 12px;
-  }
-
-  .dropdown_menu {
-      width: 100%;
-  }
+    .footer_column {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
 }
