@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MEDIA_URL } from "../../config";
 import styles from "./Style/AudioOrderExercise.module.css";
-import img1 from "./image/image.png";
+import img1 from "./image/image4.png";
 const AudioOrderExercise = ({ exercise, onAnswer }) => {
   const { header, data } = exercise;
   const { audio, options, correct_answer } = data;
@@ -53,7 +53,7 @@ const AudioOrderExercise = ({ exercise, onAnswer }) => {
         <img src={img1} alt="Bear" className={styles.bear} />
         <div className={styles.audioIcon}>
           <audio controls>
-            <source src={`${MEDIA_URL}${audio}`} type="audio/mpeg" />
+            <source src={`${MEDIA_URL}${audio}`} />
             Ваш браузер не поддерживает аудио.
           </audio>
         </div>
