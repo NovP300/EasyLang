@@ -4,6 +4,7 @@ import { FaXTwitter, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa6"
 
 const Footer = React.forwardRef((props, ref) => {
     return (
+        
         <div className={styles.home}>
             <footer className={styles.footer} ref={ref}>
                 <div className={styles.footer_container_custom}>

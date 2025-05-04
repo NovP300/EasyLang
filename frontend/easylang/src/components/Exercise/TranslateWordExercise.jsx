@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Style/TranslateWordExercise.module.css";
-import img1 from "./image/image.png";
+import img1 from "./image/image5.png";
 
 const TranslateWordExercise = ({ exercise, onAnswer }) => {
   const { header, data } = exercise;
