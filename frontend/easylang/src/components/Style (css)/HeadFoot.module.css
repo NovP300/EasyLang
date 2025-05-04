@@ -259,80 +259,86 @@
     margin: 2px 0;
   }
 
-/* <= 1200px */
+/* Адаптация для экранов <= 1200px */
 @media (max-width: 1200px) {
-    .nav {
+  .nav {
       padding: 0 20px;
-    }
-  
-    .nav_links {
+  }
+
+  .nav_links {
       gap: 16px;
-    }
-  
-    .auth_buttons {
+  }
+
+  .auth_buttons {
       gap: 8px;
-    }
-  
-    .footer_container {
+  }
+
+  .footer_container {
       padding: 0 20px;
       gap: 20px;
-    }
   }
-  
-  /* <= 992px */
-  @media (max-width: 992px) {
-    .header {
-        padding: 10px 10px;
-      }
-    
-      .nav {
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 10px;
-      }
-    
-      .logo {
-        font-size: 1.2rem;
-      }
-    
-      .nav_links {
-        gap: 10px;
-      }
-    
-      .nav_links li button {
-        font-size: 0.9rem;
-        padding: 4px 8px;
-      }
-    
-      .auth_buttons {
-        gap: 6px;
-      }
-    
-      .login_btn,
-      .signup_btn,
-      .profile_btn {
-        padding: 6px 10px;
-        font-size: 0.9rem;
-      }
-    
-      .profile_btn {
-        width: auto;
-      }
+}
+
+/* <= 992px */
+@media (max-width: 992px) {
+  .header {
+      padding: 10px 10px;
   }
-  
-  /* <= 768px (уже частично есть, здесь усилим поведение) */
-  @media (max-width: 768px) {
-    .nav {
+
+  .nav {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+  }
+
+  .logo {
+      font-size: 1.2rem;
+  }
+
+  .nav_links {
+      gap: 10px;
+  }
+
+  .nav_links li button {
+      font-size: 0.9rem;
+      padding: 4px 8px;
+  }
+
+  .auth_buttons {
+      gap: 6px;
+  }
+
+  .login_btn,
+  .signup_btn,
+  .profile_btn {
+      padding: 6px 10px;
+      font-size: 0.9rem;
+  }
+
+  .profile_btn {
+      width: auto;
+  }
+}
+
+@media (max-width: 825px) {
+  .nav_links {
+    display: none !important;
+  }
+}
+
+/* <= 768px */
+@media (max-width: 768px) {
+  .nav {
       flex-direction: column;
       align-items: flex-start;
       padding: 10px 15px;
-    }
-  
-    .logo {
+  }
+
+  .logo {
       font-size: 1.2rem;
-    }
-  
-    .nav_links {
+  }
+
+  .nav_links {
       position: absolute;
       top: 60px;
       left: 0;
@@ -344,59 +350,58 @@
       transform: translateY(-200px);
       transition: transform 0.3s;
       z-index: 99;
-    }
-  
-    .nav_active {
+  }
+
+  .nav_active {
       transform: translateY(0);
-    }
-  
-    .auth_buttons {
+  }
+
+  .auth_buttons {
       display: none;
-    }
-  
-    .menu_icon {
+  }
+
+  .menu_icon {
       display: flex;
-    }
-  
-    .footer_container {
+  }
+
+  .footer_container {
       flex-direction: column;
       align-items: center;
       padding: 20px 10px;
-    }
-  
-    .footer_column {
+  }
+
+  .footer_column {
       width: 100%;
       max-width: 300px;
       text-align: center;
-    }
   }
-  
-  /* <= 576px */
-  @media (max-width: 576px) {
-    .logo {
+}
+
+/* <= 576px */
+@media (max-width: 576px) {
+  .logo {
       font-size: 1rem;
-    }
-  
-    .footer_column h4 {
+  }
+
+  .footer_column h4 {
       font-size: 15px;
-    }
-  
-    .footer_column li {
+  }
+
+  .footer_column li {
       font-size: 13px;
-    }
-  
-    .dropdown_item {
+  }
+
+  .dropdown_item {
       font-size: 14px;
-    }
-  
-    .profile_btn {
+  }
+
+  .profile_btn {
       width: 100%;
       font-size: 14px;
       padding: 10px 12px;
-    }
-  
-    .dropdown_menu {
-      width: 100%;
-    }
   }
-  
+
+  .dropdown_menu {
+      width: 100%;
+  }
+}
