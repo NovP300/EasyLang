@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'gender', 'birth_date']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'gender', 'birth_date', 'role']
 
 # Сериализатор для регистрации
 class RegisterSerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = ['id', 'title', 'difficulty_level', 'module', 'slug', 'theory']
+        fields = ['id', 'title', 'difficulty_level', 'module', 'slug', 'theory', 'lesson_order']
 
 
 class LessonShortSerializer(serializers.ModelSerializer):
@@ -89,6 +89,7 @@ class LessonProgressSerializer(serializers.ModelSerializer):
         model = LessonProgress
         fields = ['id', 'user', 'lesson']
         read_only_fields = ['user'] 
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
@@ -153,4 +154,4 @@ from .models import Feedback
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
-        fields = ['id', 'name', 'age', 'phone', 'email', 'created_at']
+        fields = ['id', 'name', 'age', 'phone', 'email', 'created_at', 'is_done']

@@ -11,7 +11,7 @@ export default function LessonList({ moduleId, completedLessonIds }) {
     const fetchLessons = async () => {
       try {
         const data = await getLessonsByModule(moduleId);
-        setLessons(data);
+        setLessons(data.sort((a, b) => a.lesson_order - b.lesson_order));
       } catch (error) {
         console.error(error.message);
       }

@@ -28,15 +28,20 @@ export default function ReviewModal() {
     }
 
     try {
-      const reviewData = { response: reviewText, estimation: rating };
+      const reviewData = {
+        response: reviewText,
+        estimation: rating,
+        is_moderated: true,
+        moderation_status: "pending",
+      };
       if (editMode) {
         // Если в режиме редактирования, обновляем отзыв
         await updateReview(existingReview.id, reviewData);
-        alert("Отзыв успешно обновлен!");
+        alert("Отзыв отправлен на повторную модерацию.");
       } else {
         // Если новый отзыв, создаем его
         await createReview(languageId, reviewText, rating);
-        alert("Отзыв успешно отправлен!");
+        alert("Отзыв отправлен на модерацию.");
       }
       navigate(background.pathname); // Закрываем модалку после отправки отзыва
     } catch (error) {
@@ -65,6 +70,20 @@ export default function ReviewModal() {
     fetchExistingReview();
   }, [languageId]);
 
+
+  const renderModerationStatus = (status) => {
+    switch (status) {
+      case "pending":
+        return <p className={styles.status_pending}>Отзыв на модерации</p>;
+      case "approved":
+        return <p className={styles.status_approved}>Отзыв одобрен</p>;
+      case "rejected":
+        return <p className={styles.status_rejected}>Отзыв отклонён. Вы можете отредактировать его.</p>;
+      default:
+        return null;
+    }
+  };
+
   if (loading) return <p>Загрузка...</p>;
 
   return (
@@ -80,6 +99,7 @@ export default function ReviewModal() {
               <p><strong>Ваш отзыв:</strong></p>
               <p>{existingReview.response}</p>
               <p><strong>Оценка:</strong> {existingReview.estimation} <kdb style={{ color: "gold" }}>★</kdb></p>
+              {renderModerationStatus(existingReview.moderation_status)}
               <button onClick={() => setEditMode(true)} className={styles.modal_button}>
                 Редактировать отзыв
               </button>

@@ -14,3 +14,13 @@ export const submitFeedback = async (formData) => {
     };
   }
 };
+
+export const getAllFeedbacks = async () => {
+  try {
+    const response = await axiosInstance.get('/feedback/');
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении заявок:', error);
+    throw new Error('Не удалось загрузить заявки');
+  }
+};

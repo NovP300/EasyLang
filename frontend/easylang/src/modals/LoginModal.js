@@ -13,7 +13,7 @@ const LoginModal = () => {
   const handleLogin = async () => {
     try {
       await login(email, password);
-      navigate("/profile");
+      navigate("/");
     } catch (error) {
       alert("Ошибка входа. Проверьте логин и пароль.");
     }

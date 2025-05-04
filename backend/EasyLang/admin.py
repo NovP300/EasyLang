@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Language, Module, Lesson, Exercise
+from django.contrib.auth.admin import UserAdmin
+from .models import Language, Module, Lesson, Exercise, User, Review
 
 class ModuleInline(admin.TabularInline):
     model = Module
@@ -7,6 +8,10 @@ class ModuleInline(admin.TabularInline):
 
 class LessonInline(admin.TabularInline):
     model = Lesson
+    extra = 1
+
+class ExercisesInline(admin.TabularInline):
+    model = Exercise
     extra = 1
 
 @admin.register(Language)
@@ -25,12 +30,30 @@ class ModuleAdmin(admin.ModelAdmin):
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "module", "difficulty_level")
+    list_display = ("id", "title", "module", "difficulty_level", "lesson_order")
     list_filter = ("module", "difficulty_level")
     search_fields = ("title", "content")
+
+    inlines = [ExercisesInline]
 
 @admin.register(Exercise)
 class ExerciseAdmin(admin.ModelAdmin):
     list_display = ("id", "lesson", "type")
     list_filter = ("type", "lesson__module__language")
     search_fields = ("type", "id")
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    list_display = ('email', 'username', 'role', 'is_staff')
+    list_filter = ('role', 'is_staff')
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('username', 'gender', 'birth_date')}),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'role'),
+        }),
+    )
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('user', 'date', 'is_moderated', 'moderation_status')

@@ -32,6 +32,20 @@ class CustomUserManager(BaseUserManager):
     
 
 class User(AbstractUser):
+
+    class Role(models.TextChoices):
+        STUDENT = "ST", "Ученик"
+        TEACHER = "TC", "Учитель"
+        CONTENT_MANAGER = "CM", "Модератор"  # Для заявок/отзывов
+        ADMIN = "AD", "Администратор"  # Полный доступ (но не root!)
+    
+    role = models.CharField(
+        max_length=2,
+        choices=Role.choices,
+        default=Role.STUDENT
+    )
+
+
     email = models.EmailField(unique=True) #Уникальный email
     username = models.CharField(max_length=100, unique=True) 
     objects = CustomUserManager() # Используем написанный менеджер паролей
@@ -78,6 +92,8 @@ class Lesson(models.Model):
     difficulty_level = models.IntegerField(choices=[(i, f"{i}/3") for i in range(1, 4)])
     theory = models.JSONField(default=list)
     slug = models.SlugField(unique=True, blank=True)
+    lesson_order = models.PositiveIntegerField(default=0)
+
 
     def __str__(self):
         return f"{self.module.title} - {self.title}"
@@ -135,11 +151,25 @@ class LessonProgress(models.Model):
         return f"{self.user.email} - {self.lesson.title}"
 
 class Review(models.Model):
+
+    STATUS_CHOICES = [
+        ('pending', 'На модерации'),
+        ('approved', 'Принят'),
+        ('rejected', 'Отклонён'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     response = models.TextField()
-    estimation = models.DecimalField(max_digits=2, decimal_places=1)  # Например: 4.5, 3.0 и т.д.
+    estimation = models.DecimalField(max_digits=2, decimal_places=1)  
+    is_moderated = models.BooleanField(default=True)
+
+    moderation_status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
 
     def __str__(self):
         return f"{self.user.username} - {self.language.name} - {self.estimation}"
@@ -151,6 +181,7 @@ class Feedback(models.Model):
     phone = models.CharField(max_length=20, verbose_name="Телефон")
     email = models.EmailField(verbose_name="Email")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    is_done = models.BooleanField(default=False, verbose_name="Заявка выполнена")
 
     class Meta:
         verbose_name = "Обратная связь"

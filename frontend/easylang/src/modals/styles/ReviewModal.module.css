@@ -99,3 +99,22 @@
 .redac {
     font-size: 18px;
 }
+
+
+.status_pending {
+    color: orange;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .status_approved {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .status_rejected {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+  }

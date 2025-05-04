@@ -191,12 +191,18 @@ export default function MainPage() {
     const isAuthenticated = Boolean(localStorage.getItem("access_token"));
 
     useEffect(() => {
+
         const fetchReviewsAndUsers = async () => {
             try {
                 // Загружаем отзывы
                 const reviewsData = await getAllReviews();
                 console.log("Загруженные отзывы:", reviewsData);  // Отладка
-                setReviews(reviewsData.slice(0, 3)); // Например, 3 последних отзыва
+
+                const approvedSorted = reviewsData
+                .filter((r) => r.moderation_status === "approved")                 // только одобренные
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                setReviews(approvedSorted.slice(0, 3));
 
                 // Загружаем данные о пользователях
                 const usersData = {};

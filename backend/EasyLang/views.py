@@ -340,3 +340,9 @@ class FeedbackView(generics.ListCreateAPIView):
             'status': 'error',
             'errors': serializer.errors
         }, status=400)
+
+
+class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all().order_by("-created_at")
+    serializer_class = FeedbackSerializer
+    

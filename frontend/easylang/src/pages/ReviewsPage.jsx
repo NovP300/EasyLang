@@ -47,7 +47,12 @@ export default function ReviewsPage() {
                 // Загружаем все отзывы
                 const reviewsData = await getAllReviews();
                 console.log("Загруженные отзывы:", reviewsData);  // Отладка
-                setReviews(reviewsData); // Устанавливаем все отзывы
+
+                const approvedSorted = reviewsData
+                .filter((r) => r.moderation_status === "approved")                 // только одобренные
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                setReviews(approvedSorted); // Устанавливаем все отзывы
 
                 // Загружаем данные о пользователях
                 const usersData = {};
