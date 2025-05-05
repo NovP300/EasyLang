@@ -134,7 +134,7 @@
     background: #333333;
     border: 1px solid #ccc;
     border-top: none;
-    border-radius: 0 0 3px 8px;
+    border-radius: 0 0 3px 3px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     max-height: 0;
@@ -174,73 +174,6 @@
 }
 
 
-
-/*футер*/
-.footer_container_custom {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    gap: 30px;
-    text-align: left;
-}
-
-.footer_block {
-    flex: 1;
-    min-width: 260px;
-}
-
-.footer_block h2 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    line-height: 1.2;
-}
-
-.footer_block h4 {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.footer_block p {
-    font-size: 14px;
-    color: #333;
-    margin: 4px 0;
-}
-
-.footer_title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.socials_title {
-    margin-top: 20px;
-    font-size: 24px;
-}
-
-.first_column {
-    margin-top: 0;
-}
-
-.lowered {
-    margin-top: 65px;
-}
-
-.socials {
-    display: flex;
-    gap: 10px;
-    margin: 10px 0;
-    margin-bottom: 150px;
-}
-
-.legal p {
-    margin: 2px 0;
-}
-
 /* Адаптация для экранов <= 1200px */
 @media (max-width: 1200px) {
     .nav {
@@ -270,11 +203,6 @@
 
     .profile_btn {
         width: 160px;
-    }
-
-    .footer_container {
-        padding: 0 20px;
-        gap: 20px;
     }
 }
 
@@ -321,7 +249,7 @@
 
 }
 
-@media (max-width: 858px) {
+@media (max-width: 935px) {
     .auth_buttons {
         display: block;
         width: 100%;
@@ -340,13 +268,18 @@
         left: 50%;
         transform: translateX(-50%);
     }
+    .login_btn {
+        box-sizing: border-box;
+    }
+    .signup_btn {
+        box-sizing: border-box;
+        margin-left: 10px;
+    }
 }
 
 /* <= 768px */
 @media (max-width: 768px) {
-    .nav {
-        position: relative;
-    }
+
 
     .auth_buttons {
         position: absolute;
@@ -355,25 +288,49 @@
         flex-direction: column;
         gap: 5px;
         align-items: flex-end;
+        width: auto;
+    }
+    .login_btn {
+        max-width: 100px;
+        margin-top: -20px;
+        font-size: 0.8rem;
+        box-sizing: border-box;
+        
+    }
+    .signup_btn {
+        padding: 10px 150px;
+        font-size: 0.8rem;
+        margin-top: -20px;
+        max-width: 140px;
+        width: 80%;
+        box-sizing: border-box;
+        margin-left: 10px;
     }
 
     .profile_wrapper {
         position: absolute;
-        top: -20px;
-        left: 440px;
-        right: 80px;
-        display: inline-block;
-        width: 50%;
+        top: -3px;
+        right: 20px;
+        width: auto;
+        z-index: 10;
     }
-    
+
     .profile_btn {
-        width: 50%;
-        font-size: 1rem;
+        font-size: 0.9rem;
+        padding: 6px 12px;
+        width: auto;
+        max-width: 140px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
-    .dropdown_menu{
-        width: 50%;
+
+    .dropdown_menu {
+        font-size: 0.8rem;
+        max-width:99px;
+        
     }
-    
+
     .nav_links {
         flex-direction: column;
         gap: 10px;
@@ -383,18 +340,6 @@
 
     .nav_links li button {
         width: 100%;
-        text-align: center;
-    }
-
-    .footer_container {
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 10px;
-    }
-
-    .footer_column {
-        width: 100%;
-        max-width: 300px;
         text-align: center;
     }
 }

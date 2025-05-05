@@ -38,7 +38,7 @@ const FillTranslationExercise = ({ exercise, onAnswer }) => {
     onAnswer(feedback.correct);
   };
 
-  const parts = text.split("___");
+  const parts = text.split("__");
 
   return (
     <div className={styles.wrapper}>

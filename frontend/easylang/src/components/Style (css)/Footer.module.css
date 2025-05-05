@@ -1,0 +1,143 @@
+.home {
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+}
+.footerWrapper {
+    width: 100%;
+}
+
+.footerTopLine {
+    height: 1px;
+    background-color: black;
+    width: 100%;
+}
+.footer_container_custom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    gap: 30px;
+    text-align: left;
+}
+
+.footer_block {
+    flex: 1;
+    min-width: 260px;
+}
+
+.footer_block h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.footer_block h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.footer_block p {
+    font-size: 14px;
+    color: #333;
+    margin: 4px 0;
+}
+
+.footer_title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.socials_title {
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+.first_column {
+    margin-top: 0;
+}
+
+.lowered {
+    margin-top: 65px;
+}
+
+.socials {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    margin-bottom: 150px;
+}
+
+.legal p {
+    margin: 2px 0;
+}
+
+/* <= 1200px */
+@media (max-width: 1200px) {
+    .footer_container_custom {
+        gap: 25px;
+        padding: 30px 15px;
+    }
+}
+
+/* <= 992px */
+@media (max-width: 992px) {
+    .footer_container_custom {
+        gap: 5px;
+        padding: 20px 10px;
+    }
+
+}
+@media (max-width: 827px) {
+    .footer_container_custom {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+    .legal{
+
+        margin-top: -100px;
+    }
+
+    .footer_block {
+        width: 100%;
+        max-width: 320px;
+
+    }
+
+    .lowered {
+        margin-top: 30px;
+    }
+}
+
+
+/* <= 768px */
+@media (max-width: 768px) {
+    .footer_container_custom {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+    }
+    .legal{
+
+        margin-top: -100px;
+    }
+
+    .footer_block {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+    }
+
+    .socials {
+        justify-content: center;
+    }
+
+    .lowered {
+        margin-top: 30px;
+    }
+}
