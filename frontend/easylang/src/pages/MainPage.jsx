@@ -1,4 +1,4 @@
-import { Link, useLocation,  useOutletContext } from "react-router-dom";
+import { Link, useLocation, useOutletContext } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Style (css)/MainPage.module.css";
 import img1 from "./pictures/france.png";
@@ -133,7 +133,7 @@ export default function MainPage() {
         age: '',
         phone: '',
         email: '',
-      });
+    });
 
 
     const [errors, setErrors] = useState({});
@@ -145,16 +145,16 @@ export default function MainPage() {
     //ВАЛИДАЦИЯ ФОРМЫ ЗАЯВОК
     const validateForm = () => {
         const newErrors = {};
-        
+
         if (!formData.name.trim()) newErrors.name = 'Введите имя';
         if (!formData.age || isNaN(formData.age) || formData.age < 5 || formData.age > 120) {
-          newErrors.age = 'Введите возраст от 5 до 120 лет';
+            newErrors.age = 'Введите возраст от 5 до 120 лет';
         }
         if (!formData.phone || !/^(\+7|8)[0-9]{10}$/.test(formData.phone)) {
-          newErrors.phone = 'Формат: +79991234567';
+            newErrors.phone = 'Формат: +79991234567';
         }
         if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-          newErrors.email = 'Введите корректный email';
+            newErrors.email = 'Введите корректный email';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -162,25 +162,25 @@ export default function MainPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) return;
-        
+
         setIsSubmitting(true);
-        
+
         try {
-          const result = await submitFeedback(formData);
-          setSubmitStatus(result);
-          
-          if (result.success) {
-            setFormData({
-              name: '',
-              age: '',
-              phone: '',
-              email: ''
-            });
-          }
+            const result = await submitFeedback(formData);
+            setSubmitStatus(result);
+
+            if (result.success) {
+                setFormData({
+                    name: '',
+                    age: '',
+                    phone: '',
+                    email: ''
+                });
+            }
         } finally {
-          setIsSubmitting(false);
+            setIsSubmitting(false);
         }
     };
 
@@ -199,8 +199,8 @@ export default function MainPage() {
                 console.log("Загруженные отзывы:", reviewsData);  // Отладка
 
                 const approvedSorted = reviewsData
-                .filter((r) => r.moderation_status === "approved")                 // только одобренные
-                .sort((a, b) => new Date(b.date) - new Date(a.date));
+                    .filter((r) => r.moderation_status === "approved")                 // только одобренные
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 setReviews(approvedSorted.slice(0, 3));
 
@@ -228,7 +228,7 @@ export default function MainPage() {
     }, []);
 
 
-    
+
 
     return (
         <div className={styles.home}>
@@ -275,14 +275,14 @@ export default function MainPage() {
                     </button>
                 </div>
 
-                {isAuthenticated? ( <button className={styles.start_btn} onClick={() => scrollToSection(languagePR)}>Начать заниматься</button>) 
-                : (
-                    <Link to="/login" state={{ background: location }}>
-                        <button className={styles.start_btn}>Начать заниматься</button>
-                    </Link>
-                )}
+                {isAuthenticated ? (<button className={styles.start_btn} onClick={() => scrollToSection(languagePR)}>Начать заниматься</button>)
+                    : (
+                        <Link to="/login" state={{ background: location }}>
+                            <button className={styles.start_btn}>Начать заниматься</button>
+                        </Link>
+                    )}
 
-            
+
 
             </section>
 
@@ -319,63 +319,63 @@ export default function MainPage() {
 
                     {submitStatus && (
                         <div className={submitStatus.success ? styles.successMessage : styles.errorMessage}>
-                        {submitStatus.message}
+                            {submitStatus.message}
                         </div>
                     )}
 
                     <form onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
-                        <input
-                            type="text"
-                            placeholder="Имя"
-                            value={formData.name}
-                            onChange={(e) => setFormData({...formData, name: e.target.value})}
-                            className={errors.name ? styles.errorInput : ''}
-                        />
-                        {errors.name && <span className={styles.error}>{errors.name}</span>}
+                            <input
+                                type="text"
+                                placeholder="Имя"
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                className={errors.name ? styles.errorInput : ''}
+                            />
+                            {errors.name && <span className={styles.error}>{errors.name}</span>}
                         </div>
 
                         <div className={styles.formGroup}>
-                        <input
-                            type="number"
-                            placeholder="Возраст"
-                            value={formData.age}
-                            onChange={(e) => setFormData({...formData, age: e.target.value})}
-                            className={errors.age ? styles.errorInput : ''}
-                            min="5"
-                            max="120"
-                        />
-                        {errors.age && <span className={styles.error}>{errors.age}</span>}
+                            <input
+                                type="number"
+                                placeholder="Возраст"
+                                value={formData.age}
+                                onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                                className={errors.age ? styles.errorInput : ''}
+                                min="5"
+                                max="120"
+                            />
+                            {errors.age && <span className={styles.error}>{errors.age}</span>}
                         </div>
 
                         <div className={styles.formGroup}>
-                        <input
-                            type="tel"
-                            placeholder="Телефон (+79991234567)"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                            className={errors.phone ? styles.errorInput : ''}
-                        />
-                        {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+                            <input
+                                type="tel"
+                                placeholder="Телефон (+79991234567)"
+                                value={formData.phone}
+                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                className={errors.phone ? styles.errorInput : ''}
+                            />
+                            {errors.phone && <span className={styles.error}>{errors.phone}</span>}
                         </div>
 
                         <div className={styles.formGroup}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={formData.email}
-                            onChange={(e) => setFormData({...formData, email: e.target.value})}
-                            className={errors.email ? styles.errorInput : ''}
-                        />
-                        {errors.email && <span className={styles.error}>{errors.email}</span>}
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                className={errors.email ? styles.errorInput : ''}
+                            />
+                            {errors.email && <span className={styles.error}>{errors.email}</span>}
                         </div>
 
-                        <button 
-                        type="submit" 
-                        className={styles.submit_btn}
-                        disabled={isSubmitting}
+                        <button
+                            type="submit"
+                            className={styles.submit_btn}
+                            disabled={isSubmitting}
                         >
-                        {isSubmitting ? 'Отправка...' : 'Оставить заявку'}
+                            {isSubmitting ? 'Отправка...' : 'Оставить заявку'}
                         </button>
                     </form>
                 </div>
@@ -386,34 +386,18 @@ export default function MainPage() {
 
                 {/* Контейнер для языков (фиксированные размеры) */}
                 <div className={styles.languageWrapper}>
-                    {!selectedLanguage ? (
-                        <div className={styles.languageContainer}>
-                            {languages.map(lang => (
-                                <button key={lang.id} className={styles.languageButton} onClick={() => setSelectedLanguage(lang)}>
-                                    <img src={lang.img} alt={lang.name} />
-                                    <span>{lang.name}</span>
-                                </button>
-                            ))}
-                        </div>
-                    ) : (
-                        /* Описание языка (появляется внутри того же контейнера) */
-                        <div className={styles.languageDescription}>
-                            {/* Левая часть: картинка + название */}
-                            <div className={styles.languageInfo}>
-                                <img className={styles.languageImage} src={selectedLanguage.img} alt={selectedLanguage.name} />
-                                <h3 className={styles.languageTitle}>{selectedLanguage.name}</h3>
-                            </div>
-
-                            {/* Кнопка "Записаться на курс" */}
-                            <a href={`/languages/${selectedLanguage.link}`} >Записаться на курс</a>
-
-                            {/* Правая часть: описание */}
-                            <p className={styles.languageText}>{selectedLanguage.description}</p>
-
-                            {/* Кнопка-стрелка справа */}
-                            <button className={styles.nextButton} onClick={() => setSelectedLanguage(null)}>➡️</button>
-                        </div>
-                    )}
+                    <div className={styles.languageContainer}>
+                        {languages.map(lang => (
+                            <Link
+                                key={lang.id}
+                                to="/about-the-course"
+                                className={styles.languageButton}
+                            >
+                                <img src={lang.img} alt={lang.name} />
+                                <span>{lang.name}</span>
+                            </Link>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Блок с тестом */}
@@ -423,7 +407,7 @@ export default function MainPage() {
                     </p>
                     <button className={styles.testButton}>
                         <Link className={styles.testLink} to={"/test"}>Пройти тест</Link>
-                        </button>
+                    </button>
                 </div>
             </section>
 

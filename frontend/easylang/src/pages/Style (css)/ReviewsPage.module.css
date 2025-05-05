@@ -4,6 +4,7 @@
     max-width: 900px;
     margin: 0 auto;
 }
+
 .closeButton {
     position: absolute;
     top: 20px;
@@ -14,7 +15,7 @@
     cursor: pointer;
     z-index: 10;
 }
-  
+
 
 .title {
     text-align: center;
@@ -67,4 +68,187 @@
 
 .comment {
     font-weight: 500;
+}
+
+.buttonGroup {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.moderateButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.approve {
+    background-color: #1b1b1b;
+    color: white;
+}
+
+.approve:hover {
+    background-color: #059669;
+    color: rgb(0, 0, 0);
+}
+
+.reject {
+    background-color: #ffffff;
+    border: 1px solid #363636;
+    color: rgb(0, 0, 0);
+}
+
+.reject:hover {
+    background-color: #dc2626;
+    color: rgb(255, 255, 255);
+}
+
+.reviewCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reviewCard:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.rating span {
+    font-size: 20px;
+    cursor: default;
+}
+
+.feedbackCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.feedbackCard:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.completed {
+    background-color: #f9e9fc;
+    opacity: 0.6;
+}
+
+.feedbackLabel {
+    margin-top: 12px;
+    display: block;
+    font-weight: 500;
+    color: #505050;
+}
+
+.toggleWrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    gap: 10px;
+}
+
+.toggleLabel {
+    font-weight: 500;
+    color: #374151;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d1d5db;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+/* Переключённое состояние */
+.switch input:checked+.slider {
+    background-color: #4ade80;
+    /* зелёный */
+}
+
+.switch input:checked+.slider:before {
+    transform: translateX(22px);
+}
+
+.filterButtons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filterButton {
+    padding: 8px 16px;
+    border: 1px solid #888;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.filterButton:hover {
+    background-color: #8a8a8a;
+}
+
+.activeFilter {
+    background-color: #1b1b1b;
+    color: white;
+    border-color: #a7a7a7;
+}
+
+.toggleButton {
+    margin-top: 12px;
+    padding: 8px 16px;
+    background-color:  #118f00;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.toggleButton:hover {
+    background-color: #36c000;
 }

@@ -74,18 +74,16 @@ export default function ModerateReviewsPage() {
 
                 <div className={styles.comment}>{review.response}</div>
 
-                <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                <div className={styles.buttonGroup}>
                   <button
-                    className={styles.modal_button}
+                    className={`${styles.moderateButton} ${styles.approve}`}
                     onClick={() => handleModerate(review.id, "approved")}
-                    style={{ backgroundColor: "green", color: "white" }}
                   >
                     Принять
                   </button>
                   <button
-                    className={styles.modal_button}
+                    className={`${styles.moderateButton} ${styles.reject}`}
                     onClick={() => handleModerate(review.id, "rejected")}
-                    style={{ backgroundColor: "red", color: "white" }}
                   >
                     Отклонить
                   </button>

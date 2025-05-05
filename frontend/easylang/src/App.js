@@ -19,6 +19,7 @@ import TestPage from "./pages/TestPage";
 import Layout from "./components/Layout";
 import ModerateReviewsPage from "./pages/ModerateReviewsPage";
 import ModerateFeedbacksPage from "./pages/ModerateFeedBacksPage";
+import AboutTheCoursePage from './pages/AboutTheCoursePage';
 
 import { getProfile } from "./api/profile";
 
@@ -72,6 +73,9 @@ function App() {
 
           <Route path="/moderate/reviews" element={isModerator ? <ModerateReviewsPage /> : <Navigate to="/" />}/>
           <Route path="/moderate/feedbacks" element={isModerator ? <ModerateFeedbacksPage /> : <Navigate to="/" />}/>
+
+          <Route path="/" element={<MainPage />} />
+          <Route path="/about-the-course/:Name" element={<AboutTheCoursePage />} />
 
         </Route>
 

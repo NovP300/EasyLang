@@ -6,6 +6,7 @@ export default function ModerateFeedbacksPage() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [completed, setCompleted] = useState({});
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     const fetchFeedbacks = async () => {
@@ -38,35 +39,61 @@ export default function ModerateFeedbacksPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Заявки с формы обратной связи</h1>
+
+      <div className={styles.filterButtons}>
+        <button
+          className={`${styles.filterButton} ${filter === "all" ? styles.activeFilter : ""}`}
+          onClick={() => setFilter("all")}
+        >
+          Все
+        </button>
+        <button
+          className={`${styles.filterButton} ${filter === "pending" ? styles.activeFilter : ""}`}
+          onClick={() => setFilter("pending")}
+        >
+          Активные
+        </button>
+        <button
+          className={`${styles.filterButton} ${filter === "completed" ? styles.activeFilter : ""}`}
+          onClick={() => setFilter("completed")}
+        >
+          Выполненные
+        </button>
+      </div>
+
       {feedbacks.length === 0 ? (
         <p>Заявок пока нет.</p>
       ) : (
         <div className={styles.reviews}>
-          {feedbacks.map(fb => (
-            <div
-              key={fb.id}
-              className={styles.reviewCard}
-              style={{
-                opacity: completed[fb.id] ? 0.5 : 1,
-                backgroundColor: completed[fb.id] ? "#f0f0f0" : "white"
-              }}
-            >
-              <div><strong>Имя:</strong> {fb.name}</div>
-              <div><strong>Возраст:</strong> {fb.age}</div>
-              <div><strong>Телефон:</strong> {fb.phone}</div>
-              <div><strong>Email:</strong> {fb.email}</div>
-              <div><strong>Создана:</strong> {new Date(fb.created_at).toLocaleString()}</div>
+          {feedbacks
+            .filter(fb => {
+              if (filter === "completed") return completed[fb.id];
+              if (filter === "pending") return !completed[fb.id];
+              return true;
+            })
+            .map(fb => (
+              <div
+                key={fb.id}
+                className={styles.reviewCard}
+                style={{
+                  opacity: completed[fb.id] ? 0.5 : 1,
+                  backgroundColor: completed[fb.id] ? "#f0f0f0" : "white"
+                }}
+              >
+                <div><strong>Имя:</strong> {fb.name}</div>
+                <div><strong>Возраст:</strong> {fb.age}</div>
+                <div><strong>Телефон:</strong> {fb.phone}</div>
+                <div><strong>Email:</strong> {fb.email}</div>
+                <div><strong>Создана:</strong> {new Date(fb.created_at).toLocaleString()}</div>
 
-              <label style={{ marginTop: "10px", display: "block" }}>
-                <input
-                  type="checkbox"
-                  checked={completed[fb.id]}
-                  onChange={() => toggleCompleted(fb.id)}
-                />{" "}
-                Выполнено
-              </label>
-            </div>
-          ))}
+                <button
+                  className={styles.toggleButton}
+                  onClick={() => toggleCompleted(fb.id)}
+                >
+                  {completed[fb.id] ? "Сделать активной" : "Отметить выполненной"}
+                </button>
+              </div>
+            ))}
         </div>
       )}
     </div>
