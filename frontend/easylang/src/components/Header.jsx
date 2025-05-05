@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Style (css)/HeadFoot.module.css";
-
+import img1 from "./Style (css)/logo.jpg";
 
 import { logout, getProfile } from "../api/profile";
 
@@ -110,68 +110,71 @@ const Header = ({ scrollToSection, aboutRef, pricingRef, languagePR, faqRef, rev
     <div className={styles.home}>
       <header className={styles.header}>
         <nav className={styles.nav}>
-            <div className={styles.logo}>EasyLang</div>
-            <div className={styles.menu_icon} onClick={toggleMenu}>
-              <div className={styles.bar}></div>
-              <div className={styles.bar}></div>
-              <div className={styles.bar}></div>
+          <div className={styles.logo}>
+            <img src={img1} className={styles.img1} alt="Логотип" />
+            EasyLang
+          </div>
+          <div className={styles.menu_icon} onClick={toggleMenu}>
+            <div className={styles.bar}></div>
+            <div className={styles.bar}></div>
+            <div className={styles.bar}></div>
+          </div>
+          {isMainPage ? (
+            <ul className={`${styles.nav_links} ${menuOpen ? styles.nav_active : ""}`}>
+              <li><button onClick={() => scrollToSection(aboutRef)}>О нас</button></li>
+              <li><button onClick={() => scrollToSection(languagePR)}>Каталог языков</button></li>
+              <li><button onClick={() => scrollToSection(pricingRef)}>Тарифы</button></li>
+              <li><button onClick={() => scrollToSection(faqRef)}>Вопросы</button></li>
+              <li><button onClick={() => scrollToSection(reviewsRef)}>Отзывы</button></li>
+              <li><button onClick={() => scrollToSection(contactsRef)}>Контакты</button></li>
+            </ul>
+          ) : (
+            <ul className={`${styles.nav_links} ${menuOpen ? styles.nav_active : ""}`}>
+              <li>
+                <button className={styles.nav_button} onClick={() => navigate("/")}>
+                  Главная
+                </button>
+              </li>
+              <li>
+                <button className={styles.nav_button} onClick={() => navigate("/reviews")}>
+                  Отзывы
+                </button>
+              </li>
+              {/* добавь другие ссылки, если надо */}
+            </ul>
+
+          )}
+
+          {!isAuthenticated ? (
+            <div className={styles.auth_buttons}>
+              <Link to="/login" state={{ background: location }}>
+                <button className={styles.login_btn}>Войти</button>
+              </Link>
+              <Link to="/register" state={{ background: location }}>
+                <button className={styles.signup_btn}>Зарегистрироваться</button>
+              </Link>
             </div>
-            {isMainPage ? (
-              <ul className={`${styles.nav_links} ${menuOpen ? styles.nav_active : ""}`}>
-                <li><button onClick={() => scrollToSection(aboutRef)}>О нас</button></li>
-                <li><button onClick={() => scrollToSection(languagePR)}>Каталог языков</button></li>
-                <li><button onClick={() => scrollToSection(pricingRef)}>Тарифы</button></li>
-                <li><button onClick={() => scrollToSection(faqRef)}>Вопросы</button></li>
-                <li><button onClick={() => scrollToSection(reviewsRef)}>Отзывы</button></li>
-                <li><button onClick={() => scrollToSection(contactsRef)}>Контакты</button></li>
-              </ul>
-            ) : (
-              <ul className={`${styles.nav_links} ${menuOpen ? styles.nav_active : ""}`}>
-                <li>
-                  <button className={styles.nav_button} onClick={() => navigate("/")}>
-                    Главная
-                  </button>
-                </li>
-                <li>
-                  <button className={styles.nav_button} onClick={() => navigate("/reviews")}>
-                    Отзывы
-                  </button>
-                </li>
-                {/* добавь другие ссылки, если надо */}
-              </ul>
-
-            )}
-
-            {!isAuthenticated ? (
+          ) : (
+            !loadingUser && user && (
               <div className={styles.auth_buttons}>
-                <Link to="/login" state={{ background: location }}>
-                  <button className={styles.login_btn}>Войти</button>
-                </Link>
-                <Link to="/register" state={{ background: location }}>
-                  <button className={styles.signup_btn}>Зарегистрироваться</button>
-                </Link>
-              </div>
-            ) : (
-              !loadingUser && user && (
-                <div className={styles.auth_buttons}>
-                  <div className={styles.profile_wrapper} ref={profileMenuRef}>
-                    <button
-                      className={`${styles.profile_btn} ${menuOpen ? styles.profile_btn_active : ''}`}
-                      onClick={() => setMenuOpen((prev) => !prev)}
-                    >
-                      {getProfileButtonName(user)}
+                <div className={styles.profile_wrapper} ref={profileMenuRef}>
+                  <button
+                    className={`${styles.profile_btn} ${menuOpen ? styles.profile_btn_active : ''}`}
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                  >
+                    {getProfileButtonName(user)}
+                  </button>
+                  <div className={`${styles.dropdown_menu} ${menuOpen ? styles.dropdown_open : ''}`}>
+                    <hr className={styles.divider} />
+                    {renderDropdownMenu()}
+                    <button className={styles.dropdown_item} onClick={handleLogout}>
+                      Выйти
                     </button>
-                    <div className={`${styles.dropdown_menu} ${menuOpen ? styles.dropdown_open : ''}`}>
-                      <hr className={styles.divider} />
-                      {renderDropdownMenu()}
-                      <button className={styles.dropdown_item} onClick={handleLogout}>
-                        Выйти
-                      </button>
-                    </div>
                   </div>
                 </div>
-              )
-            )}
+              </div>
+            )
+          )}
         </nav>
       </header >
     </div >
