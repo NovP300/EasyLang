@@ -4,208 +4,41 @@
     text-align: center;
 }
 
-.header {
-    background: rgb(255, 255, 255);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px 20px;
-}
-
-.nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-}
-
-.menu_icon {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.bar {
-    width: 25px;
-    height: 3px;
-    background: rgba(127, 67, 153, 1);
-    margin: 3px 0;
-}
-
-.nav_links {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-
-}
-
-.nav_links li button {
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-    font-size: 1rem;
-    display: inline-block;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    transition: background 0.2s, color 0.2s;
-    background-color: rgb(255, 255, 255);
-}
-
-.nav_links li button:hover {
-    color: rgb(0, 0, 0);
-
-    background: rgb(230, 230, 230);
-    /* Серый фон при наведении */
-}
-
-/* Кнопки авторизации */
-.auth_buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.login_btn {
-    padding: 8px 16px;
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 5px;
-    background: none;
-    color: rgb(0, 0, 0);
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-}
-
-.login_btn:hover {
-    background: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
-}
-
-.signup_btn {
-    padding: 8px 16px;
-    border-radius: 5px;
-    background: rgba(127, 67, 153, 1);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.signup_btn:hover {
-    background: rgb(119, 90, 131);
-}
-
-.profile_btn {
-    padding: 8px 16px;
-    border-radius: 5px;
-    background: rgb(0, 0, 0);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.profile_btn:hover {
-    background: rgb(51, 50, 51);
-}
-
-.profile_wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.profile_btn {
-    padding: 10px 16px;
-    border-radius: 8ps;
-    background: black;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.2s;
-    width: 180px;
-    text-align: center;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.profile_btn:hover {
-    background: rgb(51, 50, 51);
-}
-
-.profile_btn_active {
-    background: rgb(51, 50, 51);
-    /* Чуть светлее при открытии */
-}
-
-.dropdown_menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgb(51, 50, 51);
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 180px;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease;
-    z-index: 100;
-}
-
-.dropdown_open {
-    max-height: 500px;
-    /* Достаточно для всех кнопок */
-}
-
-.divider {
-    margin: 0;
-    border: none;
-    border-top: 1px solid #737373;
-}
-
-.dropdown_item {
-    background: none;
-    border: none;
-    padding: 12px 16px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 15px;
-    transition: background 0.2s;
-    color: #fffefe;
-    width: 100%;
-}
-
-.dropdown_item:hover {
-    background-color: #474747;
-}
-
-
+/* EasyLang — учите языки в своем ритме! */
 /* --------------------------------------- */
 .hero_section {
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    /* Или подбери вручную */
+    overflow: hidden;
+}
+
+.hero_bg_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .hero_overlay {
-    background-image: url('/src/pages/pictures/fon.png');
+    position: relative;
+    z-index: 1;
     min-height: 65vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    /* Наложение с темным фоном */
     padding: 40px;
-    color: #000000;
+    color: #000;
     text-align: center;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: brightness(1);
+    /* Можно добавить тень или затемнение по вкусу */
 }
 
 .home_title {
@@ -238,14 +71,97 @@
 
 .login_link {
     color: rgb(0, 0, 0);
-    /* Зеленый цвет для ссылки */
     text-decoration: underline;
     font-size: 1rem;
+}
 
+@media (max-width: 1200px) {
+    .home_title {
+        font-size: 2rem;
+        margin-top: 80px;
+        margin-bottom: 40px;
+    }
+
+    .home_text {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+
+    .try_free_btn {
+        font-size: 0.95rem;
+        padding: 10px 18px;
+    }
+}
+
+@media (max-width: 992px) {
+    .home_title {
+        font-size: 1.8rem;
+        margin-top: 30px;
+        margin-bottom: 35px;
+    }
+
+    .home_text {
+        font-size: 1rem;
+        margin-bottom: 35px;
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .try_free_btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .hero_overlay {
+        padding: 20px;
+        padding-top: 10px;
+        min-height: 60vh;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .home_title {
+        font-size: 1.5rem;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .home_text {
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .try_free_btn {
+        font-size: 0.85rem;
+        padding: 8px 14px;
+    }
+
+    .login_link {
+        font-size: 0.9rem;
+    }
+
+
+    .hero_bg_img {
+        object-fit: contain;
+        height: auto;
+    }
+
+    .hero_overlay {
+        padding: 20px;
+        padding-top: 10px;
+        min-height: 60vh;
+        justify-content: flex-start;
+    }
 }
 
 /* Начните изучать английский язык прямо сейчас!-------------------*/
-
+/* --------------------------------------- */
 .start_learning_section {
     text-align: center;
     padding: 50px 0;
@@ -254,19 +170,15 @@
 }
 
 .start_learning_title {
-    font-size: 2.3rem;
+    font-size: 35px;
     margin-bottom: 50px;
 }
 
 .buttons_row {
     display: flex;
-    /* Используем flexbox для центровки */
     justify-content: center;
-    /* Центрируем элементы по горизонтали */
     flex-wrap: wrap;
-    /* Чтобы кнопки располагались в несколько строк */
     max-width: 1250px;
-    /* Максимальная ширина контейнера */
     margin: 0 auto;
     border-radius: 5px;
     margin-bottom: 50px;
@@ -329,6 +241,79 @@
     border: none;
     color: white;
     cursor: pointer;
+}
+
+/* До 1200px — немного уменьшаем кнопки и заголовок */
+@media (max-width <= 1200px) {
+    .start_learning_title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    .buttons_row button {
+        width: 240px;
+        height: 130px;
+        font-size: 18px;
+        padding: 16px;
+        margin: 15px;
+    }
+
+    .start_btn {
+        font-size: 18px;
+    }
+}
+
+/* До 992px — 2 колонки кнопок + ещё уменьшение */
+@media (max-width <= 992px) {
+    .start_learning_title {
+        font-size: 1.8rem;
+    }
+
+    .buttons_row {
+        justify-content: center;
+    }
+
+    .buttons_row button {
+        width: 220px;
+        height: 120px;
+        font-size: 17px;
+        margin: 12px;
+    }
+
+    .start_btn {
+        font-size: 17px;
+        padding: 10px 18px;
+    }
+}
+
+/* До 768px — 1 колонка кнопок, всё по центру */
+@media (max-width <= 768px) {
+    .start_learning_title {
+        font-size: 12px;
+        padding: 0 10px;
+        width: 80%;
+    }
+
+    .buttons_row {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .buttons_row button {
+        width: 90%;
+        height: auto;
+        padding: 14px;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .start_btn {
+        font-size: 16px;
+        padding: 10px 20px;
+        width: 90%;
+        max-width: 300px;
+    }
 }
 
 /* Что вас приведет к результату?-----------------------------*/
@@ -1299,7 +1284,8 @@
     .buttons_row button {
         font-size: 14px;
         padding: 8px;
-        width: 90%; /* чуть уменьшена ширина для удобства */
+        width: 90%;
+        /* чуть уменьшена ширина для удобства */
     }
 
     .nav_links {
@@ -1313,7 +1299,8 @@
     }
 
     .hero_overlay {
-        padding: 15px; /* Меньше отступов на мобильных устройствах */
+        padding: 15px;
+        /* Меньше отступов на мобильных устройствах */
     }
 
     .pricing_card {
