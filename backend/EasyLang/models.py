@@ -50,6 +50,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True) 
     objects = CustomUserManager() # Используем написанный менеджер паролей
 
+
     USERNAME_FIELD = "email" 
     REQUIRED_FIELDS = ["username"]
 
@@ -62,6 +63,9 @@ class User(AbstractUser):
         max_length=1, choices=GENDER_CHOICES, null=True, blank=True
     )
     birth_date = models.DateField(null=True, blank=True)
+
+    subscription = models.BooleanField(default=False)
+    subscription_due = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.email # Отображение email вместо id

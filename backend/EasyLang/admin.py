@@ -44,7 +44,7 @@ class ExerciseAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('email', 'username', 'role', 'is_staff')
+    list_display = ('email', 'username', 'role', 'is_staff', 'subscription', 'subscription_due')
     list_filter = ('role', 'is_staff')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),

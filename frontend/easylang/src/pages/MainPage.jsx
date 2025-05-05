@@ -9,6 +9,8 @@ import { getAllReviews } from "../api/review";
 import { getUserById } from "../api/profile";
 import { FaStar, FaMedal } from "react-icons/fa";
 import { submitFeedback } from '../api/feedback';
+import { useNavigate} from "react-router-dom";
+
 
 
 const languages = [
@@ -228,6 +230,16 @@ export default function MainPage() {
     }, []);
 
 
+    const navigate = useNavigate();
+    const handleStartClick = () => {
+        if (isAuthenticated) {
+          navigate("/payment");
+        } else {
+          navigate("/register" , { state: { background: location } });
+        }
+      };
+
+
 
 
     return (
@@ -421,7 +433,7 @@ export default function MainPage() {
                                 Вас ждут бесплатные задания: десятки упражнений на лексику, грамматику, произношение
                             </p>
                             <p className={styles.card_price}>бесплатно</p>
-                            <button className={styles.card_button}>Попробовать</button>
+                            <button className={styles.card_button}  onClick={() => navigate("/test")}>Попробовать</button>
                         </div>
                         <div className={styles.pricing_card}>
                             <h3 className={styles.card_title}>Премиум</h3>
@@ -429,7 +441,7 @@ export default function MainPage() {
                                 Максимальный доступ ко всем упражнениям и материалам на сайте, занимайтесь сколько хотите
                             </p>
                             <p className={styles.card_price}>от 329 р/мес</p>
-                            <button className={styles.card_button}>Начать заниматься</button>
+                            <button className={styles.card_button} onClick={handleStartClick}>Начать заниматься</button>
                         </div>
                         <div className={styles.pricing_card}>
                             <h3 className={styles.card_title}>Премиум полгода</h3>
@@ -437,7 +449,7 @@ export default function MainPage() {
                                 Максимальный доступ ко всем упражнениям и материалам на сайте, занимайтесь сколько хотите
                             </p>
                             <p className={styles.card_price}>от 1299 р/мес</p>
-                            <button className={styles.card_button}>Начать заниматься</button>
+                            <button className={styles.card_button} onClick={handleStartClick}>Начать заниматься</button>
                         </div>
                         <div className={styles.pricing_card}>
                             <h3 className={styles.card_title}>Премиум год</h3>
@@ -445,7 +457,7 @@ export default function MainPage() {
                                 Максимальный доступ ко всем упражнениям и материалам на сайте, занимайтесь сколько хотите
                             </p>
                             <p className={styles.card_price}>от 2388 р/мес</p>
-                            <button className={styles.card_button}>Начать заниматься</button>
+                            <button className={styles.card_button} onClick={handleStartClick}>Начать заниматься</button>
                         </div>
                     </div>
                 </section>

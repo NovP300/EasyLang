@@ -55,3 +55,17 @@ export const updateProfile = async (data) => {
     throw error;
   }
 };
+
+
+export const updateUserSubscription = async (months) => {
+  const user = await getProfile();
+  if (!user) throw new Error("Пользователь не авторизован");
+
+  const today = new Date();
+  const dueDate = new Date(today.setMonth(today.getMonth() + months));
+
+  return await updateProfile({
+    subscription: true,
+    subscription_due: dueDate.toISOString().split("T")[0], // yyyy-mm-dd
+  });
+};

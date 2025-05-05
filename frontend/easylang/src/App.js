@@ -20,6 +20,7 @@ import Layout from "./components/Layout";
 import ModerateReviewsPage from "./pages/ModerateReviewsPage";
 import ModerateFeedbacksPage from "./pages/ModerateFeedBacksPage";
 import AboutTheCoursePage from './pages/AboutTheCoursePage';
+import PaymentPage from "./pages/PaymentPage";
 
 import { getProfile } from "./api/profile";
 
@@ -76,6 +77,7 @@ function App() {
 
           <Route path="/" element={<MainPage />} />
           <Route path="/about-the-course/:Name" element={<AboutTheCoursePage />} />
+          <Route path="/payment" element={<PaymentPage/>}> </Route>
 
         </Route>
 
