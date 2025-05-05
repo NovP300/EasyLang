@@ -345,4 +345,16 @@ class FeedbackView(generics.ListCreateAPIView):
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all().order_by("-created_at")
     serializer_class = FeedbackSerializer
+
+    @action(detail=True, methods=["patch"], url_path="update-status")
+    def update_status(self, request, pk=None):
+        feedback = self.get_object()
+        is_done = request.data.get("is_done")
+
+        if is_done is None:
+            return Response({"error": "Поле is_done обязательно"}, status=status.HTTP_400_BAD_REQUEST)
+
+        feedback.is_done = is_done
+        feedback.save()
+        return Response({"success": True, "is_done": feedback.is_done})
     

@@ -24,3 +24,15 @@ export const getAllFeedbacks = async () => {
     throw new Error('Не удалось загрузить заявки');
   }
 };
+
+export const updateFeedbackStatus = async (id, isDone) => {
+  try {
+    const response = await axiosInstance.patch(`/feedbacks/${id}/update-status/`, {
+      is_done: isDone,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при обновлении статуса:", error);
+    throw new Error("Не удалось обновить статус заявки");
+  }
+};

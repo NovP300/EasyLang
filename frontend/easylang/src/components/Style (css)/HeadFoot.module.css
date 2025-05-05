@@ -20,11 +20,18 @@
 }
 
 .logo {
+    display: flex;
+    align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
     color: rgb(0, 0, 0);
 }
 
+.img1 {
+    width: 45px;
+    height: auto;
+    margin-right: 8px; /* Расстояние между иконкой и текстом */
+}
 .menu_icon {
     display: none;
     flex-direction: column;
@@ -249,7 +256,7 @@
 
 }
 
-@media (max-width: 935px) {
+@media (max-width: 1014px) {
     .auth_buttons {
         display: block;
         width: 100%;
@@ -320,6 +327,7 @@
         padding: 6px 12px;
         width: auto;
         max-width: 140px;
+        min-width: 140px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -327,8 +335,8 @@
 
     .dropdown_menu {
         font-size: 0.8rem;
-        max-width:99px;
-        
+        max-width: 140px;
+        min-width: 140px;
     }
 
     .nav_links {

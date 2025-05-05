@@ -5,13 +5,14 @@ from .views import (
     RegisterView, ProfileView,
     LanguageViewSet, ModuleViewSet,
     LessonViewSet, ExerciseViewSet, LessonViewSet, LessonProgressView, ProgressOverviewView, ReviewViewSet, MyReviewByLanguageView,
-    UserDetailView, DetailedProgressView, TestLessonsView, MarkLessonsCompletedBeforeModuleView, ChangePasswordView, CustomTokenObtainPairView, FeedbackView
+    UserDetailView, DetailedProgressView, TestLessonsView, MarkLessonsCompletedBeforeModuleView, ChangePasswordView, CustomTokenObtainPairView, FeedbackView, FeedbackViewSet
 )
 
 
 router = DefaultRouter()
 router.register(r'lessons', LessonViewSet, basename='lesson')
 router.register(r'reviews', ReviewViewSet)
+router.register(r'feedbacks', FeedbackViewSet, basename='feedbacks')
 
 
 urlpatterns = [

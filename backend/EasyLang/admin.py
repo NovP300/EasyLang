@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Language, Module, Lesson, Exercise, User, Review
+from .models import Language, Module, Lesson, Exercise, User, Review, Feedback
 
 class ModuleInline(admin.TabularInline):
     model = Module
@@ -57,3 +57,8 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('user', 'date', 'is_moderated', 'moderation_status')
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('name', 'is_done')

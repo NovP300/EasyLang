@@ -5,6 +5,7 @@ import img1 from "./pictures/france.png";
 import img2 from "./pictures/nemec.png";
 import img3 from "./pictures/spanish.png";
 import img4 from "./pictures/USA.png";
+import img5 from "./pictures/fon1.jpg";
 import { getAllReviews } from "../api/review";
 import { getUserById } from "../api/profile";
 import { FaStar, FaMedal } from "react-icons/fa";
@@ -239,14 +240,11 @@ export default function MainPage() {
         }
       };
 
-
-
-
     return (
         <div className={styles.home}>
-
             {/* EasyLang — учите языки в своем ритме! */}
             <section className={styles.hero_section}>
+            <img src={img5} alt="Фон" className={styles.hero_bg_img} />
                 <div className={styles.hero_overlay}>
                     <h1 className={styles.home_title}>EasyLang — учите языки в своем ритме!</h1>
                     <p className={styles.home_text}>
@@ -293,9 +291,6 @@ export default function MainPage() {
                             <button className={styles.start_btn}>Начать заниматься</button>
                         </Link>
                     )}
-
-
-
             </section>
 
             {/* Модальное окно */}
