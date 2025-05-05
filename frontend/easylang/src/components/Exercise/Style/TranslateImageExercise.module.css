@@ -5,6 +5,8 @@
     background-color: transparent;
     border-radius: 0;
     box-shadow: none;
+    height: 620px;
+    margin-top: 150px;
 }
 
 .header {
@@ -24,7 +26,20 @@
 }
 
 .bear {
-    width: 110px;
+    width: 150px;
+    animation: swing 2s infinite;
+    border: 5px solid #dadada; /* тёплая золотистая рамка */
+    border-radius: 15px; /* скруглённые углы */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* тень для объёма */
+}
+
+
+@keyframes swing {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
 }
 
 .Icon {

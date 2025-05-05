@@ -5,6 +5,8 @@
     background-color: transparent;
     border-radius: 0;
     box-shadow: none;
+    height: 620px;
+    margin-top: 150px;
 }
 
 .header {
