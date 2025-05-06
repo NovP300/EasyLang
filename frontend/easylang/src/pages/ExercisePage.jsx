@@ -7,6 +7,8 @@ import { getLessonBySlug } from "../api/lessons";
 import { unlockLessonsUpToModule } from "../api/modules";
 import styles from "./Style (css)/ExercisePage.module.css";
 
+
+
 const GamePage = () => {
   const { slug } = useParams();
   const location = useLocation();
@@ -149,7 +151,8 @@ const GamePage = () => {
 
               <button
                 className={styles.successButton}
-                
+                onClick={() =>
+                  navigate("/test", {state: { step: 3, languageId: passedLanguageId, }, })}
               >
                 Пройти заново
               </button>
@@ -210,6 +213,7 @@ const GamePage = () => {
         );
       }
     }
+
   }
 
   const currentExercise = queue[currentIndex];
