@@ -5,6 +5,7 @@ import ExerciseRenderer from "../components/Exercise/ExerciseRender";
 import { markLessonCompleted } from "../api/progress";
 import { getLessonBySlug } from "../api/lessons";
 import { unlockLessonsUpToModule } from "../api/modules";
+import styles from "./Style (css)/ExercisePage.module.css";
 
 const GamePage = () => {
   const { slug } = useParams();
@@ -129,8 +130,30 @@ const GamePage = () => {
     if (isTest) {
       if (errors > maxErrorsAllowed) {
         return (
-          <div className="p-4 text-center">
-            ❌ Вы не прошли тест. Попробуйте пройти тест для другого уровня или начните с первого модуля.
+          <div className={styles.successWrapper}>
+            <h2 className={styles.successTitle}>Не получилось 😔</h2>
+
+            <div className={styles.successCard}>
+              <p className={styles.successText}>
+                Вы не прошли тест. Попробуйте выбрать другой уровень или начните сначала.
+              </p>
+            </div>
+
+            <div className={styles.successActions}>
+              <button
+                className={styles.successButton}
+                onClick={() => navigate(`/progress?languageId=${passedLanguageId}`)}
+              >
+                Выбрать другой уровень
+              </button>
+
+              <button
+                className={styles.successButton}
+                
+              >
+                Пройти заново
+              </button>
+            </div>
           </div>
         );
       } else if (!isAuthenticated) {
@@ -144,33 +167,49 @@ const GamePage = () => {
         }));
 
         return (
-          <div className="p-4 text-center space-y-4">
-            <p>🎉 Молодец! Вы успешно прошли тест.</p>
-            <p>Зарегистрируйтесь, чтобы сохранить результат и приступить к обучению!</p>
-            <button
-              onClick={() => navigate("/register", { state: { background: location } })}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
-            >
-              Зарегистрироваться
-            </button>
-            <button
-              onClick={() => navigate("/")}
-              className="underline text-sm text-gray-600"
-            >
-              Позже
-            </button>
+          <div className={styles.successWrapper}>
+            <h2 className={styles.successTitle}>Ты молодец!</h2>
+            <div className={styles.successCard}>
+              <p className={styles.successText}>
+                Вы успешно прошли тест!<br />
+                Зарегистрируйтесь, чтобы сохранить результат и приступить к обучению.
+              </p>
+            </div>
+            <div className={styles.successActions}>
+              <button
+                onClick={() => navigate("/register", { state: { background: location } })}
+                className={styles.successButton}
+              >
+                Зарегистрироваться
+              </button>
+              <button
+                onClick={() => navigate("/")}
+                className={`${styles.successButton} ${styles.laterButton}`}
+              >
+                Позже
+              </button>
+            </div>
           </div>
         );
       } else {
         return (
-          <div className="p-4 text-center">
-            ✅ Вы успешно прошли тест! Модули  разблокированы в соответсвии с пройденным тестом.
+          <div className={styles.successWrapper}>
+            <h2 className={styles.successTitle}>Ты молодец!</h2>
+            <div className={styles.successCard}>
+              <p className={styles.successText}>
+                Начнём с модуля 1! Кажется, этот уровень вам подходит. Если что, мы всегда сможем изменить программу позже.
+              </p>
+            </div>
+            <button
+              onClick={() => navigate(`/progress?languageId=${passedLanguageId}`)}
+              className={styles.successButton}
+            >
+              Хорошо
+            </button>
           </div>
         );
       }
     }
-
-    return <div className="p-4 text-center">✅ Все задания выполнены!</div>;
   }
 
   const currentExercise = queue[currentIndex];

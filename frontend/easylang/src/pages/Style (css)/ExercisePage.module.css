@@ -1,0 +1,67 @@
+.successWrapper {
+    max-width: 400px;
+    margin: 100px auto;
+    text-align: center;
+  }
+  
+  .successTitle {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .successCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: rgba(231, 188, 251, 0.46);
+    padding: 40px;
+    border-radius: 60% 32% 60% 35% / 35% 74% 20% 46%;
+    max-width: 600px;
+    position: relative;
+    margin-top: 100px;
+    margin-bottom: 120px;
+  }
+  
+  .successText {
+    font-size: 16px;
+    font-style: italic;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .successActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .successButton {
+    background: rgb(44, 44, 44);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    flex: 1; /* Чтобы обе кнопки имели одинаковую ширину */
+    margin-bottom: 150px;
+  }
+  
+  .successButton:hover {
+    background-color: #3b3b3b;
+  }
+  
+  .laterButton {
+    background: rgb(44, 44, 44);
+    font-weight: bold;
+    border: none;
+  }
+ 
