@@ -82,7 +82,7 @@ const WordOrderExercise = ({ exercise, onAnswer }) => {
       
       {!feedback && (
         <div className={styles.buttonsRow}>
-          <button className={styles.skipButton}>Пропустить</button>
+          
           <button onClick={handleSubmit} className={styles.submitButton}>
             Проверить
           </button>

@@ -82,7 +82,12 @@ export default function CoursePage() {
           <p className={styles.testText}>
             Сомневаешься в своём уровне и не знаешь с чего начать?
           </p>
-          <button className={styles.testButton}>Пройти тест</button>
+          <button
+            className={styles.testButton}
+            onClick={() =>
+              navigate("/test", {state: { step: 2, languageId, }, })}>
+            Пройти тест
+          </button>
         </div>
       </div>
 
@@ -90,9 +95,9 @@ export default function CoursePage() {
       {/* Выводим модули с прогрессом */}
 
       {filteredModules.map((mod, index) => {
-        const isLocked = index > 0 && 
-                        !filteredProgressModules[index - 1]?.is_completed;
-        
+        const isLocked = index > 0 &&
+          !filteredProgressModules[index - 1]?.is_completed;
+
         return (
           <ModuleItem
             key={mod.id}
