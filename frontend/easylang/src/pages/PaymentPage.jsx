@@ -14,7 +14,7 @@ export default function PaymentPage() {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [plan, setPlan] = useState('');
-  
+
   const prices = {
     month: {
       label: "1 месяц - 329₽/мес, списание ежемесячно",
@@ -107,7 +107,7 @@ export default function PaymentPage() {
 
   return (
     <div className={styles.container}>
-      <h2>Оплата подписки</h2>
+      <h2>Оплата курса</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div>
           <label>Номер карты</label>
@@ -121,45 +121,47 @@ export default function PaymentPage() {
           {errors.cardNumber && <p className={styles.error}>{errors.cardNumber}</p>}
         </div>
 
-        <div>
-          <label>Срок действия (ММ/ГГ)</label>
-          <input
-            type="text"
-            name="expiry"
-            value={formData.expiry}
-            onChange={handleChange}
-            placeholder="MM/YY"
-          />
-          {errors.expiry && <p className={styles.error}>{errors.expiry}</p>}
+        <div className={styles.row}>
+          <div className={styles.halfInput}>
+            <input
+              type="text"
+              name="expiry"
+              value={formData.expiry}
+              onChange={handleChange}
+              placeholder="MM/ГГ"
+            />
+            {errors.expiry && <p className={styles.error}>{errors.expiry}</p>}
+          </div>
+
+          <div className={styles.halfInput}>
+            <input
+              type="text"
+              name="cvv"
+              value={formData.cvv}
+              onChange={handleChange}
+              maxLength={4}
+              placeholder="CVV2/CVC2"
+            />
+            {errors.cvv && <p className={styles.error}>{errors.cvv}</p>}
+          </div>
         </div>
 
         <div>
-          <label>CVV2/CVC2</label>
-          <input
-            type="text"
-            name="cvv"
-            value={formData.cvv}
-            onChange={handleChange}
-            maxLength={4}
-          />
-          {errors.cvv && <p className={styles.error}>{errors.cvv}</p>}
-        </div>
-
-        <div>
-          <label>Email для чека</label>
+          <label>Информация для оплаты</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            placeholder="Email-адрес"
           />
           {errors.email && <p className={styles.error}>{errors.email}</p>}
         </div>
 
         <div>
-          <label>Выберите тариф:</label>
+          <label>Тариф:</label>
           <select name="plan" value={formData.plan} onChange={handleChange} required>
-            <option value="">-- Выберите --</option>
+            <option value="">Выберите тариф</option>
             <option value="month">{prices.month.label}</option>
             <option value="half_year">{prices.half_year.label}</option>
             <option value="year">{prices.year.label}</option>
@@ -167,10 +169,10 @@ export default function PaymentPage() {
           {errors.plan && <p className={styles.error}>{errors.plan}</p>}
 
           {formData.plan && prices[formData.plan] && (
-            <div style={{ marginTop: "10px", fontWeight: "bold" }}>
-                {prices[formData.plan].amount}
+            <div style={{ marginTop: "15px", fontWeight: "bold" }}>
+              {prices[formData.plan].amount}
             </div>
-            )}
+          )}
         </div>
 
         <button type="submit" className={styles.submit}>Оплатить</button>

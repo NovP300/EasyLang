@@ -79,18 +79,3 @@
     background-color: #999999;
     border-radius: 50px;
 }
-
-.forgot_password {
-    margin-top: 1rem;
-    text-align: center;
-    font-size: 0.875rem;
-}
-
-.forgot_password a {
-    color: #1c1c1c;
-    text-decoration: none;
-}
-
-.forgot_password a:hover {
-    text-decoration: underline;
-}

@@ -5,10 +5,7 @@ import styles from "./Style (css)/Profile.module.css";
 import ChangePasswordModal from "../modals/ChangePasswordModal";
 
 const Profile = () => {
-
   console.log("Компонент Profile загружен");
-
-
 
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
@@ -29,8 +26,6 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
-    // Проверка наличия токена при загрузке
     const token = localStorage.getItem("access_token");
     if (!token) {
       navigate("/");
@@ -125,8 +120,6 @@ const Profile = () => {
     }
   };
 
-
-
   const handleCancel = () => {
     navigate("/");
   };
@@ -215,25 +208,19 @@ const Profile = () => {
           <button type="button" className={styles.cancelButton} onClick={handleCancel}>Отмена</button>
         </div>
 
-        <div className={styles.buttonGroup}>
           <button
             type="button"
-            className={styles.secondaryButton}
+            className={styles.centeredButton}
             onClick={() => setShowPasswordModal(true)}
           >
             Сменить пароль
           </button>
-        </div>
       </form>
-
-
       <ChangePasswordModal
         isOpen={showPasswordModal}
         onClose={() => setShowPasswordModal(false)}
         userEmail={formData.email}
       />
-
-
     </div>
   );
 };

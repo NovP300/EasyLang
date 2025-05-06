@@ -12,8 +12,6 @@ import { FaStar, FaMedal } from "react-icons/fa";
 import { submitFeedback } from '../api/feedback';
 import { useNavigate} from "react-router-dom";
 
-
-
 const languages = [
     {
         id: 1,
@@ -88,15 +86,13 @@ export default function MainPage() {
     const languagePR = useRef(null);
     const faqRef = useRef(null);
     const reviewsRef = useRef(null);
-    const contactsRef = useRef(null);
 
+    const { setHeaderProps, contactsRef } = useOutletContext();
 
     const scrollToSection = (ref) => {
         setMenuOpen(false); // Закрываем бургер-меню при переходе
         ref.current?.scrollIntoView({ behavior: "smooth" });
     };
-
-    const { setHeaderProps } = useOutletContext();
 
     useEffect(() => {
         setHeaderProps({
@@ -130,14 +126,12 @@ export default function MainPage() {
     };
 
     //ФОРМАААА
-
     const [formData, setFormData] = useState({
         name: '',
         age: '',
         phone: '',
         email: '',
     });
-
 
     const [errors, setErrors] = useState({});
     const [submitStatus, setSubmitStatus] = useState(null);
@@ -230,7 +224,6 @@ export default function MainPage() {
         fetchReviewsAndUsers();
     }, []);
 
-
     const navigate = useNavigate();
     const handleStartClick = () => {
         if (isAuthenticated) {
@@ -252,7 +245,7 @@ export default function MainPage() {
                         EasyLang — это интерактивные курсы, <br /> практические задания и современный подход к обучению без преподавателей. <br />
                         Учитесь в своем ритме и достигайте результатов!
                     </p>
-                    <Link to="#">
+                    <Link to="/test">
                         <button className={styles.try_free_btn}>Попробовать бесплатно</button>
                     </Link>
                     <div className={styles.login_link}>
@@ -397,7 +390,7 @@ export default function MainPage() {
                         {languages.map(lang => (
                             <Link
                                 key={lang.id}
-                                to="/about-the-course"
+                                to={`/about-the-course/${lang.link}`}
                                 className={styles.languageButton}
                             >
                                 <img src={lang.img} alt={lang.name} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
@@ -6,14 +6,16 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   const [headerProps, setHeaderProps] = useState({});
 
+  // создаём отдельный ref здесь
+  const contactsRef = useRef(null);
+
   return (
     <>
-      <Header {...headerProps} />
+      <Header {...headerProps} contactsRef={contactsRef} />
       <main>
-        {/* передаем setHeaderProps всем вложенным страницам */}
-        <Outlet context={{ setHeaderProps }} />
+        <Outlet context={{ setHeaderProps, contactsRef }} />
       </main>
-      <Footer />
+      <Footer ref={contactsRef} />
     </>
   );
 };

@@ -26,10 +26,6 @@ import { getProfile } from "./api/profile";
 
 import { useState, useEffect } from "react";
 
-
-
-
-
 function App() {
   const location = useLocation();
   const background = location.state && location.state.background;
@@ -47,18 +43,11 @@ function App() {
   
         fetchUser();
       }, [isAuthenticated]);
-
-
   const isModerator = user?.role === "CM";
 
   return (
     <>
       <Routes location={background || location}>
-
-
-        
-
-
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
 
@@ -76,14 +65,10 @@ function App() {
           <Route path="/moderate/feedbacks" element={isModerator ? <ModerateFeedbacksPage /> : <Navigate to="/" />}/>
 
           <Route path="/" element={<MainPage />} />
-          <Route path="/about-the-course/:Name" element={<AboutTheCoursePage />} />
+          <Route path="/about-the-course/:language" element={<AboutTheCoursePage />} />
           <Route path="/payment" element={<PaymentPage/>}> </Route>
-
         </Route>
-
       </Routes>
-
-
       {/* Модалки поверх background */}
       {background && (
         <Routes>

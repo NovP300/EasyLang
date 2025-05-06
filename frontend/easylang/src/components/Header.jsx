@@ -7,7 +7,7 @@ import { logout, getProfile } from "../api/profile";
 
 const Header = ({ scrollToSection, aboutRef, pricingRef, languagePR, faqRef, reviewsRef, contactsRef }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState(null); // 👈 добавлено
+  const [user, setUser] = useState(null); 
   const [loadingUser, setLoadingUser] = useState(true);
   const profileMenuRef = useRef(null);
   const location = useLocation();
@@ -110,7 +110,7 @@ const Header = ({ scrollToSection, aboutRef, pricingRef, languagePR, faqRef, rev
     <div className={styles.home}>
       <header className={styles.header}>
         <nav className={styles.nav}>
-          <div className={styles.logo}>
+          <div className={styles.logo} onClick={() => navigate("/")}>
             <img src={img1} className={styles.img1} alt="Логотип" />
             EasyLang
           </div>

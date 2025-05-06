@@ -41,9 +41,6 @@ const LoginModal = () => {
           placeholder="Пароль"
         />
         <button className={styles.modal_button} onClick={handleLogin}>Войти</button>
-        <div className={styles.forgot_password}>
-          <a href="/forgot-password">Забыли пароль?</a>
-        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { changePassword, obtainNewTokens} from '../api/auth';
+import { changePassword, obtainNewTokens } from '../api/auth';
+import styles from "./styles/ChangePasswordModal.module.css";
 
 const ChangePasswordModal = ({ isOpen, onClose, userEmail }) => {
   const [formData, setFormData] = useState({
@@ -73,7 +74,7 @@ const ChangePasswordModal = ({ isOpen, onClose, userEmail }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setLoading(true);
@@ -87,7 +88,7 @@ const ChangePasswordModal = ({ isOpen, onClose, userEmail }) => {
       });
 
       await obtainNewTokens(userEmail, formData.new_password);
-      
+
       setSuccess(true);
       setTimeout(() => {
         resetForm();
@@ -95,7 +96,7 @@ const ChangePasswordModal = ({ isOpen, onClose, userEmail }) => {
       }, 2000);
     } catch (err) {
       let errorMessage = "Ошибка при смене пароля";
-      
+
       if (err.message.includes("Неверный текущий пароль")) {
         setValidationErrors(prev => ({
           ...prev,
@@ -113,89 +114,89 @@ const ChangePasswordModal = ({ isOpen, onClose, userEmail }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Смена пароля</h2>
-        
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <h2 className={styles.title}>Смена пароля</h2>
+
         {success ? (
-          <div className="alert alert-success">
+          <div className={styles.alertSuccess}>
             Пароль успешно изменён!
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
             {error && (
-              <div className="alert alert-error">
+              <div className={styles.alertError}>
                 {error}
               </div>
             )}
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <input
                 type="password"
                 name="old_password"
                 placeholder="Старый пароль"
                 value={formData.old_password}
                 onChange={handleChange}
-                className={validationErrors.old_password ? "error" : ""}
+                className={`${styles.input} ${validationErrors.old_password ? styles.inputError : ""}`}
                 required
               />
               {validationErrors.old_password && (
-                <span className="error-message">
+                <span className={styles.errorMessage}>
                   {validationErrors.old_password}
                 </span>
               )}
             </div>
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <input
                 type="password"
                 name="new_password"
                 placeholder="Новый пароль (минимум 8 символов)"
                 value={formData.new_password}
                 onChange={handleChange}
-                className={validationErrors.new_password ? "error" : ""}
+                className={`${styles.input} ${validationErrors.new_password ? styles.inputError : ""}`}
                 required
                 minLength="8"
               />
               {validationErrors.new_password && (
-                <span className="error-message">
+                <span className={styles.errorMessage}>
                   {validationErrors.new_password}
                 </span>
               )}
             </div>
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <input
                 type="password"
                 name="repeat_password"
                 placeholder="Повторите новый пароль"
                 value={formData.repeat_password}
                 onChange={handleChange}
-                className={validationErrors.repeat_password ? "error" : ""}
+                className={`${styles.input} ${validationErrors.repeat_password ? styles.inputError : ""}`}
                 required
               />
               {validationErrors.repeat_password && (
-                <span className="error-message">
+                <span className={styles.errorMessage}>
                   {validationErrors.repeat_password}
                 </span>
               )}
             </div>
 
-            <div className="modal-actions">
-              <button 
-                type="submit" 
+            <div className={styles.modalActions}>
+              <button
+                type="submit"
                 disabled={loading}
-                className="btn-primary"
+                className={styles.btnPrimary}
               >
                 {loading ? "Сохраняем..." : "Сменить пароль"}
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => {
                   resetForm();
                   onClose();
                 }}
-                className="btn-secondary"
+                className={styles.btnSecondary}
                 disabled={loading}
               >
                 Отмена
