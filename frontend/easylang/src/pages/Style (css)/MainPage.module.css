@@ -70,10 +70,15 @@
 }
 
 .login_link {
-    color: rgb(0, 0, 0);
-    text-decoration: underline;
+    color: #1c1c1c;
+    text-decoration: none;
     font-size: 1rem;
 }
+
+.login_link a {
+    color: inherit;
+}
+
 
 @media (max-width: 1200px) {
     .home_title {
@@ -244,7 +249,7 @@
 }
 
 /* До 1200px — немного уменьшаем кнопки и заголовок */
-@media (max-width <= 1200px) {
+@media (max-width <=1200px) {
     .start_learning_title {
         font-size: 2rem;
         margin-bottom: 40px;
@@ -264,7 +269,7 @@
 }
 
 /* До 992px — 2 колонки кнопок + ещё уменьшение */
-@media (max-width <= 992px) {
+@media (max-width <=992px) {
     .start_learning_title {
         font-size: 1.8rem;
     }
@@ -287,7 +292,7 @@
 }
 
 /* До 768px — 1 колонка кнопок, всё по центру */
-@media (max-width <= 768px) {
+@media (max-width <=768px) {
     .start_learning_title {
         font-size: 12px;
         padding: 0 10px;
@@ -467,6 +472,11 @@
     border: none;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
+    color: #000;
+}
+
+.languageButton a {
+    color: inherit;
 }
 
 .languageButton img {

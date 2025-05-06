@@ -75,7 +75,6 @@ const faqData = [
     },
 ];
 
-
 export default function MainPage() {
     const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);

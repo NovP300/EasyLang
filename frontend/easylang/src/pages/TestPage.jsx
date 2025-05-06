@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getTestLessonsByLanguage } from "../api/lessons";
 import styles from './Style (css)/TestPage.module.css';
 
 export default function TestPage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [step, setStep] = useState(1);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
@@ -24,7 +25,7 @@ export default function TestPage() {
     { label: "Средний", difficulty: 2 },
     { label: "Продвинутый", difficulty: 3 },
   ];
-  
+
   function getLevelDescription(label) {
     switch (label) {
       case "Я новичок":
@@ -87,7 +88,27 @@ export default function TestPage() {
       alert("Не удалось найти подходящий урок для выбранного уровня.");
     }
   };
+  
+  useEffect(() => {
+    if (location.state?.languageId) {
+      const langEntry = Object.entries(languages).find(
+        ([, lang]) => lang.id === location.state.languageId
+      );
+      if (langEntry) {
+        const [, lang] = langEntry;
+        setSelectedLanguage(lang);
+      }
+    }
 
+    if (location.state?.step) {
+      setStep(location.state.step);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div className={styles.container}>
       {/* Навигация */}
