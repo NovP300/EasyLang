@@ -7,7 +7,6 @@ import { getUserById } from "../api/profile";
 
 
 
-
 const languages = [
     {
         id: 1,
@@ -40,6 +39,10 @@ export default function ReviewsPage() {
     const [reviews, setReviews] = useState([]);
     const [users, setUsers] = useState({});
     const [loading, setLoading] = useState(true);
+    
+    const [selectedRating, setSelectedRating] = useState(null);
+    const [selectedLanguage, setSelectedLanguage] = useState(null);
+
 
     useEffect(() => {
         const fetchReviewsAndUsers = async () => {
@@ -49,8 +52,8 @@ export default function ReviewsPage() {
                 console.log("Загруженные отзывы:", reviewsData);  // Отладка
 
                 const approvedSorted = reviewsData
-                .filter((r) => r.moderation_status === "approved")                 // только одобренные
-                .sort((a, b) => new Date(b.date) - new Date(a.date));
+                    .filter((r) => r.moderation_status === "approved")                 // только одобренные
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 setReviews(approvedSorted); // Устанавливаем все отзывы
 
@@ -80,16 +83,51 @@ export default function ReviewsPage() {
         navigate(-1); // Вернуться на предыдущую страницу
     };
 
+    const filteredReviews = reviews.filter((review) => {
+        const matchesRating = selectedRating !== null ? Number(review.estimation) === selectedRating : true;
+        const matchesLanguage = selectedLanguage !== null ? review.language === selectedLanguage : true;
+        return matchesRating && matchesLanguage;
+    });
+
     return (
         <div className={styles.container}>
             <button onClick={handleClose} className={styles.closeButton}>✕</button>
             <h1 className={styles.title}>Отзывы наших учеников</h1>
 
+            {/* БЛОК ФИЛЬТРОВ */}
+            <div className={styles.filtersWrapper}>
+                <div className={styles.filterGroup}>
+                    <span className={styles.filterTitle}>Оценка:</span>
+                    {[5, 4, 3, 2, 1].map((star) => (
+                        <button
+                            key={star}
+                            className={`${styles.filterButton} ${selectedRating === star ? styles.activeFilter : ""}`}
+                            onClick={() => setSelectedRating(selectedRating === star ? null : star)}
+                        >
+                            <FaStar className={styles.starIcon} /> {star}
+                        </button>
+                    ))}
+                </div>
+
+                <div className={styles.filterGroup}>
+                    <span className={styles.filterTitle}>Язык курса:</span>
+                    {languages.map((lang) => (
+                        <button
+                            key={lang.id}
+                            className={`${styles.filterButton} ${selectedLanguage === lang.id ? styles.activeFilter : ""}`}
+                            onClick={() => setSelectedLanguage(selectedLanguage === lang.id ? null : lang.id)}
+                        >
+                            {lang.name}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
             {loading ? (
                 <div className={styles.loading}>Загрузка...</div> // Блок для загрузки
             ) : (
                 <div className={styles.reviews}>
-                    {reviews.map((review) => {
+                    {filteredReviews.map((review) => {
                         const user = users[review.user]; // Ищем пользователя по id
                         const language = languages.find(lang => lang.id === review.language); // Ищем язык по id
 

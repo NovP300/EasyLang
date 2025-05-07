@@ -7,6 +7,7 @@
     box-shadow: none;
     height: 620px;
     margin-top: 150px;
+    margin-bottom: 150px;
 }
 
 .header {
@@ -28,9 +29,9 @@
 .bear {
     width: 150px;
     animation: swing 2s infinite;
-    border: 5px solid #dadada; /* тёплая золотистая рамка */
-    border-radius: 15px; /* скруглённые углы */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* тень для объёма */
+    border: 5px solid #dadada; 
+    border-radius: 15px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
 
@@ -133,6 +134,7 @@
     margin-top: 30px;
     padding: 40px;
     border-radius: 8px;
+
 }
 
 .correct {

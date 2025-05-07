@@ -252,3 +252,64 @@
 .toggleButton:hover {
     background-color: #36c000;
 }
+
+.filtersWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.filterGroup {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filterTitle {
+    font-weight: 600;
+    margin-right: 8px;
+    align-self: center;
+    color: #374151;
+}
+
+.filterButton {
+    padding: 8px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f3f4f6;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #111827;
+}
+
+.filterButton:hover {
+    background-color: #767c86;
+}
+
+.activeFilter {
+    background-color: #1f2937;
+    color: #ffffff;
+    border-color: #1f2937;
+}
+
+.starIcon {
+    color: #facc15;
+    margin-right: 4px;
+}
+
+.language {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 12px;
+    background: linear-gradient(90deg, #c084fc, #ec4899);
+    color: white;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    align-self: flex-start;
+    transition: background 0.8s ease;
+  }
