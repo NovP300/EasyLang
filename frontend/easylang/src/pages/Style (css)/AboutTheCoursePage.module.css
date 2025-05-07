@@ -10,12 +10,15 @@
 .left {
     flex: 1;
     padding-right: 2rem;
+    margin-left: 500px;
 }
+
 
 .right {
     flex: 1;
     display: flex;
     justify-content: center;
+    margin-right: 500px;
 }
 
 .title {
@@ -47,6 +50,7 @@
     border-radius: 8px;
     width: 100%;
     max-width: 400px;
+
 }
 
 .infoItem {
