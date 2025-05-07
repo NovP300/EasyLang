@@ -6,6 +6,14 @@ import img2 from "./pictures/nemec.png";
 import img3 from "./pictures/spanish.png";
 import img4 from "./pictures/USA.png";
 import img5 from "./pictures/fon1.jpg";
+
+import img6 from "./pictures/lvl.PNG";
+import img7 from "./pictures/kyrs.PNG";
+import img8 from "./pictures/interactiv.jpg";
+import img9 from "./pictures/materials.PNG";
+import img10 from "./pictures/gibgr.jpg";
+import img11 from "./pictures/motivate.jpg";
+
 import { getAllReviews } from "../api/review";
 import { getUserById } from "../api/profile";
 import { FaStar, FaMedal } from "react-icons/fa";
@@ -258,22 +266,28 @@ export default function MainPage() {
                 <h2 className={styles.start_learning_title}>Начните изучать английский язык прямо сейчас!</h2>
                 <div className={styles.buttons_row}>
                     <button onClick={() => openModal('Начните с теста, чтобы понять, с чего лучше стартовать.')}>
-                        Определим ваш уровень и пробелы в знаниях
+                        <span className={styles.btnText}>Определим ваш уровень и пробелы в знаниях</span>
+                        <img src={img6} alt="иконка1" className={styles.btnIcon} />
                     </button>
                     <button onClick={() => openModal('Выбирайте темы и форматы, которые подходят именно вам.')}>
-                        Персонализированные курсы
+                        <span className={styles.btnText}>Персонализированные курсы</span>
+                        <img src={img7} alt="иконка2" className={styles.btnIcon} />
                     </button>
                     <button onClick={() => openModal('Практикуйте грамматику, лексику и произношение в увлекательной форме.')}>
-                        Интерактивные задания
+                        <span className={styles.btnText}>Интерактивные задания</span>
+                        <img src={img8} alt="иконка3" className={styles.btnIcon} />
                     </button>
                     <button onClick={() => openModal('Учитесь на примерах из реальной жизни: статьи, видео, подкасты и диалоги носителей языка.')}>
-                        Аутентичные материалы
+                        <span className={styles.btnText}>Аутентичные материалы</span>
+                        <img src={img9} alt="иконка4" className={styles.btnIcon} />
                     </button>
                     <button onClick={() => openModal('Учитесь когда и где удобно, без строгих расписаний.')}>
-                        Гибкий график
+                        <span className={styles.btnText}>Гибкий график</span>
+                        <img src={img10} alt="иконка5" className={styles.btnIcon} />
                     </button>
                     <button onClick={() => openModal('Следите за своими успехами и получайте награды за достижения!')}>
-                        Прогресс и мотивация
+                        <span className={styles.btnText}>Прогресс и мотивация</span>
+                        <img src={img11} alt="иконка6" className={styles.btnIcon} />
                     </button>
                 </div>
 

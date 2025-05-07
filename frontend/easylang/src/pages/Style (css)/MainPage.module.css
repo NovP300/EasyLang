@@ -169,58 +169,79 @@
 /* --------------------------------------- */
 .start_learning_section {
     text-align: center;
-    padding: 50px 0;
-    background: #f5f5f5;
-    background: linear-gradient(0deg, rgba(245, 245, 245, 1) 0%, rgba(223, 186, 227, 1) 27%, rgba(225, 186, 230, 1) 67%, rgba(255, 255, 255, 1) 100%);
-}
-
-.start_learning_title {
-    font-size: 35px;
-    margin-bottom: 50px;
-}
-
-.buttons_row {
+    padding: 60px 20px;
+    background: linear-gradient(275deg, #ffffff 0%, #f2e6ff 50%, #e7d0ff 100%);
+  }
+  
+  .start_learning_title {
+    font-size: 42px;
+    margin-bottom: 40px;
+    color: #3d1e56;
+    font-weight: 700;
+  }
+  
+  .buttons_row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1300px;
+    margin: 0 auto 50px auto;
+  }
+  
+  .buttons_row button {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 1250px;
-    margin: 0 auto;
-    border-radius: 5px;
-    margin-bottom: 50px;
-}
-
-.buttons_row button {
-    padding: 18px 20px;
-    font-size: 20px;
-    height: 150px;
-    width: 280px;
-    background-color: rgb(255, 255, 255);
-    color: #282828;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: 18px;
+    height: 160px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    color: #333;
     border: none;
-    margin: 20px;
-}
-
-.buttons_row button:hover {
-    background-color: rgb(215, 210, 210);
-}
-
-.start_btn {
-    background-color: rgba(127, 67, 153, 1);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .buttons_row button:hover {
+    background: linear-gradient(145deg, #f5defa, #f0f0f0);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(127, 67, 153, 0.2);
+  }
+  
+  .btnText {
+    flex: 1;
+    margin-right: 10px;
+    text-align: left;
+  }
+  
+  .btnIcon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+  
+  .start_btn {
+    background: linear-gradient(90deg, rgba(127, 67, 153, 1) 0%, rgba(185, 114, 218, 1) 100%);
     color: #fff;
-    padding: 10px 20px;
+    padding: 16px 36px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     font-size: 20px;
     cursor: pointer;
-    margin-bottom: 20px;
-    transition: background-color 0.3s;
-}
-
-.start_btn:hover {
-    background-color: rgb(113, 75, 129);
-}
-
-.modal {
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 20px;
+  }
+  
+  .start_btn:hover {
+    background: linear-gradient(90deg, rgba(113, 75, 129, 1) 0%, rgba(168, 96, 203, 1) 100%);
+    transform: translateY(-2px);
+  }
+  
+  /* Модалка */
+  .modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -230,97 +251,97 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.modal_content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
+    z-index: 100;
+  }
+  
+  .modal_content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
     text-align: center;
-}
-
-.modal_content button {
+    max-width: 400px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal_content button {
     margin-top: 20px;
-    padding: 10px;
-    background-color: rgba(127, 67, 153, 1);
+    padding: 12px 20px;
+    background: linear-gradient(90deg, rgba(127, 67, 153, 1) 0%, rgba(185, 114, 218, 1) 100%);
     border: none;
-    color: white;
+    border-radius: 8px;
+    color: #fff;
     cursor: pointer;
-}
-
-/* До 1200px — немного уменьшаем кнопки и заголовок */
-@media (max-width: 1200px) {
+  }
+  
+  /* До 1200px — чуть меньше размер */
+  @media (max-width: 1200px) {
     .start_learning_title {
-        font-size: 30px;
-        margin-bottom: 40px;
+      font-size: 36px;
+      margin-bottom: 30px;
     }
-
+  
+    .btnIcon {
+      width: 50px;
+      height: 50px;
+    }
+  
     .buttons_row button {
-        width: 240px;
-        height: 130px;
-        font-size: 18px;
-        padding: 16px;
-        margin: 15px;
+      height: 140px;
+      font-size: 17px;
     }
-
-    .start_btn {
-        font-size: 18px;
-    }
-}
-
-/* До 992px — 2 колонки кнопок + ещё уменьшение */
-@media (max-width: 992px) {
+  }
+  
+  /* До 992px — 2 колонки */
+  @media (max-width: 992px) {
     .start_learning_title {
-        font-size: 26px;
-        padding: 0 10px;
+      font-size: 30px;
+      margin-bottom: 30px;
     }
-
+  
     .buttons_row {
-        justify-content: center;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
-
+  
     .buttons_row button {
-        width: 220px;
-        height: 120px;
-        font-size: 17px;
-        margin: 12px;
+      height: 130px;
+      font-size: 16px;
+      padding: 18px;
     }
-
-    .start_btn {
-        font-size: 17px;
-        padding: 10px 18px;
-    }
-}
-
-/* До 768px — 1 колонка кнопок, всё по центру */
-@media (max-width: 768px) {
-    .start_learning_title {
-        font-size: 22px;
-        margin-bottom: 30px;
-        padding: 0 10px;
-    }
-
+  }
+  
+  /* До 768px — снова 3 в ряд, но сужаем */
+  @media (max-width: 768px) {
     .buttons_row {
-        flex-direction: column;
-        align-items: center;
+      grid-template-columns: repeat(1, 1fr);
     }
-
+  
     .buttons_row button {
-        width: 90%;
-        max-width: 320px;
-        height: auto;
-        padding: 16px 14px;
-        font-size: 16px;
-        margin: 10px 0;
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      padding: 16px 14px;
+      font-size: 16px;
     }
-
+  
+    .btnText {
+      flex: 1;
+      margin: 0 10px 0 0;
+    }
+  
+    .btnIcon {
+      width: 40px;
+      height: 40px;
+    }
+  
     .start_btn {
-        font-size: 16px;
-        padding: 12px 20px;
-        width: 90%;
-        max-width: 300px;
+      font-size: 16px;
+      padding: 12px 20px;
+      width: 90%;
+      max-width: 300px;
     }
-}
+  }
+  
 
 /*---------------------------------------------------------------------------------------*/
 /* Что вас приведет к результату?-----------------------------*/
