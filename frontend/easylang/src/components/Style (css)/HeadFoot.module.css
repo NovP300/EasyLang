@@ -24,15 +24,42 @@
     align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
-    color: rgb(0, 0, 0);
     cursor: pointer;
+    background: linear-gradient(270deg, #ff6ec4, #7873f5, #ff6ec4);
+    background-size: 800% 800%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 10s linear infinite;
+}
+
+.logo:hover {
+    animation: gradientShift 3s ease infinite;
 }
 
 .img1 {
     width: 45px;
     height: auto;
-    margin-right: 8px; /* Расстояние между иконкой и текстом */
+    margin-right: 8px;
+    transition: transform 0.3s ease;
 }
+
+.logo:hover .img1 {
+    transform: scale(1.1);
+}
+
+/* Анимация переливания */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 .menu_icon {
     display: none;
     flex-direction: column;

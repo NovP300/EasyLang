@@ -162,6 +162,13 @@ h1 {
 .congrats_image {
     width: 100px;
     height: auto;
+    animation: swing 2s infinite;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.congrats_image:hover {
+    transform: scale(1.1) rotate(3deg); /* лёгкое увеличение и поворот */
+    filter: brightness(1.1) saturate(1.2); /* делает картинку ярче и насыщеннее */
 }
 
 .congrats_text {
