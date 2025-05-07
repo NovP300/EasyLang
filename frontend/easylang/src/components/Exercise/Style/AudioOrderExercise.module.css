@@ -124,6 +124,7 @@
     border-radius: 8px;
     font-size: 17px;
     cursor: pointer;
+    margin-left: auto;
 }
 
 .feedbackBox {
