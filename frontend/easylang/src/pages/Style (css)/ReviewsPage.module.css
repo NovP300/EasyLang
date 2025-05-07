@@ -240,7 +240,7 @@
 .toggleButton {
     margin-top: 12px;
     padding: 8px 16px;
-    background-color:  #118f00;
+    background-color: #118f00;
     color: white;
     border: none;
     border-radius: 8px;
@@ -312,4 +312,4 @@
     text-align: center;
     align-self: flex-start;
     transition: background 0.8s ease;
-  }
+}
