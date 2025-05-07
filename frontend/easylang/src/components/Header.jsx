@@ -106,13 +106,6 @@ const Header = ({ scrollToSection, aboutRef, pricingRef, languagePR, faqRef, rev
     );
   };
 
-  useEffect(() => {
-    if (location.state?.scrollToLanguages) {
-      scrollToSection(languagePR);  // твоя функция
-      // Сбросим флаг, чтобы он не сработал повторно при следующем переходе
-      window.history.replaceState({}, document.title);
-    }
-  }, [location]);
 
   return (
     <div className={styles.home}>

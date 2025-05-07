@@ -30,6 +30,8 @@ export default function CoursePage() {
 
   const filteredModules = modules.filter(mod => mod.title !== 'Test');
   const filteredProgressModules = UseProgress.modules.filter(mod => mod.title !== 'Test');
+  const sortedModules = [...filteredModules].sort((a, b) => a.order - b.order);
+  const sortedProgressModules = [...filteredProgressModules].sort((a, b) => a.order - b.order);
 
   // Загружаем модули и описание языка
   useEffect(() => {
@@ -95,8 +97,11 @@ export default function CoursePage() {
       {/* Выводим модули с прогрессом */}
 
       {filteredModules.map((mod, index) => {
-        const isLocked = index > 0 &&
-          !filteredProgressModules[index - 1]?.is_completed;
+        
+        const currentProgress = sortedProgressModules[index];
+        //const isCompleted = currentProgress?.is_completed;
+        const isLocked = index > 0 && !sortedProgressModules[index - 1]?.is_completed;
+        //const isLocked = !isCompleted && index > 0 && !filteredProgressModules[index - 1]?.is_completed;
 
         return (
           <ModuleItem
