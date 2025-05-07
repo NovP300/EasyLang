@@ -32,9 +32,7 @@
     animation: gradientShift 10s linear infinite;
 }
 
-.logo:hover {
-    animation: gradientShift 3s ease infinite;
-}
+
 
 .img1 {
     width: 45px;

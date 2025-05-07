@@ -59,7 +59,7 @@ const GamePage = () => {
   useEffect(() => {
     if (!isTest && completed && lessonId) {
       markLessonCompleted(lessonId)
-        .then(() => navigate(`/progress?languageId=${languageId}`))
+        .then(() => console.log("Урок успешно отмечен как завершённый"))
         .catch((err) =>
           console.error("Ошибка при отметке урока как завершённого", err)
         );
@@ -152,7 +152,7 @@ const GamePage = () => {
               <button
                 className={styles.successButton}
                 onClick={() =>
-                  navigate("/test", {state: { step: 3, languageId: passedLanguageId, }, })}
+                  navigate("/test", { state: { step: 3, languageId: passedLanguageId, }, })}
               >
                 Пройти заново
               </button>
@@ -213,7 +213,33 @@ const GamePage = () => {
         );
       }
     }
-
+    else {
+      // обычный урок успешно пройден
+      return (
+        <div className={styles.successWrapper}>
+          <h2 className={styles.successTitle}>Урок пройден!</h2>
+          <div className={styles.successCard}>
+            <p className={styles.successText}>
+              Отличная работа! Вы успешно завершили этот урок.
+            </p>
+          </div>
+          <div className={styles.successActions}>
+            <button
+              className={styles.successButton}
+              onClick={() => navigate(`/progress?languageId=${languageId}`)}
+            >
+              К прогрессу
+            </button>
+            <button
+              className={`${styles.successButton} ${styles.laterButton}`}
+              onClick={() => navigate("/")}
+            >
+              На главную
+            </button>
+          </div>
+        </div>
+      );
+    }
   }
 
   const currentExercise = queue[currentIndex];
