@@ -21,7 +21,7 @@ import ModerateReviewsPage from "./pages/ModerateReviewsPage";
 import ModerateFeedbacksPage from "./pages/ModerateFeedBacksPage";
 import AboutTheCoursePage from './pages/AboutTheCoursePage';
 import PaymentPage from "./pages/PaymentPage";
-
+import PromoModal from "./modals/PromoModal";
 import { getProfile } from "./api/profile";
 
 import { useState, useEffect } from "react";
@@ -67,6 +67,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/about-the-course/:language" element={<AboutTheCoursePage />} />
           <Route path="/payment" element={<PaymentPage/>}> </Route>
+          
         </Route>
       </Routes>
       {/* Модалки поверх background */}
@@ -75,6 +76,7 @@ function App() {
           <Route path="/login" element={<LoginModal />} />
           <Route path="/register" element={<RegisterModal />} />
           <Route path="/review" element={<ReviewModal />} />
+          <Route path="/promo" element={<PromoModal />} />
         </Routes>
       )}
 

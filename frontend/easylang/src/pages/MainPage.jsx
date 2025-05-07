@@ -256,7 +256,7 @@ export default function MainPage() {
                         <button className={styles.try_free_btn}>Попробовать бесплатно</button>
                     </Link>
                     <div className={styles.login_link}>
-                        <Link to="/login" state={{ background: location }}>У меня уже есть аккаунт</Link>
+                        <Link to="/promo" state={{ background: location }}>У меня уже есть аккаунт</Link>
                     </div>
                 </div>
             </section>
