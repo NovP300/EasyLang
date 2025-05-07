@@ -1,9 +1,11 @@
 import styles from "./Style (css)/MyCourses.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { getProfile } from "../api/profile";
 import { getProgressOverview, getDetailedProgress } from "../api/progress";
+import { getEnrollments } from "../api/enrollment";
+
 
 const LANGUAGE_MAPPING = {
   english: { id: 1, name: "Английский" },
@@ -13,6 +15,8 @@ const LANGUAGE_MAPPING = {
 };
 
 function getCourseWord(count) {
+
+  
   const lastDigit = count % 10;
   const lastTwoDigits = count % 100;
   
@@ -23,6 +27,8 @@ function getCourseWord(count) {
 }
 
 export default function MyCourses() {
+
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [progressData, setProgressData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,9 +52,10 @@ export default function MyCourses() {
     const loadData = async () => {
       console.log("Начало загрузки данных прогресса...");
       try {
-        const [overview, detailed] = await Promise.all([
+        const [overview, detailed, enrollments] = await Promise.all([
           getProgressOverview(),
-          getDetailedProgress()
+          getDetailedProgress(),
+          getEnrollments()
         ]);
         
         console.log("Данные overview:", JSON.stringify(overview, null, 2));
@@ -57,6 +64,7 @@ export default function MyCourses() {
         setProgressData({
           overview,
           detailed,
+          enrollments,
           languages: Object.values(LANGUAGE_MAPPING)
         });
       } catch (error) {
@@ -72,42 +80,30 @@ export default function MyCourses() {
   }, []);
 
   const calculateCourseStats = () => {
-    // 1. Проверяем, что данные прогресса загружены
     if (!progressData) return { total: 0, completed: 0, started: 0, coursesData: [] };
   
-    // 2. Проходим по всем языкам из LANGUAGE_MAPPING
-    const coursesData = Object.values(LANGUAGE_MAPPING).map(lang => {
-      // 3. Фильтруем модули текущего языка (по language_id)
-      const modules = progressData.detailed.modules.filter(m => m.language_id === lang.id);
-      
-      // 4. Считаем общее количество модулей для языка
-      const totalModules = modules.length;
-      
-      // 5. Считаем количество завершенных модулей
-      const completedModules = modules.filter(m => m.is_completed).length;
-      
-      // 6. Проверяем, начат ли курс (хотя бы 1 урок пройден)
-      const hasStarted = modules.some(m => m.completed_lessons > 0);
+    const enrolledLanguageIds = progressData.enrollments.map(e => e.language);
   
-      // 7. Возвращаем статистику для текущего языка
-      return {
-        id: lang.id,
-        title: lang.name,
-        totalModules,
-        completedModules,
-        hasStarted,
-      };
-    });
+    const coursesData = Object.values(LANGUAGE_MAPPING)
+      .filter(lang => enrolledLanguageIds.includes(lang.id))
+      .map(lang => {
+        const modules = progressData.detailed.modules.filter(m => m.language_id === lang.id);
+        const totalModules = modules.length;
+        const completedModules = modules.filter(m => m.is_completed).length;
   
-    // 8. Фильтруем только активные курсы (начатые или завершенные)
-    const activeCourses = coursesData.filter(c => c.hasStarted || c.completedModules > 0);
-    
-    // 9. Считаем общую статистику:
+        return {
+          id: lang.id,
+          title: lang.name,
+          totalModules,
+          completedModules,
+        };
+      });
+  
     return {
-      total: activeCourses.length, // Всего активных курсов
-      completed: activeCourses.filter(c => c.completedModules === c.totalModules).length, // Завершенные
-      started: activeCourses.filter(c => c.completedModules < c.totalModules).length, // Начатые
-      coursesData: activeCourses, // Данные для отображения
+      total: coursesData.length,
+      completed: coursesData.filter(c => c.completedModules === c.totalModules && c.totalModules > 0).length,
+      started: coursesData.filter(c => c.completedModules < c.totalModules && c.totalModules > 0).length,
+      coursesData
     };
   };
 
@@ -120,6 +116,10 @@ export default function MyCourses() {
   if (error) {
     return <div className={styles.error}>{error}</div>;
   }
+
+  const handleGoToCatalog = () => {
+    navigate("/", { state: { scrollToLanguages: true } });
+  };
 
   return (
     <div>
@@ -139,6 +139,15 @@ export default function MyCourses() {
         <h3 className={styles.courseHeader}>
           Всего {total} {getCourseWord(total)}
         </h3>
+
+        {coursesData.length === 0 ? (
+          <div className={styles.emptyMessage}>
+            <p>Вы еще не записаны ни на один курс.</p>
+            <button onClick={handleGoToCatalog} className={styles.linkBtn}>
+              Записаться на первый курс
+            </button>
+          </div>
+        ) : (
 
         <div className={styles.courseList}>
           {coursesData.map((course) => (
@@ -172,6 +181,7 @@ export default function MyCourses() {
             </div>
           ))}
         </div>
+        )}
       </section>
     </div>
   );

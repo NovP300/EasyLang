@@ -193,3 +193,15 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.email})"
+
+
+class Enrollment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='enrollments')
+    language = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='enrollments')
+    enrolled_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'language')  # Гарантирует уникальность записей
+
+    def __str__(self):
+        return f"{self.user.email} → {self.language.name}"

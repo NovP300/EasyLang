@@ -1,13 +1,13 @@
 from django.shortcuts import render
 
 from rest_framework import generics, permissions
-from EasyLang.models import User, Language, Module, Lesson, Exercise, LessonProgress, Review, Feedback
+from EasyLang.models import User, Language, Module, Lesson, Exercise, LessonProgress, Review, Feedback, Enrollment
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import (UserSerializer, RegisterSerializer, LanguageSerializer, ModuleSerializer, FeedbackSerializer,
 LessonSerializer, ExerciseSerializer, LessonProgressSerializer,
- ReviewSerializer, ChangePasswordSerializer, CustomTokenObtainPairSerializer)
+ ReviewSerializer, ChangePasswordSerializer, CustomTokenObtainPairSerializer, EnrollmentSerializer)
 
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -358,3 +358,27 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         feedback.save()
         return Response({"success": True, "is_done": feedback.is_done})
     
+
+class EnrollmentViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        enrollments = Enrollment.objects.filter(user=request.user)
+        serializer = EnrollmentSerializer(enrollments, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        user = request.user
+        language_id = request.data.get("language")
+
+        if not language_id:
+            return Response({"error": "Не указан язык"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Проверка на уникальность
+        exists = Enrollment.objects.filter(user=user, language_id=language_id).exists()
+        if exists:
+            return Response({"detail": "Вы уже записаны на этот курс."}, status=status.HTTP_400_BAD_REQUEST)
+
+        enrollment = Enrollment.objects.create(user=user, language_id=language_id)
+        serializer = EnrollmentSerializer(enrollment)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
