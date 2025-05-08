@@ -51,7 +51,7 @@ class ModuleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Module
-        fields = ['id', 'title', 'description', 'language']
+        fields = ['id', 'title', 'description', 'language', 'paid', 'is_test']
 
 class LessonSerializer(serializers.ModelSerializer):
     module = ModuleSerializer(read_only=True)

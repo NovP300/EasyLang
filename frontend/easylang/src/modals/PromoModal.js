@@ -6,11 +6,18 @@ import { IoLockOpenOutline } from "react-icons/io5";
 import { TiBook } from "react-icons/ti";
 import { LuPenLine } from "react-icons/lu";
 
+ 
+
 const PromoModal = () => {
     useEffect(() => {
         console.log("PromoModal загружен");
     }, []);
     const navigate = useNavigate();
+
+    const handleGoToPayments = () => {
+        navigate("/", { state: { scrollToPayments: true } });
+      };
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
@@ -40,7 +47,7 @@ const PromoModal = () => {
                 <div className={styles.buttons}>
                     <button
                         className={styles.primaryButton}
-                        onClick={() => navigate("/payment")}
+                        onClick={handleGoToPayments}
                     >
                         Перейти к тарифам
                     </button>

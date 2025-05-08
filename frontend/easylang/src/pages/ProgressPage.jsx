@@ -9,6 +9,7 @@ import { SlFlag } from "react-icons/sl";
 import ModuleItem from "../components/ModuleItem";
 import { getModulesByLanguage } from "../api/modules";
 import { getProgressOverview, getDetailedProgress } from "../api/progress";
+import useProgress from "../api/useProgress";
 
 const languageMapping = {
   english: 1,
@@ -43,12 +44,13 @@ export default function ProgressPage() {
     completed_lesson_ids: [],
     modules: []
   });
-  const [loading, setLoading] = useState(true);
+
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
+        setPageLoading(true);
 
         const [overviewRes, detailedRes, modulesRes] = await Promise.all([
           getProgressOverview(),
@@ -77,15 +79,17 @@ export default function ProgressPage() {
       } catch (error) {
         console.error("Ошибка загрузки данных:", error);
       } finally {
-        setLoading(false);
+        setPageLoading(false);
       }
     };
 
     if (languageId) fetchData();
   }, [languageId]);
 
-  const filteredModules = modules.filter(mod => mod.title !== 'Test');
-  const filteredProgressModules = detailedProgress.modules.filter(mod => mod.title !== 'Test');
+  const { UseProgress, loading } = useProgress();
+  const filteredModules = modules.filter(mod => !mod.is_test);
+  const sortedModules = [...filteredModules].sort((a, b) => a.order - b.order);
+
 
   if (loading) return <div>Загрузка...</div>;
 
@@ -177,21 +181,18 @@ export default function ProgressPage() {
       </div>
 
       <h2 className={styles.modules_title}>Список модулей</h2>
-      {filteredModules.map((mod, index) => {
-        const prevModule = filteredModules[index - 1];
-        const prevProgress = filteredProgressModules.find(m => m.id === prevModule?.id);
-        const isLocked = index > 0 && !prevProgress?.is_completed;
 
-        return (
-          <ModuleItem
-            key={mod.id}
-            module={mod}
-            isLocked={isLocked}
-            completedLessonIds={detailedProgress.completed_lesson_ids}
-            moduleClass={isLocked ? styles.lockedModule : styles.unlockedModule}
-          />
-        );
-      })}
+      {sortedModules.map((mod, index) => {
+      
+              return (
+                <ModuleItem
+                  key={mod.id}
+                  module={mod}
+                  completedLessonIds={UseProgress.completed_lesson_ids || []}
+                  hasSubscription={UseProgress.has_subscription}
+                />
+              );
+            })}
     </div>
   );
 }

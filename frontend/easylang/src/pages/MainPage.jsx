@@ -246,6 +246,10 @@ export default function MainPage() {
           // Сбросим флаг, чтобы он не сработал повторно при следующем переходе
           window.history.replaceState({}, document.title);
         }
+        if (location.state?.scrollToPayments) {
+            scrollToSection(pricingRef);
+            window.history.replaceState({}, document.title);
+        }
     }, [location]);
 
     return (

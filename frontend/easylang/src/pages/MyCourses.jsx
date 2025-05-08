@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getProfile } from "../api/profile";
 import { getProgressOverview, getDetailedProgress } from "../api/progress";
 import { getEnrollments } from "../api/enrollment";
+import { format } from "date-fns";
 
 
 const LANGUAGE_MAPPING = {
@@ -87,7 +88,9 @@ export default function MyCourses() {
     const coursesData = Object.values(LANGUAGE_MAPPING)
       .filter(lang => enrolledLanguageIds.includes(lang.id))
       .map(lang => {
-        const modules = progressData.detailed.modules.filter(m => m.language_id === lang.id);
+        const modules = progressData.detailed.modules.filter(m => m.language_id === lang.id && !m.is_test);
+
+        console.log(modules);
         const totalModules = modules.length;
         const completedModules = modules.filter(m => m.is_completed).length;
   
@@ -117,6 +120,10 @@ export default function MyCourses() {
     return <div className={styles.error}>{error}</div>;
   }
 
+  const subscriptionDue = profile?.subscription_due
+    ? format(new Date(profile.subscription_due), "dd MMM yyyy")
+    : null;
+
   const handleGoToCatalog = () => {
     navigate("/", { state: { scrollToLanguages: true } });
   };
@@ -132,6 +139,11 @@ export default function MyCourses() {
         <p className={styles.profileStats}>
           Количество начатых курсов: {started}
         </p>
+        {profile?.subscription && subscriptionDue && (
+          <p className={styles.profileStats}>
+            Подписка активна до: {subscriptionDue}
+          </p>
+        )}
       </section>
 
       {/* Секция курсов */}

@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import LessonList from "./LessonList";
 import styles from "./Style (css)/ModuleItem.module.css";
 import { FaCheckCircle, FaPlus, FaMinus } from "react-icons/fa";
 import { getLessonsByModule } from "../api/lessons";
+import useProgress from "../api/useProgress";
 
-export default function ModuleItem({ module, isLocked, completedLessonIds, moduleClass }) {
+export default function ModuleItem({ module,  completedLessonIds, moduleClass, hasSubscription}) {
   const [open, setOpen] = useState(false);
   const [lessons, setLessons] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+
   useEffect(() => {
     const fetchLessons = async () => {
       const data = await getLessonsByModule(module.id);
@@ -15,12 +21,26 @@ export default function ModuleItem({ module, isLocked, completedLessonIds, modul
     fetchLessons();
   }, [module.id]);
 
-  const isModuleCompleted = lessons.length > 0 && lessons.every(lesson => completedLessonIds.includes(lesson.id));
+  const isModuleCompleted = module.is_completed || (
+    lessons.length > 0 && lessons.every(lesson => completedLessonIds.includes(lesson.id))
+  );
 
+  const isLocked = module.paid && !hasSubscription;
 
   return (
     <div className={`${styles.moduleItem} ${moduleClass}`}>
-      <div className={styles.moduleHeader} onClick={() => !isLocked && setOpen(!open)}>
+
+        <div
+          className={styles.moduleHeader}
+          onClick={() => {
+            if (isLocked) {
+              navigate("/promo", { state: { background: location } });
+            } else {
+              setOpen(!open);
+            }
+          }}
+        >
+
         <div className={`${styles.statusIcon} ${isModuleCompleted ? styles.completed : styles.incomplete}`}>
           <FaCheckCircle size={28} />
         </div>

@@ -23,15 +23,14 @@ export default function CoursePage() {
   const location = useLocation();
 
   // Состояния для модулей, описания языка, прогресса и загрузки
-  const [modules, setModules] = useState([]);
   const [languageDescription, setLanguageDescription] = useState("");
   const [languageName, setLanguageName] = useState(""); // Для имени курса
+
+  const [modules, setModules] = useState([]);
   const { UseProgress, loading } = useProgress(); // Получаем прогресс
 
-  const filteredModules = modules.filter(mod => mod.title !== 'Test');
-  const filteredProgressModules = UseProgress.modules.filter(mod => mod.title !== 'Test');
+  const filteredModules = modules.filter(mod => !mod.is_test);
   const sortedModules = [...filteredModules].sort((a, b) => a.order - b.order);
-  const sortedProgressModules = [...filteredProgressModules].sort((a, b) => a.order - b.order);
 
   // Загружаем модули и описание языка
   useEffect(() => {
@@ -96,19 +95,13 @@ export default function CoursePage() {
       <h2 className={styles.modulesTitle}>Список модулей</h2>
       {/* Выводим модули с прогрессом */}
 
-      {filteredModules.map((mod, index) => {
-        
-        const currentProgress = sortedProgressModules[index];
-        //const isCompleted = currentProgress?.is_completed;
-        const isLocked = index > 0 && !sortedProgressModules[index - 1]?.is_completed;
-        //const isLocked = !isCompleted && index > 0 && !filteredProgressModules[index - 1]?.is_completed;
-
+      {sortedModules.map((mod, index) => {
         return (
           <ModuleItem
             key={mod.id}
             module={mod}
-            isLocked={isLocked}
             completedLessonIds={UseProgress.completed_lesson_ids || []}
+            hasSubscription={UseProgress.has_subscription}
           />
         );
       })}

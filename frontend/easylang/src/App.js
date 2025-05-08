@@ -24,6 +24,7 @@ import PaymentPage from "./pages/PaymentPage";
 import PromoModal from "./modals/PromoModal";
 import { getProfile } from "./api/profile";
 
+
 import { useState, useEffect } from "react";
 
 function App() {

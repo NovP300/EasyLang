@@ -222,13 +222,15 @@ class DetailedProgressView(APIView):
                 "completed_lessons": completed,
                 "total_lessons": lessons.count(),
                 "is_completed": completed == lessons.count() and lessons.exists(),
+                "is_test": module.is_test,
             })
 
         return Response({
             "completed_lesson_ids": list(
                 LessonProgress.objects.filter(user=request.user).values_list("lesson_id", flat=True)
             ),
-            "modules": modules_data
+            "modules": modules_data,
+            "subscription": request.user.subscription
         })
 
 
