@@ -322,6 +322,7 @@
         gap: 5px;
         align-items: flex-end;
         width: auto;
+        
     }
     .login_btn {
         max-width: 100px;
@@ -368,6 +369,7 @@
     .nav_links {
         flex-direction: column;
         gap: 10px;
+        margin-right: 50px;
         width: 100%;
         margin-top: 20px;
     }

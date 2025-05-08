@@ -171,24 +171,24 @@
     text-align: center;
     padding: 60px 20px;
     background: linear-gradient(275deg, #ffffff 0%, #f2e6ff 50%, #e7d0ff 100%);
-  }
-  
-  .start_learning_title {
+}
+
+.start_learning_title {
     font-size: 2.3rem;
     margin-bottom: 40px;
     color: #000000;
     font-weight: 700;
-  }
-  
-  .buttons_row {
+}
+
+.buttons_row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     max-width: 1300px;
     margin: 0 auto 50px auto;
-  }
-  
-  .buttons_row button {
+}
+
+.buttons_row button {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -203,27 +203,27 @@
     transition: all 0.3s ease;
     cursor: pointer;
     text-align: left;
-  }
-  
-  .buttons_row button:hover {
+}
+
+.buttons_row button:hover {
     background: linear-gradient(145deg, #f5defa, #f0f0f0);
     transform: translateY(-4px);
     box-shadow: 0 10px 20px rgba(127, 67, 153, 0.2);
-  }
-  
-  .btnText {
+}
+
+.btnText {
     flex: 1;
     margin-right: 10px;
     text-align: left;
-  }
-  
-  .btnIcon {
+}
+
+.btnIcon {
     width: 60px;
     height: 60px;
     object-fit: contain;
-  }
-  
-  .start_btn {
+}
+
+.start_btn {
     background: linear-gradient(90deg, rgba(127, 67, 153, 1) 0%, rgba(185, 114, 218, 1) 100%);
     color: #fff;
     padding: 16px 36px;
@@ -233,15 +233,15 @@
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
     margin-top: 20px;
-  }
-  
-  .start_btn:hover {
+}
+
+.start_btn:hover {
     background: linear-gradient(90deg, rgba(113, 75, 129, 1) 0%, rgba(168, 96, 203, 1) 100%);
     transform: translateY(-2px);
-  }
-  
-  /* Модалка */
-  .modal {
+}
+
+/* Модалка */
+.modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -252,18 +252,18 @@
     justify-content: center;
     align-items: center;
     z-index: 100;
-  }
-  
-  .modal_content {
+}
+
+.modal_content {
     background-color: #fff;
     padding: 30px;
     border-radius: 12px;
     text-align: center;
     max-width: 400px;
     box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
-  }
-  
-  .modal_content button {
+}
+
+.modal_content button {
     margin-top: 20px;
     padding: 12px 20px;
     background: linear-gradient(90deg, rgba(127, 67, 153, 1) 0%, rgba(185, 114, 218, 1) 100%);
@@ -271,77 +271,77 @@
     border-radius: 8px;
     color: #fff;
     cursor: pointer;
-  }
-  
-  /* До 1200px — чуть меньше размер */
-  @media (max-width: 1200px) {
+}
+
+/* До 1200px — чуть меньше размер */
+@media (max-width: 1200px) {
     .start_learning_title {
-      font-size: 36px;
-      margin-bottom: 30px;
+        font-size: 36px;
+        margin-bottom: 30px;
     }
-  
+
     .btnIcon {
-      width: 50px;
-      height: 50px;
+        width: 50px;
+        height: 50px;
     }
-  
+
     .buttons_row button {
-      height: 140px;
-      font-size: 17px;
+        height: 140px;
+        font-size: 17px;
     }
-  }
-  
-  /* До 992px — 2 колонки */
-  @media (max-width: 992px) {
+}
+
+/* До 992px — 2 колонки */
+@media (max-width: 992px) {
     .start_learning_title {
-      font-size: 30px;
-      margin-bottom: 30px;
+        font-size: 30px;
+        margin-bottom: 30px;
     }
-  
+
     .buttons_row {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
-  
+
     .buttons_row button {
-      height: 130px;
-      font-size: 16px;
-      padding: 18px;
+        height: 130px;
+        font-size: 16px;
+        padding: 18px;
     }
-  }
-  
-  /* До 768px — снова 3 в ряд, но сужаем */
-  @media (max-width: 768px) {
+}
+
+/* До 768px — снова 3 в ряд, но сужаем */
+@media (max-width: 768px) {
     .buttons_row {
-      grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
-  
+
     .buttons_row button {
-      width: 100%;
-      height: auto;
-      flex-direction: row;
-      padding: 16px 14px;
-      font-size: 16px;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        padding: 16px 14px;
+        font-size: 16px;
     }
-  
+
     .btnText {
-      flex: 1;
-      margin: 0 10px 0 0;
+        flex: 1;
+        margin: 0 10px 0 0;
     }
-  
+
     .btnIcon {
-      width: 40px;
-      height: 40px;
+        width: 40px;
+        height: 40px;
     }
-  
+
     .start_btn {
-      font-size: 16px;
-      padding: 12px 20px;
-      width: 90%;
-      max-width: 300px;
+        font-size: 16px;
+        padding: 12px 20px;
+        width: 90%;
+        max-width: 300px;
     }
-  }
-  
+}
+
 
 /*---------------------------------------------------------------------------------------*/
 /* Что вас приведет к результату?-----------------------------*/
@@ -390,10 +390,13 @@
 }
 
 .icon {
+    display: block;
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    flex-shrink: 0;
     margin-right: 15px;
-    font-size: 28px;
-    min-width: 28px;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .auth_form {
@@ -784,7 +787,7 @@
     color: #555;
     text-align: justify;
     flex-grow: 1;
-    padding:20px 20px 20px 20px;
+    padding: 20px 20px 20px 20px;
 }
 
 .card_price {
@@ -832,7 +835,8 @@
         border-bottom: 1px solid black;
         text-align: center;
     }
-    .card_description{
+
+    .card_description {
         text-align: center;
         padding: 10px;
         margin-bottom: 10px;
@@ -974,338 +978,142 @@
     background: rgb(74, 74, 74);
 }
 
+/* До 1200px */
+@media (max-width: 1200px) {
 
-/* <= 1266px */
-@media (max-width: 1266px) {
-
-    .results_column {
-        gap: 15px;
+    .faqSection h2,
+    .reviewSection h2 {
+        font-size: 28px;
+        margin-bottom: 25px;
     }
 
-    .results_section {
-        padding: 30px 20px;
+    .faqItem {
+        font-size: 17px;
     }
 
-    .results_title {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-    }
-
-    .nav_links {
-        gap: 20px;
+    .faqAnswer {
         font-size: 15px;
     }
 
-    .testContainer {
-        padding: 25px;
-    }
-
-    .hero_overlay {
-        padding: 40px 20px;
-    }
-
-    .home_title {
-        font-size: 2rem;
-    }
-
-    .home_text {
-        font-size: 1.1rem;
-    }
-
-    .buttons_row {
-        gap: 15px;
-    }
-
-    .buttons_row button {
-        font-size: 15px;
-        padding: 10px 20px;
+    .btnCom {
+        font-size: 17px;
+        padding: 10px 16px;
     }
 }
 
-/* <= 1150px */
-@media (max-width: 1150px) {
-    .pricing_card {
-        width: 28%;
-        padding: 15px;
+/* До 992px */
+@media (max-width: 992px) {
+
+    .faqSection h2,
+    .reviewSection h2 {
+        font-size: 26px;
         margin-bottom: 20px;
     }
 
-    .pricing_container {
-        gap: 16px;
-        justify-content: center;
-        flex-wrap: wrap;
+    .faqItem {
+        font-size: 16px;
+        padding: 10px 0;
     }
 
-    .results_columns {
-        padding: 0 10px;
-        gap: 20px;
-    }
-
-    .results_title {
-        font-size: 1.6rem;
-    }
-
-    .nav_links {
-        gap: 15px;
+    .faqAnswer {
         font-size: 14px;
+        line-height: 1.4;
     }
 
-    .nav_logo img {
-        max-width: 130px;
-    }
-
-    .buttons_row {
-        gap: 12px;
-        flex-wrap: wrap;
-    }
-
-    .buttons_row button {
-        font-size: 15px;
-        padding: 10px 18px;
-    }
-
-    .hero_overlay {
-        padding: 30px 15px;
-    }
-
-    .home_title {
-        font-size: 1.9rem;
-    }
-
-    .home_text {
-        font-size: 1rem;
-    }
-}
-
-/* <= 1024px */
-@media (max-width: 1024px) {
     .reviewGrid {
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        max-width: 600px;
+        margin: 0 auto;
     }
 
     .reviewCard {
-        padding: 15px;
-        font-size: 14px;
+        width: 100%;
+        padding: 18px;
+        border-radius: 8px;
     }
 
-    .auth_buttons {
-        flex-direction: row;
-        gap: 10px;
-        justify-content: center;
+    .reviewCard .stars {
+        font-size: 18px;
     }
 
-    .hero_overlay {
-        padding: 30px 20px;
-    }
-
-    .home_title {
-        font-size: 2rem;
-        text-align: center;
-    }
-
-    .home_text {
-        font-size: 1.1rem;
-        text-align: center;
-    }
-
-    .pricing_card {
-        width: 90%;
-        margin: 0 auto 20px;
-    }
-
-    .nav_links {
-        gap: 12px;
+    .reviewCard .user {
         font-size: 13px;
     }
 
-    .faqItem {
+    .reviewCard .comment {
+        font-size: 13px;
+    }
+
+    .language {
         font-size: 15px;
-        padding: 12px;
-    }
-}
-
-/* <= 850px */
-/* <= 850px */
-@media (max-width: 850px) {
-    .pricing_container {
-        flex-direction: column;
-        align-items: center;
     }
 
-    .pricing_card {
-        width: 90%;
-        margin: 20px auto;
-        padding: 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-    }
-
-    .buttons_row {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        margin-top: 20px;
-    }
-
-    .buttons_row button {
-        width: 80%;
-        margin: 8px 0;
+    .btnCom {
         font-size: 16px;
-        padding: 10px;
-    }
-
-    .faqItem {
-        padding: 10px;
-        text-align: left;
-        font-size: 15px;
-        line-height: 1.4;
-    }
-
-    .faqAnswer {
-        font-size: 14px;
-        line-height: 1.4;
-    }
-
-    .nav_links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: #fff;
-        padding: 20px 0;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        gap: 15px;
-        z-index: 1000;
-    }
-
-    .nav_links.active {
-        display: flex;
-    }
-
-    .menu_icon {
-        display: flex;
-        cursor: pointer;
-        padding: 10px;
-    }
-
-    .auth_buttons {
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .reviewGrid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .reviewCard {
-        padding: 15px;
-        font-size: 14px;
+        padding: 10px 14px;
+        margin-top: 80px;
     }
 }
 
-/* Мобильные (до 768px) */
+/* До 768px */
 @media (max-width: 768px) {
-    .nav {
-        flex-direction: row;
-        justify-content: space-between;
+    .faqSection {
+        padding: 30px 10px;
     }
 
-    .menu_icon {
-        display: flex;
-    }
-
-    .nav_links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background: #fff;
-        padding: 20px 0;
-        gap: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav_links.open {
-        display: flex;
-    }
-
-    .auth_buttons {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .hero_overlay {
-        padding: 20px;
-    }
-
-    .home_title {
-        font-size: 1.8rem;
-        margin-top: 50px;
-    }
-
-    .home_text {
-        font-size: 1rem;
-    }
-
-    .buttons_row button {
-        width: 100%;
-        height: auto;
-        font-size: 16px;
-    }
-
-    .results_section {
-        padding: 20px 10px;
-    }
-
-    .results_title {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-    }
-
-    .buttons_row {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .buttons_row button {
-        width: 100%;
-        height: 60px;
-        font-size: 16px;
-        padding: 10px;
-    }
-
-    .pricing_container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .pricing_card {
-        border: none;
-        margin-bottom: 20px;
-        width: 90%;
-        padding: 20px;
+    .faqSection h2,
+    .reviewSection h2 {
+        font-size: 22px;
+        margin-bottom: 18px;
     }
 
     .faqItem {
-        font-size: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 15px;
+        padding: 8px 0;
     }
 
     .faqAnswer {
         font-size: 14px;
+        margin: 8px auto 16px auto;
+    }
+
+    .reviewSection {
+        padding: 30px 10px;
     }
 
     .reviewGrid {
         grid-template-columns: 1fr;
+        gap: 14px;
+        max-width: 50%;
     }
 
     .reviewCard {
-        padding: 15px;
+        padding: 14px;
+    }
+
+    .reviewCard .stars {
+        font-size: 14px;
+    }
+
+    .reviewCard .user {
+        font-size: 12px;
+    }
+
+    .reviewCard .comment {
+        font-size: 12px;
+    }
+
+    .language {
+        font-size: 14px;
+    }
+
+    .btnCom {
+        font-size: 15px;
+        padding: 10px 14px;
+        margin-top: 60px;
     }
 }

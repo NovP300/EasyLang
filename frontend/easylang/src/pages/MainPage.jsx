@@ -14,11 +14,18 @@ import img9 from "./pictures/materials.PNG";
 import img10 from "./pictures/gibgr.jpg";
 import img11 from "./pictures/motivate.jpg";
 
+import img12 from "./pictures/pogryz.png";
+import img13 from "./pictures/postep.png";
+import img14 from "./pictures/razvitie.png";
+import img15 from "./pictures/paractica.png";
+import img16 from "./pictures/osozn.png";
+import img17 from "./pictures/poderz.png";
+
 import { getAllReviews } from "../api/review";
 import { getUserById } from "../api/profile";
 import { FaStar, FaMedal } from "react-icons/fa";
 import { submitFeedback } from '../api/feedback';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const languages = [
     {
@@ -234,17 +241,17 @@ export default function MainPage() {
     const navigate = useNavigate();
     const handleStartClick = () => {
         if (isAuthenticated) {
-          navigate("/payment");
+            navigate("/payment");
         } else {
-          navigate("/register" , { state: { background: location } });
+            navigate("/register", { state: { background: location } });
         }
-      };
+    };
 
     useEffect(() => {
         if (location.state?.scrollToLanguages) {
-          scrollToSection(languagePR);  // твоя функция
-          // Сбросим флаг, чтобы он не сработал повторно при следующем переходе
-          window.history.replaceState({}, document.title);
+            scrollToSection(languagePR);  // твоя функция
+            // Сбросим флаг, чтобы он не сработал повторно при следующем переходе
+            window.history.replaceState({}, document.title);
         }
         if (location.state?.scrollToPayments) {
             scrollToSection(pricingRef);
@@ -256,7 +263,7 @@ export default function MainPage() {
         <div className={styles.home}>
             {/* EasyLang — учите языки в своем ритме! */}
             <section className={styles.hero_section}>
-            <img src={img5} alt="Фон" className={styles.hero_bg_img} />
+                <img src={img5} alt="Фон" className={styles.hero_bg_img} />
                 <div className={styles.hero_overlay}>
                     <h1 className={styles.home_title}>EasyLang — учите языки в своем ритме!</h1>
                     <p className={styles.home_text}>
@@ -327,15 +334,32 @@ export default function MainPage() {
                     <h2 className={styles.results_title}>Что вас приведет к <br />результату?</h2>
                     <div className={styles.results_columns}>
                         <ul className={styles.results_column}>
-                            <li><FaMedal className={styles.icon} /> Погружение в язык – учитесь через живые примеры, диалоги и аутентичные материалы.</li>
-                            <li><FaMedal className={styles.icon} /> Постепенная сложность – задания и темы усложняются по мере роста ваших навыков.</li>
-                            <li><FaMedal className={styles.icon} /> Развитие всех навыков – прокачивайте чтение, письмо, аудирование и лексику в комплексе.</li>
+                            <li>
+                                <img src={img12} alt="" className={styles.icon} />
+                                Погружение в язык – учитесь через живые примеры, диалоги и аутентичные материалы.
+                            </li>
+                            <li>
+                                <img src={img13} alt="" className={styles.icon} />
+                                Постепенная сложность – задания и темы усложняются по мере роста ваших навыков.
+                            </li>
+                            <li>
+                                <img src={img14} alt="" className={styles.icon} />
+                                Развитие всех навыков – прокачивайте чтение, письмо, аудирование и лексику в комплексе.
+                            </li>
                         </ul>
-
                         <ul className={styles.results_column}>
-                            <li><FaMedal className={styles.icon} /> Практика через повторение – закрепляйте знания с помощью тестов, заданий и мини-игр.</li>
-                            <li><FaMedal className={styles.icon} /> Осознанное обучение – понимайте, как и зачем используется каждое правило и конструкция.</li>
-                            <li><FaMedal className={styles.icon} /> Поддержка мотивации – отслеживайте прогресс, получайте награды и достигайте новых целей!</li>
+                            <li>
+                                <img src={img15} alt="" className={styles.icon} />
+                                Практика через повторение – закрепляйте знания с помощью тестов, заданий и мини-игр.
+                            </li>
+                            <li>
+                                <img src={img16} alt="" className={styles.icon} />
+                                Осознанное обучение – понимайте, как и зачем используется каждое правило и конструкция.
+                            </li>
+                            <li>
+                                <img src={img17} alt="" className={styles.icon} />
+                                Поддержка мотивации – отслеживайте прогресс, получайте награды и достигайте новых целей!
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -446,7 +470,7 @@ export default function MainPage() {
                                 Вас ждут бесплатные задания: десятки упражнений на лексику, грамматику, произношение
                             </p>
                             <p className={styles.card_price}>бесплатно</p>
-                            <button className={styles.card_button}  onClick={() => navigate("/test")}>Попробовать</button>
+                            <button className={styles.card_button} onClick={() => navigate("/test")}>Попробовать</button>
                         </div>
                         <div className={styles.pricing_card}>
                             <h3 className={styles.card_title}>Премиум</h3>
