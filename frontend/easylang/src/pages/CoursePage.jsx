@@ -29,8 +29,6 @@ export default function CoursePage() {
   const [modules, setModules] = useState([]);
   const { UseProgress, loading } = useProgress(); // Получаем прогресс
 
-  const filteredModules = modules.filter(mod => !mod.is_test);
-  const sortedModules = [...filteredModules].sort((a, b) => a.order - b.order);
 
   // Загружаем модули и описание языка
   useEffect(() => {
@@ -56,6 +54,14 @@ export default function CoursePage() {
     fetchModules();
     fetchLanguageDetails();
   }, [Name, languageId]);
+
+  const filteredModules = modules.filter(mod => !mod.is_test);
+  const sortedModules = [...filteredModules].sort((a, b) => a.order - b.order);
+
+  useEffect(() => {
+    console.log("Modules (до сортировки):", modules);
+    console.log("Sorted:", sortedModules.map(m => m.order));
+  }, [modules]);
 
   if (loading) return <div>Загрузка курса...</div>;
 

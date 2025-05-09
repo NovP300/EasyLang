@@ -282,7 +282,7 @@ export default function MainPage() {
 
             {/* Начните изучать английский язык прямо сейчас! */}
             <section className={styles.start_learning_section}>
-                <h2 className={styles.start_learning_title}>Начните изучать английский язык прямо сейчас!</h2>
+                <h2 className={styles.start_learning_title}>Начните изучать языки прямо сейчас!</h2>
                 <div className={styles.buttons_row}>
                     <button onClick={() => openModal('Начните с теста, чтобы понять, с чего лучше стартовать.')}>
                         <span className={styles.btnText}>Определим ваш уровень и пробелы в знаниях</span>
