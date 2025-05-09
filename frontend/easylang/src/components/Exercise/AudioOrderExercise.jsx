@@ -2,11 +2,14 @@ import { useState } from "react";
 import { MEDIA_URL } from "../../config";
 import styles from "./Style/AudioOrderExercise.module.css";
 import img1 from "./image/image4.png";
+
 const AudioOrderExercise = ({ exercise, onAnswer }) => {
   const { header, data } = exercise;
   const { audio, options, correct_answer } = data;
-  const [selected, setSelected] = useState([]);
+
+  const [selected, setSelected] = useState([]); // { word, index }
   const [feedback, setFeedback] = useState(null);
+
   const positiveWords = [
     "Супер!",
     "Молодец!",
@@ -16,33 +19,26 @@ const AudioOrderExercise = ({ exercise, onAnswer }) => {
     "Удивительно!",
     "Ты вообще красотка!"
   ];
-  const handleWordClick = (word) => {
-    if (selected.includes(word)) {
-      setSelected(selected.filter((w) => w !== word));
-    } else {
-      setSelected([...selected, word]);
-    }
+
+  const handleWordClick = (word, index) => {
+    setSelected([...selected, { word, index }]);
   };
 
-  const handleRemoveWord = (word) => {
-    setSelected(selected.filter((w) => w !== word));
+  const handleRemoveWord = (indexToRemove) => {
+    setSelected(selected.filter(({ index }) => index !== indexToRemove));
   };
 
   const handleSubmit = () => {
-    const isCorrect = JSON.stringify(selected) === JSON.stringify(correct_answer);
+    const selectedWords = selected.map((item) => item.word);
+    const isCorrect = JSON.stringify(selectedWords) === JSON.stringify(correct_answer);
     const randomPraise = positiveWords[Math.floor(Math.random() * positiveWords.length)];
-    /*setFeedback(isCorrect ? "✅ Верно!" : `❌ Ошибка. Правильный порядок: ${correct_answer.join(" ")}`);*/
+
     setFeedback({
       correct: isCorrect,
       message: isCorrect
         ? randomPraise
         : correct_answer.join(" "),
     });
-    /*setTimeout(() => {
-      setSelected([]);
-      setFeedback(null);
-      onAnswer(isCorrect);
-    }, 2000);*/
   };
 
   return (
@@ -59,14 +55,14 @@ const AudioOrderExercise = ({ exercise, onAnswer }) => {
         </div>
       </div>
 
-      {/* Выбранные */}
+      {/* Выбранные слова */}
       <div className={styles.selectedContainer}>
         <div className={styles.line}></div>
         <div className={styles.selectedWords}>
-          {selected.map((word, index) => (
+          {selected.map(({ word, index }) => (
             <button
               key={index}
-              onClick={() => handleRemoveWord(word)}
+              onClick={() => handleRemoveWord(index)}
               className={styles.selectedWord}
             >
               {word}
@@ -76,24 +72,26 @@ const AudioOrderExercise = ({ exercise, onAnswer }) => {
         <div className={styles.line}></div>
       </div>
 
-      {/* Все варианты */}
+      {/* Варианты слов */}
       <div className={styles.optionsContainer}>
-        {options
-          .filter((word) => !selected.includes(word)) // фильтруем выбранные
-          .map((word, index) => (
+        {options.map((word, index) => {
+          const isSelected = selected.some((item) => item.index === index);
+          if (isSelected) return null;
+
+          return (
             <button
               key={index}
-              onClick={() => handleWordClick(word)}
+              onClick={() => handleWordClick(word, index)}
               className={styles.wordButton}
             >
               {word}
             </button>
-          ))}
+          );
+        })}
       </div>
 
       {!feedback && (
         <div className={styles.buttonsRow}>
-          
           <button onClick={handleSubmit} className={styles.submitButton}>
             Проверить
           </button>
@@ -128,7 +126,6 @@ const AudioOrderExercise = ({ exercise, onAnswer }) => {
           </div>
         </div>
       )}
-
     </div>
   );
 };

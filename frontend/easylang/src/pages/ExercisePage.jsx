@@ -4,7 +4,6 @@ import { getExercisesByLesson } from "../api/exercises";
 import ExerciseRenderer from "../components/Exercise/ExerciseRender";
 import { markLessonCompleted } from "../api/progress";
 import { getLessonBySlug } from "../api/lessons";
-import { unlockLessonsUpToModule } from "../api/modules";
 import styles from "./Style (css)/ExercisePage.module.css";
 
 
@@ -112,15 +111,7 @@ const GamePage = () => {
     if (currentIndex + 1 >= queue.length) {
       setCompleted(true);
 
-      if (isTest && errors <= maxErrorsAllowed && isAuthenticated) {
-        if (passedLanguageId && testLevel) {
-          unlockLessonsUpToModule(passedLanguageId, testLevel)
-            .then(() => console.log("Модули успешно разблокированы"))
-            .catch((err) =>
-              console.error("Ошибка при разблокировке модулей", err)
-            );
-        }
-      }
+      
     } else {
       setCurrentIndex(currentIndex + 1);
     }
@@ -175,7 +166,7 @@ const GamePage = () => {
             <div className={styles.successCard}>
               <p className={styles.successText}>
                 Вы успешно прошли тест!<br />
-                Зарегистрируйтесь, чтобы сохранить результат и приступить к обучению.
+                Советуем начать с модуля {testLevel}! Зарегистрируйтесь, чтобы  приступить к обучению.
               </p>
             </div>
             <div className={styles.successActions}>
@@ -200,7 +191,7 @@ const GamePage = () => {
             <h2 className={styles.successTitle}>Ты молодец!</h2>
             <div className={styles.successCard}>
               <p className={styles.successText}>
-                Начнём с модуля 1! Кажется, этот уровень вам подходит. Если что, мы всегда сможем изменить программу позже.
+                  Начнём с модуля {testLevel}! Кажется, этот уровень вам подходит. Если что, Вы всегда сможете изменить программу позже.
               </p>
             </div>
             <button
