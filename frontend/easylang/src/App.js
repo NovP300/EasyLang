@@ -75,6 +75,7 @@ function App() {
       </Routes>
       {/* Модалки поверх background */}
       {background && (
+        
         <Routes>
           <Route path="/login" element={<LoginModal />} />
           <Route path="/register" element={<RegisterModal />} />
