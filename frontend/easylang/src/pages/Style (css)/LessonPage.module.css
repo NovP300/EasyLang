@@ -223,3 +223,19 @@
 .exerciseLink:hover {
   background-color: #333;
 }
+
+@media (max-width: 768px) {
+  .secondBlockWrapper {
+    flex-direction: column;
+  }
+
+  .vocabularySide {
+    min-width: unset;
+  }
+
+  .exerciseLink {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+}
