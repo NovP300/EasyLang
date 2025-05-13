@@ -23,6 +23,7 @@ import AboutTheCoursePage from './pages/AboutTheCoursePage';
 import PaymentPage from "./pages/PaymentPage";
 import PromoModal from "./modals/PromoModal";
 import { getProfile } from "./api/profile";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 import { useState, useEffect } from "react";
@@ -48,6 +49,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       <Routes location={background || location}>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
@@ -73,6 +75,7 @@ function App() {
       </Routes>
       {/* Модалки поверх background */}
       {background && (
+        
         <Routes>
           <Route path="/login" element={<LoginModal />} />
           <Route path="/register" element={<RegisterModal />} />

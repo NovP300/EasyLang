@@ -34,10 +34,8 @@ const VocabularyBlock = ({ items }) => (
   </div>
 );
 
-const PictureBlock = ({ text, media }) => (
+const PictureBlock = ({ media }) => (
   <div className={styles.pictureBlock}>
-    <h3 className="font-bold">Картинка</h3>
-    <p>{text}</p>
     <img src={`${MEDIA_URL}${media}`} alt={`Путь к картинке: ${MEDIA_URL}${media}`} className="w-full" />
   </div>
 );
