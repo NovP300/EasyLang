@@ -93,29 +93,32 @@ const GamePage = () => {
 
 
   const handleAnswer = (isCorrect) => {
-    const current = queue[currentIndex];
+      const current = queue[currentIndex];
 
-    if (!isCorrect && isTest) {
-      const newErrors = errors + 1;
-      setErrors(newErrors);
-      if (newErrors > maxErrorsAllowed) {
-        setCompleted(true);
-        return;
+      if (!isCorrect && isTest) {
+        const newErrors = errors + 1;
+        setErrors(newErrors);
+        if (newErrors > maxErrorsAllowed) {
+          setCompleted(true);
+          return;
+        }
       }
-    }
 
-    if (!isCorrect && !isTest) {
-      setQueue((prevQueue) => [...prevQueue, current]);
-    }
+      if (!isCorrect && !isTest) {
+        // Добавляем текущий в конец очереди, чтобы повторить позже
+        setQueue((prevQueue) => [...prevQueue, current]);
+      }
 
-    if (currentIndex + 1 >= queue.length) {
-      setCompleted(true);
+      const nextIndex = currentIndex + 1;
 
-      
-    } else {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
+      if (nextIndex >= queue.length) {
+        // Текущий был последним
+        setCompleted(true);
+      } else {
+        // Переходим к следующему
+        setCurrentIndex(nextIndex);
+      }
+};
 
   if (queue.length === 0) return <p>Загрузка заданий...</p>;
 
