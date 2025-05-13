@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Style (css)/Payment.module.css"; // создашь или переиспользуешь стили
 import { updateUserSubscription } from "../api/profile"; // функция, которую нужно будет сделать
+import { useNavigate } from "react-router-dom";
 
 export default function PaymentPage() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ export default function PaymentPage() {
     email: "",
     plan: "1", // по умолчанию 1 месяц
   });
+
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -99,6 +102,10 @@ export default function PaymentPage() {
 
       await updateUserSubscription(planDurations[formData.plan]);
       setMessage("Оплата прошла успешно! Подписка активирована.");
+    
+      setTimeout(() => {
+        navigate("/courses");
+      }, 1500);
     } catch (error) {
       console.error(error);
       setMessage("Ошибка при обработке оплаты");

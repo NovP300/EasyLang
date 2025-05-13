@@ -16,6 +16,7 @@
 }
 
 .hero_bg_img {
+    padding: 0;
     position: absolute;
     top: 0;
     left: 0;

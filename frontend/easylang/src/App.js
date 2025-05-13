@@ -47,6 +47,10 @@ function App() {
       }, [isAuthenticated]);
   const isModerator = user?.role === "CM";
 
+  useEffect(() => {
+    document.body.style.margin = "0";
+  }, []);
+
   return (
     <>
       <ScrollToTop />

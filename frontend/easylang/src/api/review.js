@@ -24,16 +24,18 @@ export const getReviewById = async (id) => {
 };
 
 // Создать новый отзыв
-export const createReview = async (languageId, responseText, estimation) => {
+export const createReview = async (languageId, responseText, estimation, userId) => {
   try {
     const response = await axiosInstance.post(`${API_URL}/reviews/`, {
       language: languageId,
       response: responseText,
       estimation: estimation,
+      user: userId,
     });
     return response.data;
   } catch (error) {
-    console.error(error);
+    // Выведем, что именно вернул сервер
+    console.error("Ошибка при отправке отзыва", error.response?.data || error);
     throw new Error("Ошибка при отправке отзыва");
   }
 };

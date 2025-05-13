@@ -275,7 +275,7 @@ export default function MainPage() {
                         <button className={styles.try_free_btn}>Попробовать бесплатно</button>
                     </Link>
                     <div className={styles.login_link}>
-                        <Link to="/promo" state={{ background: location }}>У меня уже есть аккаунт</Link>
+                        <Link to="/login" state={{ background: location }}>У меня уже есть аккаунт</Link>
                     </div>
                 </div>
             </section>
@@ -485,7 +485,7 @@ export default function MainPage() {
                             <p className={styles.card_description}>
                                 Максимальный доступ ко всем упражнениям и материалам на сайте, занимайтесь сколько хотите
                             </p>
-                            <p className={styles.card_price}>от 1299 р/мес</p>
+                            <p className={styles.card_price}>от 249 р/мес</p>
                             <button className={styles.card_button} onClick={handleStartClick}>Начать заниматься</button>
                         </div>
                         <div className={styles.pricing_card}>
@@ -493,7 +493,7 @@ export default function MainPage() {
                             <p className={styles.card_description}>
                                 Максимальный доступ ко всем упражнениям и материалам на сайте, занимайтесь сколько хотите
                             </p>
-                            <p className={styles.card_price}>от 2388 р/мес</p>
+                            <p className={styles.card_price}>от 199 р/мес</p>
                             <button className={styles.card_button} onClick={handleStartClick}>Начать заниматься</button>
                         </div>
                     </div>
@@ -524,14 +524,16 @@ export default function MainPage() {
                 <h2>Отзывы наших учеников</h2>
 
                 {loading ? (
-                    <div>Загрузка...</div> // Заменяем на блок с текстом "Загрузка"
+                    <div>Загрузка...</div>
                 ) : (
                     <div className={styles.reviewGrid}>
                         {reviews.map((review) => {
-                            // Ищем язык по id
+                            // Теперь мы больше не ищем пользователя и не форматируем дату — они уже приходят с бэка!
                             const language = languages.find(lang => lang.id === review.language);
+
                             return (
                                 <div key={review.id} className={styles.reviewCard}>
+                                    {/* Блок с оценкой (звёздочки) */}
                                     <div className={styles.rating}>
                                         {[...Array(5)].map((_, index) => (
                                             <FaStar
@@ -541,21 +543,18 @@ export default function MainPage() {
                                         ))}
                                     </div>
 
+                                    {/* Новый блок с именем пользователя и датой */}
                                     <div className={styles.user}>
-                                        {/* Проверяем, если пользователь есть в state */}
-                                        {users[review.user] && (
-                                            <>
-                                                <div>
-                                                    {users[review.user].username} <br />
-                                                    <small>{new Date(review.date).toLocaleDateString()}</small> {/* Форматируем дату */}
-                                                </div>
-                                            </>
-                                        )}
+                                        <div>
+                                            <strong>{review.username}</strong><br />
+                                            <small>{review.formatted_date}</small>
+                                        </div>
                                     </div>
 
+                                    {/* Текст отзыва */}
                                     <div className={styles.comment}>{review.response}</div>
 
-                                    {/* Отображаем название языка */}
+                                    {/* Название языка (если найден) */}
                                     {language && <div className={styles.language}>Курс: {language.name}</div>}
                                 </div>
                             );
@@ -563,6 +562,7 @@ export default function MainPage() {
                     </div>
                 )}
 
+                {/* Кнопка перехода на полную страницу отзывов */}
                 <Link to="/reviews">
                     <button className={styles.btnCom}>Больше отзывов</button>
                 </Link>

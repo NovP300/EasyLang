@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
-
+from datetime import date
 
 # Сериализатор для пользователя
 class UserSerializer(serializers.ModelSerializer):
@@ -19,6 +19,13 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'first_name', 
         'last_name', 'gender', 'birth_date', 'role', 'subscription', 'subscription_due']
+
+    def to_representation(self, instance):
+        today = date.today()
+        if instance.subscription_due and instance.subscription_due < today:
+            instance.subscription = False
+            instance.save(update_fields=["subscription"])
+        return super().to_representation(instance)
 
 # Сериализатор для регистрации
 class RegisterSerializer(serializers.ModelSerializer):
@@ -93,10 +100,19 @@ class LessonProgressSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    formatted_date = serializers.SerializerMethodField()
+
     class Meta:
         model = Review
-        fields = '__all__'
-        read_only_fields = ['user', 'date']
+        fields = '__all__'  # Все поля модели + два дополнительных
+        read_only_fields = ['username', 'formatted_date']
+
+    def get_formatted_date(self, obj):
+        return obj.date.strftime('%d.%m.%Y')
+
+
+    
 
 
 
