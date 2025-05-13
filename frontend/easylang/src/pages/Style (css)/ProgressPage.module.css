@@ -160,8 +160,9 @@ h1 {
 }
 
 .congrats_image {
-    width: 100px;
-    height: auto;
+    margin: auto;
+    width: 90px;
+    height: 150px;
     animation: swing 2s infinite;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
