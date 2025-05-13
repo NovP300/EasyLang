@@ -142,6 +142,9 @@
   max-width: 100%;
   border-radius: 8px;
   margin-top: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Словарь — список */
@@ -205,6 +208,7 @@
   max-width: 100%;
   border-radius: 8px;
   margin-top: 12px;
+  
 }
 
 /* Кнопка к упражнениям */
