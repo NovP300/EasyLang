@@ -46,9 +46,11 @@ class ExerciseAdmin(admin.ModelAdmin):
 class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'username', 'role', 'is_staff', 'subscription', 'subscription_due')
     list_filter = ('role', 'is_staff')
+
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('username', 'gender', 'birth_date')}),
+        ('Subscription', {'fields': ('subscription', 'subscription_due')}),  # ← добавлено
         ('Permissions', {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'role'),
         }),

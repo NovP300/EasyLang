@@ -13,11 +13,10 @@ const AudioOrderExercise = ({ exercise, onAnswer }) => {
   const positiveWords = [
     "Супер!",
     "Молодец!",
-    "Умница!",
     "Так держать!",
     "Потрясающе!",
     "Удивительно!",
-    "Ты вообще красотка!"
+    "Хорошо!",
   ];
 
   const handleWordClick = (word, index) => {

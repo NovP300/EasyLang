@@ -10,11 +10,10 @@ const TranslateImageExercise = ({ exercise, onAnswer }) => {
   const positiveWords = [
     "Супер!",
     "Молодец!",
-    "Умница!",
     "Так держать!",
     "Потрясающе!",
     "Удивительно!",
-    "Ты вообще красотка!"
+    "Хорошо!",
   ];
   const handleSubmit = () => {
     const isCorrect = input.trim().toLowerCase() === correct_answer.toLowerCase();

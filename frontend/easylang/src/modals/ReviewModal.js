@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./styles/ReviewModal.module.css";
 import { createReview, getReviewByUserAndLanguage, updateReview } from "../api/review";
+import { getProfile } from "../api/profile";
 
 export default function ReviewModal() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function ReviewModal() {
   const [existingReview, setExistingReview] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   // Функция для закрытия модалки
   const handleClose = () => {
@@ -33,6 +35,7 @@ export default function ReviewModal() {
         estimation: rating,
         is_moderated: true,
         moderation_status: "pending",
+        user: user.id,
       };
       if (editMode) {
         // Если в режиме редактирования, обновляем отзыв
@@ -40,7 +43,7 @@ export default function ReviewModal() {
         alert("Отзыв отправлен на повторную модерацию.");
       } else {
         // Если новый отзыв, создаем его
-        await createReview(languageId, reviewText, rating);
+        await createReview(languageId, reviewText, rating, user.id);
         alert("Отзыв отправлен на модерацию.");
       }
       navigate(background.pathname); // Закрываем модалку после отправки отзыва
@@ -69,6 +72,18 @@ export default function ReviewModal() {
 
     fetchExistingReview();
   }, [languageId]);
+
+  // Получаем информацию о пользователе
+  useEffect(() => {
+    const fetchUser = async () => {
+      const profile = await getProfile();
+      if (profile) {
+        setUser(profile);  // Сохраняем пользователя в state
+      }
+    };
+
+    fetchUser();
+  }, []);
 
 
   const renderModerationStatus = (status) => {

@@ -94,7 +94,7 @@ export default function ReviewsPage() {
             <button onClick={handleClose} className={styles.closeButton}>✕</button>
             <h1 className={styles.title}>Отзывы наших учеников</h1>
 
-            {/* БЛОК ФИЛЬТРОВ */}
+            {/* Фильтры */}
             <div className={styles.filtersWrapper}>
                 <div className={styles.filterGroup}>
                     <span className={styles.filterTitle}>Оценка:</span>
@@ -123,16 +123,17 @@ export default function ReviewsPage() {
                 </div>
             </div>
 
+            {/* Отзывы */}
             {loading ? (
-                <div className={styles.loading}>Загрузка...</div> // Блок для загрузки
+                <div className={styles.loading}>Загрузка...</div>
             ) : (
                 <div className={styles.reviews}>
                     {filteredReviews.map((review) => {
-                        const user = users[review.user]; // Ищем пользователя по id
-                        const language = languages.find(lang => lang.id === review.language); // Ищем язык по id
+                        const language = languages.find(lang => lang.id === review.language);
 
                         return (
                             <div className={styles.reviewCard} key={review.id}>
+                                {/* Звёздочки */}
                                 <div className={styles.rating}>
                                     {[...Array(5)].map((_, index) => (
                                         <FaStar
@@ -142,20 +143,19 @@ export default function ReviewsPage() {
                                     ))}
                                 </div>
 
+                                {/* Имя пользователя и дата */}
                                 <div className={styles.userInfo}>
-                                    <div>
-                                        <div className={styles.username}>
-                                            {user ? user.username : "Имя пользователя"} {/* Показываем имя пользователя */}
-                                        </div>
-                                        <div className={styles.date}>
-                                            {new Date(review.date).toLocaleDateString()} {/* Форматируем дату */}
-                                        </div>
+                                    <div className={styles.username}>
+                                        {review.username || "Имя пользователя"}
+                                    </div>
+                                    <div className={styles.date}>
+                                        {review.formatted_date || ""}
                                     </div>
                                 </div>
 
                                 <div className={styles.comment}>{review.response}</div>
 
-                                {/* Добавляем название языка (если нужно) */}
+                                {/* Название языка */}
                                 {language && <div className={styles.language}>{language.name}</div>}
                             </div>
                         );

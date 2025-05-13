@@ -11,11 +11,10 @@ const FillTranslationExercise = ({ exercise, onAnswer }) => {
   const positiveWords = [
     "Супер!",
     "Молодец!",
-    "Умница!",
     "Так держать!",
     "Потрясающе!",
     "Удивительно!",
-    "Ты вообще красотка!"
+    "Хорошо!",
   ];
 
   const handleSubmit = () => {

@@ -62,10 +62,14 @@ export const updateUserSubscription = async (months) => {
   if (!user) throw new Error("Пользователь не авторизован");
 
   const today = new Date();
-  const dueDate = new Date(today.setMonth(today.getMonth() + months));
+  let currentDue = user.subscription_due ? new Date(user.subscription_due) : today;
+
+  // Если подписка активна (срок еще не истёк), отталкиваемся от даты окончания
+  const baseDate = currentDue > today ? currentDue : today;
+  const newDueDate = new Date(baseDate.setMonth(baseDate.getMonth() + months));
 
   return await updateProfile({
     subscription: true,
-    subscription_due: dueDate.toISOString().split("T")[0], // yyyy-mm-dd
+    subscription_due: newDueDate.toISOString().split("T")[0], // yyyy-mm-dd
   });
 };
